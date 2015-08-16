@@ -26,6 +26,15 @@
 *.exe
 *.out
 *.app
+
+#Latex
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+
+# Others
 *.pyc
 *.deps
 tp
