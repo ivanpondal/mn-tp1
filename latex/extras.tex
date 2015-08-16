@@ -1,0 +1,140 @@
+% -------------------- COMANDOS ESPECIALES ------------------------------
+
+\newcommand{\calcular}[2]{\pgfmathtruncatemacro{#1}{#2}}
+
+\pgfplotsset{
+  filter params/.style n args={4}{
+      x filter/.code={
+          \edef\tempa{\thisrow{#1}}
+          \edef\tempb{#2}
+          \edef\tempc{\thisrow{#3}}
+          \edef\tempd{#4}
+          \ifx\tempa\tempb
+            \ifx\tempc\tempd
+            \else
+              \def\pgfmathresult{inf}
+            \fi
+          \else
+            \def\pgfmathresult{inf}
+          \fi
+      }
+  }
+}
+
+\newcommand{\graficarDatos}[6]{
+  \begin{tikzpicture}
+  \begin{axis}[
+      title={#1},
+      xlabel={#2},
+      ylabel={#3},
+      scaled x ticks=false,
+      scaled y ticks=false,
+      scale=0.5
+  ]
+  \addplot[only marks, color=black] table[x=#4,y=#5]{#6};
+  \end{axis}
+  \end{tikzpicture}
+}
+
+\newcommand{\graficarDatosPlus}[7]{
+  \begin{tikzpicture}
+  \begin{axis}[
+      title={#1},
+      xlabel={#2},
+      ylabel={#3},
+      scaled x ticks=false,
+      scaled y ticks=false,
+      width=0.6\textwidth,
+      #7
+  ]
+  \addplot[only marks, color=black] table[x=#4,y=#5]{#6};
+  \end{axis}
+  \end{tikzpicture}
+}
+
+\makeatletter
+\pgfplotsset{
+    groupplot xlabel/.initial={},
+    every groupplot x label/.style={
+        at={($({group c1r\pgfplots@group@rows.west}|-{group c1r\pgfplots@group@rows.outer south})!0.5!({group c\pgfplots@group@columns r\pgfplots@group@rows.east}|-{group c\pgfplots@group@columns r\pgfplots@group@rows.outer south})$)},
+        anchor=north,
+    },
+    groupplot ylabel/.initial={},
+    every groupplot y label/.style={
+            rotate=90,
+        at={($({group c1r1.north}-|{group c1r1.outer
+west})!0.5!({group c1r\pgfplots@group@rows.south}-|{group c1r\pgfplots@group@rows.outer west})$)},
+        anchor=south
+    },
+    execute at end groupplot/.code={%
+      \node [/pgfplots/every groupplot x label]
+{\pgfkeysvalueof{/pgfplots/groupplot xlabel}};
+      \node [/pgfplots/every groupplot y label]
+{\pgfkeysvalueof{/pgfplots/groupplot ylabel}};
+    },
+    group/only outer labels/.style =
+{
+group/every plot/.code = {%
+    \ifnum\pgfplots@group@current@row=\pgfplots@group@rows\else%
+        \pgfkeys{xticklabels = {}, xlabel = {}}\fi%
+    \ifnum\pgfplots@group@current@column=1\else%
+        \pgfkeys{yticklabels = {}, ylabel = {}}\fi%
+}
+}
+}
+
+\def\endpgfplots@environment@groupplot{%
+    \endpgfplots@environment@opt%
+    \pgfkeys{/pgfplots/execute at end groupplot}%
+    \endgroup%
+}
+\makeatother
+
+\newcommand{\barGraphExp}[2]{
+    \begin{tikzpicture}
+    \begin{axis}[
+        xlabel={Implementación},
+    	ylabel={Tiempo de ejecución (clocks)},
+        legend style={at={(1.4,1.0)}},
+        ybar,
+        scaled ticks=false,
+        width=0.5\textwidth,
+        height=0.5\textwidth,
+        tickpos=left,
+        xtick=\empty,
+        ytick align=inside,
+        xtick align=inside,
+    	enlargelimits=0.05,
+        bar width=16,
+    ]
+    % How to process each item:
+    \renewcommand*{\do}[1]{\addplot+[color=black] table[x=n, y=##1]{datos/datos_blur.dat};}
+    % Process list:
+    \docsvlist{#2}
+    \legend{#2}
+    \end{axis}
+    \end{tikzpicture}
+}
+
+\newcommand{\graficarDatosExp}[6]{
+  \begin{tikzpicture}
+  \begin{axis}[
+      title={#1},
+      xlabel={#2},
+      ylabel={#3},
+      scaled x ticks=false,
+      scaled y ticks=false,
+      enlargelimits=0.05,
+      width=0.5\textwidth,
+      height=0.5\textwidth
+  ]
+  \addplot[color=black] table[x=#5,y=#6]{#4};
+  % \renewcommand*{\do}[1]{\addplot table[x=#5,y=##1]{#4};}
+  % %     % Process list:
+  % \docsvlist{#6}
+  % \legend{#6}
+  \end{axis}
+  \end{tikzpicture}
+}
+
+% ------------------------------------------------------------------------

@@ -33,6 +33,7 @@
 *.fls
 *.log
 *.synctex.gz
+*.toc
 
 # Others
 *.pyc

@@ -1,0 +1,45 @@
+\usepackage{color} % para snipets de codigo coloreados
+\usepackage{fancybox} % para el sbox de los snipets de codigo
+\definecolor{litegrey}{gray}{0.94}
+% \newenvironment{sidebar}{%
+% \begin{Sbox}\begin{minipage}{.85\textwidth}}%
+% {\end{minipage}\end{Sbox}%
+% \begin{center}\setlength{\fboxsep}{6pt}%
+% \shadowbox{\TheSbox}\end{center}}
+% \newenvironment{warning}{%
+% \begin{Sbox}\begin{minipage}{.85\textwidth}\sffamily\lite\small\RaggedRight}%
+% {\end{minipage}\end{Sbox}%
+% \begin{center}\setlength{\fboxsep}{6pt}%
+% \colorbox{litegrey}{\TheSbox}\end{center}}
+
+%\newenvironment{codesnippet}{%
+%\begin{Sbox}\begin{minipage}{\linewidth-2\fboxsep-2\fboxrule-4pt}\sffamily\small}%
+%{\end{minipage}\end{Sbox}%
+%\begin{center}%
+%\colorbox{litegrey}{\TheSbox}\end{center}}
+
+% \newenvironment{codesnippet}{\VerbatimEnvironment%
+%   \noindent
+%   %{\columnwidth-\leftmargin-\rightmargin-2\fboxsep-2\fboxrule-4pt}
+%   \begin{Sbox}
+%   \begin{minipage}{\linewidth-2\fboxsep-2\fboxrule-4pt}
+%   \begin{Verbatim}
+% }{%
+%   \end{Verbatim}
+%   \end{minipage}
+%   \end{Sbox}%
+%   \colorbox{litegrey}{\TheSbox}
+% }
+
+\newenvironment{codesnippet}{\VerbatimEnvironment%
+  \noindent
+  %      {\columnwidth-\leftmargin-\rightmargin-2\fboxsep-2\fboxrule-4pt}
+  \begin{Sbox}
+  \begin{minipage}{\linewidth}
+  \begin{Verbatim}
+}{%
+  \end{Verbatim}
+  \end{minipage}
+  \end{Sbox}%
+  \colorbox{litegrey}{\TheSbox}
+}

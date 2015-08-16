@@ -1,0 +1,114 @@
+\documentclass[a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{charter} % tipografia
+%\usepackage{graphicx}
+\usepackage[pdftex]{graphicx}
+\usepackage{sidecap}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{makeidx}
+\usepackage{float}
+\usepackage{amsmath, amsthm, amssymb}
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}{Corolario}[theorem]
+\newtheorem{lemma}[theorem]{Lema}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{charter}
+\usepackage{wrapfig}
+\usepackage{listings}
+\usepackage{hyperref} % links
+\usepackage{algorithm} %http://www.ctan.org/pkg/algorithms
+\usepackage{algorithmic}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{pgfplots}
+% \usepackage{pgfplotstable}
+% custom
+\input{codesnippet}
+\input{page.layout}
+\input{extras}
+% \setcounter{secnumdepth}{2}
+\usepackage{underscore}
+\usepackage{caratula}
+\usepackage{url}
+\lstset{
+    language=C++,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    commentstyle=\color{ForestGreen}\ttfamily,
+    morecomment=[l][\color{magenta}]{\#}
+}
+
+% *********************** %
+\usepackage{tikz}
+\usetikzlibrary{graphs}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+% Otros
+\usepackage{arrayjobx}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{etoolbox}
+\lstset{breaklines=true}
+% *********************** %
+
+% ******************************************************** %
+% TEMPLATE DE INFORME ORGA2 v0.1 %
+% ******************************************************** %
+% ******************************************************** %
+% %
+% ALGUNOS PAQUETES REQUERIDOS (EN UBUNTU): %
+% ========================================
+% %
+% texlive-latex-base %
+% texlive-latex-recommended %
+% texlive-fonts-recommended %
+% texlive-latex-extra %
+% texlive-lang-spanish (en ubuntu 13.10) %
+% ******************************************************** %
+\begin{document}
+\thispagestyle{empty}
+\materia{Métodos Numéricos}
+\submateria{Segundo Cuatrimestre de 2015}
+\titulo{Trabajo Práctico I}
+%\subtitulo{Grupo: }
+\integrante{Iv\'an Arcuschin}{678/13}{iarcuschin@gmail.com}
+\integrante{Mart\'in Jedwabny}{885/13}{martiniedva@gmail.com}
+\integrante{Jos\'e Massigoge}{954/12}{jmmassigoge@gmail.com}
+\integrante{Iv\'an Pondal}{???/??}{ivan.pondal@gmail.com}
+\maketitle
+% no footer on the first page
+\thispagestyle{empty}
+\newpage
+
+\tableofcontents
+
+\newpage
+\section{Introducción}
+\input{intro}
+
+\newpage
+\section{Ejercicio 1}
+\input{ejercicio-1}
+
+\newpage
+\section{Ejercicio 2}
+\input{ejercicio-2}
+
+\newpage
+\section{Ejercicio 3}
+\input{ejercicio-3}
+
+\newpage
+\section{Conclusión}
+\input{conclusion}
+
+\newpage
+\appendix
+\input{apendice}
+
+\end{document}
