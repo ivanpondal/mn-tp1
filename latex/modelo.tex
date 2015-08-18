@@ -56,34 +56,32 @@ Para encontrar estos valores, transformamos la ecuaci\'on (\ref{calor}) en un co
 
 \subsection{Representación del sistema}
 
-Para representar el sistema de ecuaciones presentado, se utilizará una matriz simple, implementada como un vector de vectores.
-
-\medskip
+Para representar el sistema de ecuaciones presentado, se utilizará una matriz simple, implementada como un vector de vectores. A continuación, se muestra como quedaría la matriz para las ecuaciones de los puntos $T_{0,0}, T(0, n-1), T_{i,j}, T_{m,0}, T_{m,n-1}$.
 
 \[
+    % reduce columns padding:
+    \setlength{\arraycolsep}{0pt}
     % fila vertical alternativa:
     % \vdots   &  \multicolumn{6}{c}{\strut}      &\vdots&         \multicolumn{6}{c}{}               & \vrule & {} \\
     \kbordermatrix{%
-                 & T(0,0) & \ldots & T(0,n-1) & \ldots & T(i,0) & \ldots & T(i,j) & \ldots & T(i,n-1) & \ldots & T(m,0) & \ldots & T(m, n-1) &        & b    \\
-        T(0,0)   & 1      & \ldots & 0        & \ldots & 0      & \ldots & 0      & \ldots & 0        & \ldots & 0      & \ldots & 0         & \vrule & T_i \\
-        \vdots   & \vdots & {}     & \vdots   & {}     & \vdots & {}     & \vdots & {}     & \vdots   & {}     & \vdots & {}     & \vdots    & \vrule & {}   \\
-        T(0,n-1) & 1      & \ldots & 0        & \ldots & 0      & \ldots & 0      & \ldots & 0        & \ldots & 0      & \ldots & 0         & \vrule & T_i \\
-        \vdots   & \vdots & {}     & \vdots   & {}     & \vdots & {}     & \vdots & {}     & \vdots   & {}     & \vdots & {}     & \vdots    & \vrule & {}   \\
-        T(i,0)   & 1      & \ldots & 0        & \ldots & 0      & \ldots & 0      & \ldots & 0        & \ldots & 0      & \ldots & 0         & \vrule & 0 \\
-        \vdots   & \vdots & {}     & \vdots   & {}     & \vdots & {}     & \vdots & {}     & \vdots   & {}     & \vdots & {}     & \vdots    & \vrule & {}   \\
-        T(i,j)   & 1      & \ldots & 0        & \ldots & 0      & \ldots & 0      & \ldots & 0        & \ldots & 0      & \ldots & 0         & \vrule & 0 \\
-        \vdots   & \vdots & {}     & \vdots   & {}     & \vdots & {}     & \vdots & {}     & \vdots   & {}     & \vdots & {}     & \vdots    & \vrule & {}   \\
-        T(i,n-1) & 1      & \ldots & 0        & \ldots & 0      & \ldots & 0      & \ldots & 0        & \ldots & 0      & \ldots & 0         & \vrule & 0 \\
-        \vdots   & \vdots & {}     & \vdots   & {}     & \vdots & {}     & \vdots & {}     & \vdots   & {}     & \vdots & {}     & \vdots    & \vrule & {}   \\
-        T(m,0)   & 1      & \ldots & 0        & \ldots & 0      & \ldots & 0      & \ldots & 0        & \ldots & 0      & \ldots & 0         & \vrule & T_e \\
-        \vdots   & \vdots & {}     & \vdots   & {}     & \vdots & {}     & \vdots & {}     & \vdots   & {}     & \vdots & {}     & \vdots    & \vrule & {}   \\
-        T(m,n-1) & 1      & \ldots & 0        & \ldots & 0      & \ldots & 0      & \ldots & 0        & \ldots & 0      & \ldots & 0         & \vrule & T_e
+                      & \bm{t_{0,0}} & \ldots & \bm{t_{0,n-1}} & \ldots & t_{i-1,j}            & \ldots & t_{i,j-1}    & \bm{t_{i,j}}                 & t_{i,j+1}    & \ldots & t_{i+1,j}    & \ldots & \bm{t_{m,0}} & \ldots & \bm{t_{m,n-1}} &        & b        \\
+        \bm{t_{0,0}}   & 1           & \ldots & 0             & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 0           & \ldots & 0             & \vrule & t_{0,0}   \\
+        \vdots        & \vdots      & {}     & \vdots        & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots      & {}     & \vdots        & \vrule & {}       \\
+        \bm{t_{0,n-1}} & 0           & \ldots & 1             & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 0           & \ldots & 0             & \vrule & t_{0,n-1} \\
+        \vdots        & \vdots      & {}     & \vdots        & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots      & {}     & \vdots        & \vrule & {}       \\
+        \bm{t_{i,j}}   & 0           & \ldots & 0             & \ldots & \bm{\beta - \gamma} & \ldots & \bm{\alpha} & \bm{-2\alpha-2\beta+\gamma} & \bm{\alpha} & \ldots & \bm{\beta}  & \ldots & 0           & \ldots & 0             & \vrule & 0        \\
+        \vdots        & \vdots      & {}     & \vdots        & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots      & {}     & \vdots        & \vrule & {}       \\
+        \bm{t_{m,0}}   & 0           & \ldots & 0             & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 1           & \ldots & 0             & \vrule & t_{m,0}   \\
+        \vdots        & \vdots      & {}     & \vdots        & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots      & {}     & \vdots        & \vrule & {}       \\
+        \bm{t_{m,n-1}} & 0           & \ldots & 0             & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 0           & \ldots & 1             & \vrule & t_{m,n-1}
     }
 \]
 
-% \begin{bmatrix}
-%     x_{11}       & x_{12} & x_{13} & \dots & x_{1n} \\
-%     x_{21}       & x_{22} & x_{23} & \dots & x_{2n} \\
-%     \hdotsfor{5} \\
-%     x_{d1}       & x_{d2} & x_{d3} & \dots & x_{dn}
-% \end{bmatrix}
+Donde, 
+\begin{itemize}
+    \item $\alpha = \frac{1}{(\Delta\theta)^2 * r^2}$
+    \item $\beta = \frac{1}{(\Delta\ r)^2}$
+    \item $\gamma = \frac{1}{(\Delta\ r) * r}$
+    \item $0 < i < n$
+    \item $0 < j < m+1$
+\end{itemize}\((?|(.)|(...)),(?|(.)|(...))\)
