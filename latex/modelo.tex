@@ -60,28 +60,33 @@ Para representar el sistema de ecuaciones presentado, se utilizará una matriz s
 
 \[
     % reduce columns padding:
-    \setlength{\arraycolsep}{0pt}
+    \setlength{\arraycolsep}{1pt}
     % fila vertical alternativa:
     % \vdots   &  \multicolumn{6}{c}{\strut}      &\vdots&         \multicolumn{6}{c}{}               & \vrule & {} \\
     \kbordermatrix{%
-                      & \bm{t_{0,0}} & \ldots & \bm{t_{0,n-1}} & \ldots & t_{i-1,j}            & \ldots & t_{i,j-1}    & \bm{t_{i,j}}                 & t_{i,j+1}    & \ldots & t_{i+1,j}    & \ldots & \bm{t_{m,0}} & \ldots & \bm{t_{m,n-1}} &        & b        \\
-        \bm{t_{0,0}}   & 1           & \ldots & 0             & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 0           & \ldots & 0             & \vrule & t_{0,0}   \\
-        \vdots        & \vdots      & {}     & \vdots        & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots      & {}     & \vdots        & \vrule & {}       \\
-        \bm{t_{0,n-1}} & 0           & \ldots & 1             & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 0           & \ldots & 0             & \vrule & t_{0,n-1} \\
-        \vdots        & \vdots      & {}     & \vdots        & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots      & {}     & \vdots        & \vrule & {}       \\
-        \bm{t_{i,j}}   & 0           & \ldots & 0             & \ldots & \bm{\beta - \gamma} & \ldots & \bm{\alpha} & \bm{-2\alpha-2\beta+\gamma} & \bm{\alpha} & \ldots & \bm{\beta}  & \ldots & 0           & \ldots & 0             & \vrule & 0        \\
-        \vdots        & \vdots      & {}     & \vdots        & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots      & {}     & \vdots        & \vrule & {}       \\
-        \bm{t_{m,0}}   & 0           & \ldots & 0             & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 1           & \ldots & 0             & \vrule & t_{m,0}   \\
-        \vdots        & \vdots      & {}     & \vdots        & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots      & {}     & \vdots        & \vrule & {}       \\
-        \bm{t_{m,n-1}} & 0           & \ldots & 0             & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 0           & \ldots & 1             & \vrule & t_{m,n-1}
+                       & \bm{t_{0,0}} & \ldots & \bm{t_{0,n-1}} & \ldots & t_{i-1,j}           & \ldots & t_{i,j-1}   & \bm{t_{i,j}}                & t_{i,j+1}   & \ldots & t_{i+1,j}   & \ldots & \bm{t_{m,0}} & \ldots & \bm{t_{m,n-1}} &        & b        \\
+        \bm{t_{0,0}}   & 1            & \ldots & 0              & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 0            & \ldots & 0              & \vrule & t_{0,0}   \\
+        \vdots         & \vdots       & {}     & \vdots         & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots       & {}     & \vdots         & \vrule & {}       \\
+        \bm{t_{0,n-1}} & 0            & \ldots & 1              & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 0            & \ldots & 0              & \vrule & t_{0,n-1} \\
+        \vdots         & \vdots       & {}     & \vdots         & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots       & {}     & \vdots         & \vrule & {}       \\
+        \bm{t_{i,j}}   & 0            & \ldots & 0              & \ldots & \bm{\beta - \gamma} & \ldots & \bm{\alpha} & \bm{-2\alpha-2\beta+\gamma} & \bm{\alpha} & \ldots & \bm{\beta}  & \ldots & 0            & \ldots & 0              & \vrule & 0        \\
+        \vdots         & \vdots       & {}     & \vdots         & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots       & {}     & \vdots         & \vrule & {}       \\
+        \bm{t_{m,0}}   & 0            & \ldots & 0              & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 1            & \ldots & 0              & \vrule & t_{m,0}   \\
+        \vdots         & \vdots       & {}     & \vdots         & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots       & {}     & \vdots         & \vrule & {}       \\
+        \bm{t_{m,n-1}} & 0            & \ldots & 0              & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 0            & \ldots & 1              & \vrule & t_{m,n-1}
     }
 \]
 
-Donde, 
+Donde,
 \begin{itemize}
     \item $\alpha = \frac{1}{(\Delta\theta)^2 * r^2}$
     \item $\beta = \frac{1}{(\Delta\ r)^2}$
     \item $\gamma = \frac{1}{(\Delta\ r) * r}$
     \item $0 < i < n$
     \item $0 < j < m+1$
-\end{itemize}\((?|(.)|(...)),(?|(.)|(...))\)
+\end{itemize}
+
+\medskip
+
+Notese que la ecuación del punto $t_{i,j}$ tiene ceros en todas sus celdas, excepto en las corresponiendentes a $t_{i-1,j}$, $t_{i,j}$, $t_{i+1j0}$, $t_{i,j-1}$ y $t_{i,j+1}$.
+Se puede ver que para cada fila de la matriz, hay una ``banda'' de tamaño $2n$ alrededor de la diagonal donde hay 5 elementos que no son cero.
