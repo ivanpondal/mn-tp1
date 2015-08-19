@@ -14,8 +14,8 @@ void AltoHorno::cargar(istream& entrada, bool lu){
 	entrada >> this->isoterma;
 	entrada >> this->cantInstancias;
 	for(int i = 0; i < this->cantInstancias; i++){
-		int tmp;
-		vector<int> tempInterior(this->cantAngulos), tempExterior(this->cantAngulos);
+		double tmp;
+		vector<double> tempInterior(this->cantAngulos), tempExterior(this->cantAngulos);
 		for(int j = 0; j < this->cantAngulos; j++){
 			entrada >> tmp;
 			tempInterior[j] = tmp;
@@ -24,16 +24,16 @@ void AltoHorno::cargar(istream& entrada, bool lu){
 			entrada >> tmp;
 			tempExterior[j] = tmp;
 		}
-		this->instancias[i] = pair<vector<int>, vector<int> >(tempInterior, tempExterior);
+		this->instancias[i] = pair<vector<double>, vector<double> >(tempInterior, tempExterior);
 	}
 	usaLU = lu;
 }
 
-int AltoHorno::darRadioInterior(){
+double AltoHorno::darRadioInterior(){
 	return this->radioInterior;
 }
 
-int AltoHorno::darRadioExterior(){
+double AltoHorno::darRadioExterior(){
 	return this->radioExterior;
 }
 
@@ -45,7 +45,7 @@ int AltoHorno::darCantAngulos(){
 	return this->cantAngulos;
 }
 
-int AltoHorno::darIsoterma(){
+double AltoHorno::darIsoterma(){
 	return this->isoterma;
 }
 
@@ -53,6 +53,6 @@ int AltoHorno::darCantInstancias(){
 	return this->cantInstancias;
 }
 
-map<int, pair<vector<int>, vector<int> > > AltoHorno::darInstancias(){
+map<int, pair<vector<double>, vector<double> > > AltoHorno::darInstancias(){
 	return this->instancias;
 }

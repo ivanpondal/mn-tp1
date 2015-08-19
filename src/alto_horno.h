@@ -11,23 +11,23 @@ using namespace std;
 class AltoHorno{
 	public:
 		AltoHorno(const char* entrada, bool lu);
-		int darRadioInterior();
-		int darRadioExterior();
+		double darRadioInterior();
+		double darRadioExterior();
 		int darCantParticiones();
 		int darCantAngulos();
-		int darIsoterma();
+		double darIsoterma();
 		int darCantInstancias();
-		map<int, pair<vector<int>, vector<int> > > darInstancias();
+		map<int, pair<vector<double>, vector<double> > > darInstancias();
 
 	private:
 		void cargar(istream& entada, bool lu);
-		int radioInterior;
-		int radioExterior;
+		double radioInterior;
+		double radioExterior;
 		int cantParticiones;
 		int cantAngulos;
-		int isoterma;
+		double isoterma;
 		int cantInstancias;
-		map<int, pair<vector<int>, vector<int> > > instancias;
+		map<int, pair<vector<double>, vector<double> > > instancias;
 		int usaLU;
 };
 
