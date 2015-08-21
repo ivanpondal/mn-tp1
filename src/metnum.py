@@ -6,16 +6,7 @@ from sys import argv
 
 # Acciones
 def build():
-  compile()
-  link()
-
-def compile():
-  for source in sources:
-    run(compiler, '-c', source+'.cpp', '-o', source+'.o')
-
-def link():
-  objects = [s+'.o' for s in sources]
-  run(compiler, '-o', executable, objects)
+  run('make')
 
 def clean():
   autoclean()
