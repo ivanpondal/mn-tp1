@@ -53,6 +53,20 @@ vector<double> SistemaEcuaciones::resolverTriangular(vector<vector<double> > &ma
 	return x;
 }
 
+void SistemaEcuaciones::factorizacionLU(vector<vector<double> > &matrizA, vector<double> &b, int n){
+	vector<vector<double> > L(n, vector<double>(n, 0));
+	//obtener L, U va a ser lo que quede en matrizA
+	for (int i = 0; i < n-1; ++i) {//fila
+		L[i][i] = 1;
+		for (int j = i+1; j < n; ++j) {//fila
+			double c = A[j][i]/A[i][i];
+			for (int k = i; k < n; ++k) {//columnas
+				
+			}
+		}
+	}
+}
+
 void SistemaEcuaciones::imprimirSistema(vector<vector<double> > &mA, vector<double> &b){
 	cout<<endl;
 	for(int j = 0; j < dimMatriz; j++){
