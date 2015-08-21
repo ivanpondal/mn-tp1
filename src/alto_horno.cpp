@@ -36,7 +36,7 @@ void AltoHorno::cargar(istream& entrada, bool lu){
 void AltoHorno::guardar(ostream& salida, vector<double> &x){
 	int dimMatriz = this->cantParticiones*this->cantAngulos;
 	for(int i = 0; i < dimMatriz; i++){
-		salida<<x[i]<<endl;
+		salida << setprecision(25) << x[i] << endl;
 	}
 }
 
