@@ -3,8 +3,11 @@
 AltoHorno::AltoHorno(const char* entrada, bool lu){
 	ifstream archivoEntrada;
 	archivoEntrada.open(entrada);
+
 	cargar(archivoEntrada, lu);
 	generarSistema();
+
+	archivoEntrada.close();
 }
 
 void AltoHorno::cargar(istream& entrada, bool lu){
@@ -28,6 +31,13 @@ void AltoHorno::cargar(istream& entrada, bool lu){
 		this->instancias[i] = pair<vector<double>, vector<double> >(tempInterior, tempExterior);
 	}
 	usaLU = lu;
+}
+
+void AltoHorno::guardar(ostream& salida, vector<double> &x){
+	int dimMatriz = this->cantParticiones*this->cantAngulos;
+	for(int i = 0; i < dimMatriz; i++){
+		salida<<x[i]<<endl;
+	}
 }
 
 void AltoHorno::generarSistema(){
@@ -122,7 +132,15 @@ map<int, pair<vector<double>, vector<double> > > AltoHorno::darInstancias(){
 	return this->instancias;
 }
 
-void AltoHorno::calcularTemperaturas(int instancia){
-	sistemaTemperaturas.resolverSistema(instancia, usaLU);
-	// TODO: guardar la solucion
+void AltoHorno::generarSoluciones(const char* salida){
+	ofstream archivoSalida;
+	archivoSalida.open(salida);
+
+	vector<double> x;
+	for(int i = 0; i < this->cantInstancias; i++){
+		x = sistemaTemperaturas.resolverSistema(i, usaLU);
+		guardar(archivoSalida, x);
+	}
+
+	archivoSalida.close();
 }
