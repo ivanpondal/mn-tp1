@@ -6,7 +6,6 @@
 #include <iostream>
 #include <fstream>
 #include <utility>
-#include <map>
 #include <vector>
 #include <iomanip>
 
@@ -18,7 +17,7 @@ class AltoHorno{
 	public:
 		AltoHorno(const char* entrada, bool lu);
 		double darIsoterma();
-		map<int, pair<vector<double>, vector<double> > > darInstancias();
+		vector<pair<vector<double>, vector<double> > > darInstancias();
 		void generarSoluciones(const char* salida);
 
 	private:
@@ -33,7 +32,7 @@ class AltoHorno{
 		int cantAngulos;
 		double isoterma;
 		int cantInstancias;
-		map<int, pair<vector<double>, vector<double> > > instancias;
+		vector<pair<vector<double>, vector<double> > > instancias;
 		SistemaEcuaciones sistemaTemperaturas;
 };
 

@@ -11,7 +11,7 @@ using namespace std;
 class SistemaEcuaciones{
 	public:
 		SistemaEcuaciones();
-		SistemaEcuaciones(vector<vector<double> > A, map<int, vector<double> > instBi, int dimMatriz);
+		SistemaEcuaciones(vector<vector<double> > A, vector<vector<double> > instB, int dimMatriz);
 		vector<double> resolverSistema(int instancia, bool lu);
 	private:
 		vector<vector<double> > A;

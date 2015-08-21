@@ -43,21 +43,16 @@ void AltoHorno::guardar(ostream& salida, vector<double> &x){
 void AltoHorno::generarSistema(){
 	int n = this->cantAngulos;
 	int m = this->cantParticiones;
-	vector<vector<double> > matrizA;
-	map<int, vector<double> > instB;
 	int dimMatriz = n*m;
 
 	// inicializo matriz A y vectores b en 0
 
-	for(int i = 0; i < this->cantInstancias; i++){
-		instB[i].assign(dimMatriz, 0);
-	}
-
-	matrizA.assign(dimMatriz, instB[0]);
+	vector<vector<double> > A(dimMatriz, vector<double>(dimMatriz, 0));
+	vector<vector<double> > instB(dimMatriz, 0);
 
 	// temperaturas internas
 	for(int f = 0; f < n; f++){
-		matrizA[f][f] = 1;
+		A[f][f] = 1;
 		for(int i = 0; i < this->cantInstancias; i++){
 			instB[i][f] = this->instancias[i].first[f];
 		}
@@ -77,23 +72,23 @@ void AltoHorno::generarSistema(){
 		gamma = 1/(difR*rj);
 		alpha = 1/(difA*difA*rj*rj);
 
-		matrizA[f][f] = gamma - 2*beta + 2*alpha;
-		matrizA[f][f - n] = beta - gamma;
-		matrizA[f][f + n] = beta;
-		matrizA[f][f + (((k - 1) == -1) ? n-1 : -1)] = alpha;
-		matrizA[f][f + (((k + 1) == n) ? 1-n : 1)] = alpha;
+		A[f][f] = gamma - 2*beta + 2*alpha;
+		A[f][f - n] = beta - gamma;
+		A[f][f + n] = beta;
+		A[f][f + (((k - 1) == -1) ? n-1 : -1)] = alpha;
+		A[f][f + (((k + 1) == n) ? 1-n : 1)] = alpha;
 	}
 
 	// temperaturas externas
 	for(int f = dimMatriz - n; f < dimMatriz; f++){
 		k = f - dimMatriz + n;
-		matrizA[f][f] = 1;
+		A[f][f] = 1;
 		for(int i = 0; i < this->cantInstancias; i++){
 			instB[i][f] = this->instancias[i].second[k];
 		}
 	}
 
-	this->sistemaTemperaturas = SistemaEcuaciones(matrizA, instB, dimMatriz);
+	this->sistemaTemperaturas = SistemaEcuaciones(A, instB, dimMatriz);
 }
 
 double AltoHorno::jesimoRadio(int j){
@@ -104,7 +99,7 @@ double AltoHorno::kesimoAngulo(int k){
 	return 2*PI*((k + this->cantAngulos) % this->cantAngulos)/this->cantAngulos;
 }
 
-map<int, pair<vector<double>, vector<double> > > AltoHorno::darInstancias(){
+vector<pair<vector<double>, vector<double> > > AltoHorno::darInstancias(){
 	return this->instancias;
 }
 
