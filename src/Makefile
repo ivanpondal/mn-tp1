@@ -2,7 +2,7 @@
 CC=g++
 
 # flags de compilación
-CFLAGS=-g -Wall -O2
+CFLAGS=-g -Wall -O2 -std=c++11
 
 # flags de linkeo
 LDFLAGS=

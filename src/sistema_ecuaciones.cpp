@@ -1,13 +1,16 @@
 #include <sistema_ecuaciones.h>
 
+#define BANDA true
+
 SistemaEcuaciones::SistemaEcuaciones(){
 	this->dimMatriz = 0;
 }
 
-SistemaEcuaciones::SistemaEcuaciones(vector<vector<double> > A, vector<vector<double> > instB, int dimMatriz){
+SistemaEcuaciones::SistemaEcuaciones(vector<vector<double> > A, map<int, vector<double> > instB, int dimMatriz, int cantAngulos){
 	this->A = A;
 	this->instB = instB;
 	this->dimMatriz = dimMatriz;
+	this->cantAngulos = cantAngulos;
 }
 
 vector<double> SistemaEcuaciones::resolverSistema(int instancia, bool lu){
@@ -20,8 +23,13 @@ vector<double> SistemaEcuaciones::resolverSistema(int instancia, bool lu){
 		return vector<double>(this->dimMatriz, 0);
 	}
 	else{
-		eliminacionGaussiana(mA, b, this->dimMatriz);
-		return resolverTriangular(mA, b, this->dimMatriz);
+		if (BANDA) {
+			eliminacionGaussianaBanda(mA, b, this->dimMatriz, this->cantAngulos);
+			return resolverTriangular(mA, b, this->dimMatriz);	
+		} else {
+			eliminacionGaussiana(mA, b, this->dimMatriz);
+			return resolverTriangular(mA, b, this->dimMatriz);	
+		}
 	}
 }
 
@@ -38,6 +46,32 @@ void SistemaEcuaciones::eliminacionGaussiana(vector<vector<double> > &A, vector<
 				A[j][k] -= coef * A[i][k];
 			}
 			b[j] -= coef * b[i];
+		}
+	}
+}
+
+void SistemaEcuaciones::eliminacionGaussianaBanda(vector<vector<double> > &A, vector<double> &b, int n, int cantAngulos){
+	// encuentro matriz triangular inferior:
+
+	// sabemos  que las ecuaciones de los puntos t(0,0) a t(0,n-1) y t(m,0) a t(m,n-1) ya tienen ceros en toda la fila (excepto en la diagonal, que es uno)
+	// empezamos a laburar en las ecuaciones t(1,0), y terminamos en la ecuacion t(m-1, n-1)
+	for(int i = 0; i < n; i++){
+		double pivote = A[i][i];
+		
+		int inicioBanda = max(i+1,cantAngulos);
+		int finBanda = min(n,inicioBanda + cantAngulos);
+
+		for(int j = inicioBanda; j < finBanda; j++){
+			if (A[j][i] != 0) {
+				// modifico la fila j usando la fila i
+				double coef = A[j][i] / pivote;
+
+				A[j][i] = 0;
+				for(int k = i+1; k < n; k++){
+					A[j][k] -= coef * A[i][k];
+				}
+				b[j] -= coef * b[i];
+			}
 		}
 	}
 }
@@ -74,7 +108,6 @@ void SistemaEcuaciones::factorizacionLU(vector<vector<double> > &A, vector<doubl
 	}
 
 void SistemaEcuaciones::imprimirSistema(vector<vector<double> > &mA, vector<double> &b){
-	cout<<endl;
 	for(int j = 0; j < dimMatriz; j++){
 		cout<<"[";
 		for(int k = 0; k < dimMatriz; k++){

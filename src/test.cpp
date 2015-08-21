@@ -51,6 +51,8 @@ void check_carga_alto_horno_instancias_dos(){
 	ASSERT(altoHorno.darInstancias()[1] == temperaturasDos);
 }
 
+
+// para correr un test: ./test test.in test.expected {0: EG, 1: LU}
 int main(int argc, char *argv[])
 {
 	// si no hay argumentos corro tests unitarios, si no los de la cátedra
