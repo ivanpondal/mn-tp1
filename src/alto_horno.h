@@ -1,34 +1,44 @@
 #ifndef ALTO_HORNO_H_
 #define ALTO_HORNO_H_
 
+#define PI 3.14159 //26535897932384626433832795
+
+#include <iostream>
 #include <fstream>
 #include <utility>
 #include <map>
 #include <vector>
+
+#include <sistema_ecuaciones.h>
 
 using namespace std;
 
 class AltoHorno{
 	public:
 		AltoHorno(const char* entrada, bool lu);
-		int darRadioInterior();
-		int darRadioExterior();
+		double darRadioInterior();
+		double darRadioExterior();
 		int darCantParticiones();
 		int darCantAngulos();
-		int darIsoterma();
+		double darIsoterma();
 		int darCantInstancias();
-		map<int, pair<vector<int>, vector<int> > > darInstancias();
+		map<int, pair<vector<double>, vector<double> > > darInstancias();
+		void calcularTemperaturas(int instancia);
 
 	private:
 		void cargar(istream& entada, bool lu);
-		int radioInterior;
-		int radioExterior;
+		void generarSistema();
+		double jesimoRadio(int j);
+		double kesimoAngulo(int k);
+		double radioInterior;
+		double radioExterior;
 		int cantParticiones;
 		int cantAngulos;
-		int isoterma;
+		double isoterma;
 		int cantInstancias;
-		map<int, pair<vector<int>, vector<int> > > instancias;
+		map<int, pair<vector<double>, vector<double> > > instancias;
 		int usaLU;
+		SistemaEcuaciones sistemaTemperaturas;
 };
 
 #endif // ALTO_HORNO_H_INCLUDED
