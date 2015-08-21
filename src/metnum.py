@@ -21,7 +21,6 @@ def clean():
   autoclean()
 
 def test():
-  build()
   import unittest
   unittest.main(module='scripts.tptests', exit=False, argv=argv[:1], verbosity=3)
 
