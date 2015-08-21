@@ -104,30 +104,6 @@ double AltoHorno::kesimoAngulo(int k){
 	return 2*PI*((k + this->cantAngulos) % this->cantAngulos)/this->cantAngulos;
 }
 
-double AltoHorno::darRadioInterior(){
-	return this->radioInterior;
-}
-
-double AltoHorno::darRadioExterior(){
-	return this->radioExterior;
-}
-
-int AltoHorno::darCantParticiones(){
-	return this->cantParticiones;
-}
-
-int AltoHorno::darCantAngulos(){
-	return this->cantAngulos;
-}
-
-double AltoHorno::darIsoterma(){
-	return this->isoterma;
-}
-
-int AltoHorno::darCantInstancias(){
-	return this->cantInstancias;
-}
-
 map<int, pair<vector<double>, vector<double> > > AltoHorno::darInstancias(){
 	return this->instancias;
 }
