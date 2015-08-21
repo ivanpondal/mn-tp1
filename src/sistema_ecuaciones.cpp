@@ -6,7 +6,7 @@ SistemaEcuaciones::SistemaEcuaciones(){
 	this->dimMatriz = 0;
 }
 
-SistemaEcuaciones::SistemaEcuaciones(vector<vector<double> > A, map<int, vector<double> > instB, int dimMatriz, int cantAngulos){
+SistemaEcuaciones::SistemaEcuaciones(vector<vector<double> > A, vector<vector<double> > instB, int dimMatriz, int cantAngulos){
 	this->A = A;
 	this->instB = instB;
 	this->dimMatriz = dimMatriz;
@@ -106,6 +106,7 @@ void SistemaEcuaciones::factorizacionLU(vector<vector<double> > &A, vector<doubl
 		}
 		cout << endl;
 	}
+}
 
 void SistemaEcuaciones::imprimirSistema(vector<vector<double> > &mA, vector<double> &b){
 	for(int j = 0; j < dimMatriz; j++){

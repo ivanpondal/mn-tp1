@@ -48,7 +48,7 @@ void AltoHorno::generarSistema(){
 	// inicializo matriz A y vectores b en 0
 
 	vector<vector<double> > A(dimMatriz, vector<double>(dimMatriz, 0));
-	vector<vector<double> > instB(dimMatriz, 0);
+	vector<vector<double> > instB(dimMatriz, vector<double>(dimMatriz, 0));
 
 	// temperaturas internas
 	for(int f = 0; f < n; f++){
@@ -88,7 +88,7 @@ void AltoHorno::generarSistema(){
 		}
 	}
 
-	this->sistemaTemperaturas = SistemaEcuaciones(A, instB, dimMatriz);
+	this->sistemaTemperaturas = SistemaEcuaciones(A, instB, dimMatriz, cantAngulos);
 }
 
 double AltoHorno::jesimoRadio(int j){

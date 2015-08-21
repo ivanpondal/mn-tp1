@@ -32,6 +32,7 @@ class AltoHorno{
 		int cantAngulos;
 		double isoterma;
 		int cantInstancias;
+		bool usaLU;
 		vector<pair<vector<double>, vector<double> > > instancias;
 		SistemaEcuaciones sistemaTemperaturas;
 };

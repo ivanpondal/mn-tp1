@@ -19,12 +19,6 @@ void check_carga_alto_horno_instancias_una(){
 	string entrada = "tests/test_carga_1.inn";
 	AltoHorno altoHorno(entrada.c_str(), false);
 
-	ASSERT_EQ(altoHorno.darRadioInterior(), 10.0);
-	ASSERT_EQ(altoHorno.darRadioExterior(), 100.0);
-	ASSERT_EQ(altoHorno.darCantParticiones(), 3);
-	ASSERT_EQ(altoHorno.darCantAngulos(), 3);
-	ASSERT_EQ(altoHorno.darIsoterma(), 500.0);
-	ASSERT_EQ(altoHorno.darCantInstancias(), 1);
 	ASSERT(altoHorno.darInstancias()[0] == temperaturas);
 }
 
