@@ -72,7 +72,6 @@ void SistemaEcuaciones::factorizacionLU(vector<vector<double> > &A, vector<doubl
 		}
 		cout << endl;
 	}
-}
 
 void SistemaEcuaciones::imprimirSistema(vector<vector<double> > &mA, vector<double> &b){
 	cout<<endl;

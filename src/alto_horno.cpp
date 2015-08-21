@@ -36,7 +36,7 @@ void AltoHorno::cargar(istream& entrada, bool lu){
 void AltoHorno::guardar(ostream& salida, vector<double> &x){
 	int dimMatriz = this->cantParticiones*this->cantAngulos;
 	for(int i = 0; i < dimMatriz; i++){
-		salida<<x[i]<<endl;
+		salida << setprecision(25) << x[i] << endl;
 	}
 }
 
@@ -77,11 +77,11 @@ void AltoHorno::generarSistema(){
 		gamma = 1/(difR*rj);
 		alpha = 1/(difA*difA*rj*rj);
 
-		matrizA[f][f] = gamma - 2*beta - 2*alpha;
+		matrizA[f][f] = gamma - 2*beta + 2*alpha;
 		matrizA[f][f - n] = beta - gamma;
 		matrizA[f][f + n] = beta;
-		matrizA[f][f + (k-1) % n] = alpha;
-		matrizA[f][f + (k+1) % n] = alpha;
+		matrizA[f][f + (((k - 1) == -1) ? n-1 : -1)] = alpha;
+		matrizA[f][f + (((k + 1) == n) ? 1-n : 1)] = alpha;
 	}
 
 	// temperaturas externas
@@ -97,11 +97,11 @@ void AltoHorno::generarSistema(){
 }
 
 double AltoHorno::jesimoRadio(int j){
-	return this->radioInterior + j*((this->radioExterior - this->radioInterior)/this->cantParticiones);
+	return this->radioInterior + j*((this->radioExterior - this->radioInterior)/(this->cantParticiones - 1));
 }
 
 double AltoHorno::kesimoAngulo(int k){
-	return 2*PI*(k < 0 ? k+this->cantParticiones : k)/this->cantAngulos;
+	return 2*PI*((k + this->cantAngulos) % this->cantAngulos)/this->cantAngulos;
 }
 
 map<int, pair<vector<double>, vector<double> > > AltoHorno::darInstancias(){

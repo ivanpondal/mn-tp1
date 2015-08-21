@@ -16,7 +16,7 @@ void check_carga_alto_horno_instancias_una(){
 	pair<vector<double>, vector<double> > temperaturas(tempInterna, tempExterna);
 
 	// cargamos el horno
-	string entrada = "tests/test_carga_1.in";
+	string entrada = "tests/test_carga_1.inn";
 	AltoHorno altoHorno(entrada.c_str(), false);
 
 	ASSERT_EQ(altoHorno.darRadioInterior(), 10.0);
@@ -44,7 +44,7 @@ void check_carga_alto_horno_instancias_dos(){
 	pair<vector<double>, vector<double> > temperaturasDos(tempInterna, tempExterna);
 
 	// cargamos el horno
-	string entrada = "tests/test_carga_2.in";
+	string entrada = "tests/test_carga_2.inn";
 	AltoHorno altoHorno(entrada.c_str(), false);
 
 	ASSERT(altoHorno.darInstancias()[0] == temperaturasUno);
