@@ -23,10 +23,11 @@ class AltoHorno{
 		double darIsoterma();
 		int darCantInstancias();
 		map<int, pair<vector<double>, vector<double> > > darInstancias();
-		void calcularTemperaturas(int instancia);
+		void generarSoluciones(const char* salida);
 
 	private:
-		void cargar(istream& entada, bool lu);
+		void cargar(istream& entrada, bool lu);
+		void guardar(ostream& salida, vector<double> &x);
 		void generarSistema();
 		double jesimoRadio(int j);
 		double kesimoAngulo(int k);
@@ -37,7 +38,7 @@ class AltoHorno{
 		double isoterma;
 		int cantInstancias;
 		map<int, pair<vector<double>, vector<double> > > instancias;
-		int usaLU;
+		bool usaLU;
 		SistemaEcuaciones sistemaTemperaturas;
 };
 
