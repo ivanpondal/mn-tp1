@@ -65,7 +65,7 @@ void AltoHorno::generarSistema(){
 
 	// temperaturas interior
 	int j, k;
-	double beta, gamma, alpha, rj, difR, difA;
+	double c0, c1, c2, rj, difR, difA;
 	for(int f = n; f < dimMatriz - n; f++){
 		j = f / n;
 		k = f - n*j;
@@ -73,15 +73,15 @@ void AltoHorno::generarSistema(){
 		difR = rj - jesimoRadio(j - 1);
 		difA = kesimoAngulo(k) - kesimoAngulo(k - 1);
 
-		beta = 1/(difR*difR);
-		gamma = 1/(difR*rj);
-		alpha = 1/(difA*difA*rj*rj);
+		c0 = 1/(difR*difR);
+		c1 = 1/(difR*rj);
+		c2 = 1/(difA*difA*rj*rj);
 
-		matrizA[f][f] = gamma - 2*beta - 2*alpha;
-		matrizA[f][f - n] = beta - gamma;
-		matrizA[f][f + n] = beta;
-		matrizA[f][f + (k-1) % n] = alpha;
-		matrizA[f][f + (k+1) % n] = alpha;
+		matrizA[f][f] = c1 - 2*c0 + 2*c2;
+		matrizA[f][f - n] = c0 - c1;
+		matrizA[f][f + n] = c0;
+		matrizA[f][f + (((k - 1) == -1) ? n-1 : -1)] = c2;
+		matrizA[f][f + (((k + 1) == n) ? 1-n : 1)] = c2;
 	}
 
 	// temperaturas externas
@@ -97,11 +97,11 @@ void AltoHorno::generarSistema(){
 }
 
 double AltoHorno::jesimoRadio(int j){
-	return this->radioInterior + j*((this->radioExterior - this->radioInterior)/this->cantParticiones);
+	return this->radioInterior + j*((this->radioExterior - this->radioInterior)/(this->cantParticiones - 1));
 }
 
 double AltoHorno::kesimoAngulo(int k){
-	return 2*PI*k/this->cantAngulos;
+	return 2*PI*((k + this->cantAngulos) % this->cantAngulos)/this->cantAngulos;
 }
 
 double AltoHorno::darRadioInterior(){
