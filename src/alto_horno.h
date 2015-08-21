@@ -16,12 +16,7 @@ using namespace std;
 class AltoHorno{
 	public:
 		AltoHorno(const char* entrada, bool lu);
-		double darRadioInterior();
-		double darRadioExterior();
-		int darCantParticiones();
-		int darCantAngulos();
 		double darIsoterma();
-		int darCantInstancias();
 		map<int, pair<vector<double>, vector<double> > > darInstancias();
 		void generarSoluciones(const char* salida);
 
@@ -38,7 +33,6 @@ class AltoHorno{
 		double isoterma;
 		int cantInstancias;
 		map<int, pair<vector<double>, vector<double> > > instancias;
-		bool usaLU;
 		SistemaEcuaciones sistemaTemperaturas;
 };
 
