@@ -14,5 +14,5 @@ compiler = 'g++'
 executable = './test'
 
 # Parametros extra
-extraParams = ['1']
+extraParams = ['0']
 
