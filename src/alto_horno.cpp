@@ -93,7 +93,7 @@ void AltoHorno::generarSistema(){
 		}
 	}
 
-	this->sistemaTemperaturas = SistemaEcuaciones(matrizA, instB, dimMatriz);
+	this->sistemaTemperaturas = SistemaEcuaciones(matrizA, instB, dimMatriz, n);
 }
 
 double AltoHorno::jesimoRadio(int j){
