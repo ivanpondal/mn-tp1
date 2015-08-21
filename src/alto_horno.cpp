@@ -36,7 +36,7 @@ void AltoHorno::cargar(istream& entrada, bool lu){
 void AltoHorno::guardar(ostream& salida, vector<double> &x){
 	int dimMatriz = this->cantParticiones*this->cantAngulos;
 	for(int i = 0; i < dimMatriz; i++){
-		salida<<x[i]<<endl;
+		salida << x[i] << endl;
 	}
 }
 
@@ -77,7 +77,7 @@ void AltoHorno::generarSistema(){
 		c1 = 1/(difR*rj);
 		c2 = 1/(difA*difA*rj*rj);
 
-		matrizA[f][f] = c1 - 2*c0 + 2*c2;
+		matrizA[f][f] = c1 - 2*c0 - 2*c2;
 		matrizA[f][f - n] = c0 - c1;
 		matrizA[f][f + n] = c0;
 		matrizA[f][f + (((k - 1) == -1) ? n-1 : -1)] = c2;
