@@ -1,7 +1,7 @@
 #ifndef ALTO_HORNO_H_
 #define ALTO_HORNO_H_
 
-#define PI 3.14159 //26535897932384626433832795
+#define PI 3.1415926535897932384626433832795
 
 #include <iostream>
 #include <fstream>
