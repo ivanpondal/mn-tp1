@@ -57,9 +57,19 @@ void check_carga_alto_horno_instancias_dos(){
 	ASSERT(altoHorno.darInstancias()[1] == temperaturasDos);
 }
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
-	RUN_TEST(check_carga_alto_horno_instancias_una);
-	RUN_TEST(check_carga_alto_horno_instancias_dos);
+	// si no hay argumentos corro tests unitarios, si no los de la cátedra
+	if(argc == 4){
+		char* entrada = argv[1];
+		char* salida = argv[2];
+		bool usaLu = argv[3][0] == '1';
+		AltoHorno altoHorno(entrada, usaLu);
+		altoHorno.generarSoluciones(salida);
+	}
+	else{
+		RUN_TEST(check_carga_alto_horno_instancias_una);
+		RUN_TEST(check_carga_alto_horno_instancias_dos);
+	}
 	return 0;
 }
