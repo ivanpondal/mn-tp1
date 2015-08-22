@@ -61,7 +61,6 @@ int main(int argc, char *argv[])
 		char* entrada = argv[1];
 		char* salida = argv[2];
 		TipoResolucion tipo = argv[3][0] == '0' ? GAUSS : LU; // enum definido en sistema_ecuaciones.h
-		tipo = LU;
 		AltoHorno altoHorno(entrada);
 		altoHorno.generarSoluciones(salida, tipo);
 	}
