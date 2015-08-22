@@ -54,7 +54,7 @@ void check_sistema_ecuaciones_LU(){
 }
 
 void check_isoterma(){
-	string entrada = "tests/test3.in";
+	string entrada = "tests/test_isoterma.in";
 	string salida = "tests/test_isoterma.out";
 	AltoHorno altoHorno(entrada.c_str());
 	altoHorno.generarSoluciones(salida.c_str(), GAUSS);
