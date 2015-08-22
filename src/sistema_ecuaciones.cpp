@@ -25,10 +25,8 @@ vector<double> SistemaEcuaciones::resolverSistema(int instancia, TipoResolucion 
 		}
 		//ahora como L*U*x = A*x = b, sea U*x = y => L*y = b
 		vector<double> y = resolverTriangularInferiorLU(this->factorizacionLU, b, this->dimMatriz);
-		for (int i = 0; i<y.size(); ++i) cout <<y[i]<<endl;
 		//ya obtuve 'y', ahora hallo 'x' resolviendo U*x = y
 		vector<double> x = resolverTriangularSuperior(this->factorizacionLU, y, this->dimMatriz);
-		for (int i = 0; i<x.size(); ++i) cout <<x[i]<<endl;
 		return x;
 	} else {
 		if (BANDA) {
@@ -58,7 +56,7 @@ vector<double> SistemaEcuaciones::resolverTriangularInferior(const vector<vector
 	for(int i = 0; i < n; ++i) {
 		x[i] = b[i];
 		for (int j = 0; j < i; ++j) {
-			x[i] -= x[i] * U[i][j];
+			x[i] -= x[j] * U[i][j];
 		}
 		x[i] /= U[i][i];
 	}
@@ -70,7 +68,7 @@ vector<double> SistemaEcuaciones::resolverTriangularInferiorLU(const vector<vect
 	for(int i = 0; i < n; ++i) {
 		x[i] = b[i];
 		for (int j = 0; j < i; ++j) {
-			x[i] -= x[i] * U[i][j];
+			x[i] -= x[j] * U[i][j];
 		}
 		// la diagonal es 1, asi que no hay que dividir por nada
 	}
