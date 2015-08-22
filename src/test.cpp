@@ -53,6 +53,14 @@ void check_sistema_ecuaciones_LU(){
 	solver.resolverSistema(0, LU);
 }
 
+void check_isoterma(){
+	string entrada = "tests/test3.in";
+	string salida = "tests/test_isoterma.out";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida.c_str(), GAUSS);
+	altoHorno.calcularIsoterma(BINARIA);
+}
+
 // para correr un test: ./test test.in test.expected {0: EG, 1: LU}
 int main(int argc, char *argv[])
 {
@@ -68,6 +76,7 @@ int main(int argc, char *argv[])
 		RUN_TEST(check_carga_alto_horno_instancias_una);
 		RUN_TEST(check_carga_alto_horno_instancias_dos);
 		RUN_TEST(check_sistema_ecuaciones_LU);
+		RUN_TEST(check_isoterma);
 	}
 	return 0;
 }

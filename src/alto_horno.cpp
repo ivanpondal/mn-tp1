@@ -1,4 +1,5 @@
 #include "alto_horno.h"
+#include <math.h>
 
 AltoHorno::AltoHorno(const char* entrada){
 	ifstream archivoEntrada;
@@ -18,6 +19,7 @@ void AltoHorno::cargar(istream& entrada){
 	entrada >> this->isoterma;
 	entrada >> this->cantInstancias;
 	this->instancias = vector<pair<vector<double>, vector<double> > >(cantInstancias);
+	this->soluciones = vector<vector<double> >(cantInstancias);
 	for(int i = 0; i < this->cantInstancias; i++){
 		double tmp;
 		vector<double> tempInterior(this->cantAngulos), tempExterior(this->cantAngulos);
@@ -109,9 +111,73 @@ void AltoHorno::generarSoluciones(const char* salida, TipoResolucion tipo){
 
 	vector<double> x;
 	for(int i = 0; i < this->cantInstancias; i++){
-		x = sistemaTemperaturas.resolverSistema(i, tipo);
-		guardar(archivoSalida, x);
+		soluciones[i] = sistemaTemperaturas.resolverSistema(i, tipo);
+		guardar(archivoSalida, soluciones[i]);
 	}
 
 	archivoSalida.close();
+}
+
+vector<double> AltoHorno::calcularIsoterma(TipoIsoterma tipo) {
+	return calcularIsotermaBinaria(0);
+}
+
+vector<double> AltoHorno::calcularIsotermaBinaria(int instancia){
+	vector<double> solucion = vector<double>(cantAngulos);
+	for(int angulo = 0; angulo < cantAngulos; ++angulo) {
+		int radio = 0;
+		while (radio < cantParticiones) {
+			if (soluciones[instancia][radio*cantParticiones+angulo] > isoterma) break;
+			++radio;
+		}
+		if (radio==0) {
+			cout << "llego" << endl;
+			solucion[instancia] = jesimoRadio(radio);
+		} else if (radio == cantParticiones) {
+			solucion[instancia] = jesimoRadio(cantParticiones-1);
+		} else {
+			int n = this->cantAngulos;
+			double radioActual = jesimoRadio(radio-1);
+			double radioSiguiente = jesimoRadio(radio);
+			int dimension = 3*n;
+			vector<vector<double> > A = vector<vector<double> >(dimension, vector<double>(dimension, 0));
+			vector<vector<double> > b = vector<vector<double> >(1, vector<double>(dimension, 0));
+			for (int i = 0; i < n; i++){
+				A[i][i] = 1;
+				b[0][i] = instancias[instancia].first[i];
+				A[dimension-1-i][dimension-1-i] = 1;
+				b[0][dimension-1-i] = instancias[instancia].second[i];
+			}
+			while (fabs(radioActual-isoterma) > 0.1){
+				double beta, gamma, alpha, rj, difR, difA;
+				for(int f = n; f < 2*n; ++f){
+					int k = f-n;
+					rj = (radioActual+radioSiguiente)/2.0;
+					difR = rj - radioActual;
+					difA = kesimoAngulo(k) - kesimoAngulo(k - 1);
+
+					beta = 1/(difR*difR);
+					gamma = 1/(difR*rj);
+					alpha = 1/(difA*difA*rj*rj);
+
+					A[f][f] = gamma - 2*beta - 2*alpha;
+					A[f][f - n] = beta - gamma;
+					A[f][f + n] = beta;
+					A[f][f + (((k - 1) == -1) ? n-1 : -1)] = alpha;
+					A[f][f + (((k + 1) == n) ? 1-n : 1)] = alpha;
+				}
+				SistemaEcuaciones sistema = SistemaEcuaciones(A, b, dimension, n);
+				vector<double> solucionAuxiliar = sistema.resolverSistema(0, GAUSS); // no tiene sentido usar LU (solo quiero resolverlo para un b)
+				double nuevoRadio = solucionAuxiliar[angulo];
+				if (nuevoRadio > isoterma) {
+					radioSiguiente = nuevoRadio;
+				} else {
+					radioActual = nuevoRadio;
+				}
+			}
+			solucion[angulo] = radioActual;
+			cout << radioActual << endl;
+		}
+	}
+	return solucion;
 }

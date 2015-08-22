@@ -11,14 +11,17 @@
 
 #include <sistema_ecuaciones.h>
 
+enum TipoIsoterma : int {BINARIA = 0};
+
 using namespace std;
 
 class AltoHorno{
 	public:
 		AltoHorno(const char* entrada);
-		double darIsoterma();
-		vector<pair<vector<double>, vector<double> > > darInstancias();
 		void generarSoluciones(const char* salida, TipoResolucion tipo);
+		vector<double> calcularIsoterma(TipoIsoterma tipo);
+		vector<pair<vector<double>, vector<double> > > darInstancias();
+		vector<vector<double> > darSoluciones();
 
 	private:
 		void cargar(istream& entrada);
@@ -26,6 +29,7 @@ class AltoHorno{
 		void generarSistema();
 		double jesimoRadio(int j);
 		double kesimoAngulo(int k);
+		vector<double> calcularIsotermaBinaria(int instancia);
 		double radioInterior;
 		double radioExterior;
 		int cantParticiones;
@@ -33,6 +37,7 @@ class AltoHorno{
 		double isoterma;
 		int cantInstancias;
 		vector<pair<vector<double>, vector<double> > > instancias;
+		vector<vector<double> > soluciones;
 		SistemaEcuaciones sistemaTemperaturas;
 };
 
