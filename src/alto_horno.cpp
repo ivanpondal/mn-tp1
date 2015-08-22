@@ -1,16 +1,16 @@
 #include "alto_horno.h"
 
-AltoHorno::AltoHorno(const char* entrada, bool lu){
+AltoHorno::AltoHorno(const char* entrada){
 	ifstream archivoEntrada;
 	archivoEntrada.open(entrada);
 
-	cargar(archivoEntrada, lu);
+	cargar(archivoEntrada);
 	generarSistema();
 
 	archivoEntrada.close();
 }
 
-void AltoHorno::cargar(istream& entrada, bool lu){
+void AltoHorno::cargar(istream& entrada){
 	entrada >> this->radioInterior;
 	entrada >> this->radioExterior;
 	entrada >> this->cantParticiones;
@@ -31,7 +31,6 @@ void AltoHorno::cargar(istream& entrada, bool lu){
 		}
 		this->instancias[i] = pair<vector<double>, vector<double> >(tempInterior, tempExterior);
 	}
-	usaLU = lu;
 }
 
 void AltoHorno::guardar(ostream& salida, vector<double> &x){
@@ -104,13 +103,13 @@ vector<pair<vector<double>, vector<double> > > AltoHorno::darInstancias(){
 	return this->instancias;
 }
 
-void AltoHorno::generarSoluciones(const char* salida){
+void AltoHorno::generarSoluciones(const char* salida, TipoResolucion tipo){
 	ofstream archivoSalida;
 	archivoSalida.open(salida);
 
 	vector<double> x;
 	for(int i = 0; i < this->cantInstancias; i++){
-		x = sistemaTemperaturas.resolverSistema(i, usaLU);
+		x = sistemaTemperaturas.resolverSistema(i, tipo);
 		guardar(archivoSalida, x);
 	}
 

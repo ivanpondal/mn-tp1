@@ -13,16 +13,15 @@ SistemaEcuaciones::SistemaEcuaciones(vector<vector<double> > A, vector<vector<do
 	this->cantAngulos = cantAngulos;
 }
 
-vector<double> SistemaEcuaciones::resolverSistema(int instancia, bool lu){
+vector<double> SistemaEcuaciones::resolverSistema(int instancia, TipoResolucion tipo){
 	// copio por si luego quisiera usar otro método
 	vector<vector<double> > mA = this->A;
 	vector<double> b = this->instB[instancia];
 
-	if(lu){
+	if (tipo == LU) {
 		// resolver utilizando factorización lu
 		return vector<double>(this->dimMatriz, 0);
-	}
-	else{
+	} else {
 		if (BANDA) {
 			eliminacionGaussianaBanda(mA, b, this->dimMatriz, this->cantAngulos);
 			return resolverTriangular(mA, b, this->dimMatriz);	
@@ -31,6 +30,17 @@ vector<double> SistemaEcuaciones::resolverSistema(int instancia, bool lu){
 			return resolverTriangular(mA, b, this->dimMatriz);	
 		}
 	}
+}
+
+vector<double> SistemaEcuaciones::resolverTriangular(vector<vector<double> > &U, vector<double> &b, int n){
+	vector<double> x(n, 0);
+	for(int i = n-1; i >= 0; --i) {
+		for(int j = i+1; j < n; j++) {
+			b[i] -= U[i][j] * x[j];
+		}
+		x[i] = b[i] / U[i][i];
+	}
+	return x;
 }
 
 void SistemaEcuaciones::eliminacionGaussiana(vector<vector<double> > &A, vector<double> &b, int n){
@@ -76,18 +86,7 @@ void SistemaEcuaciones::eliminacionGaussianaBanda(vector<vector<double> > &A, ve
 	}
 }
 
-vector<double> SistemaEcuaciones::resolverTriangular(vector<vector<double> > &U, vector<double> &b, int n){
-	vector<double> x(n, 0);
-	for(int i = n-1; i >= 0; --i) {
-		for(int j = i+1; j < n; j++) {
-			b[i] -= U[i][j] * x[j];
-		}
-		x[i] = b[i] / U[i][i];
-	}
-	return x;
-}
-
-void SistemaEcuaciones::factorizacionLU(vector<vector<double> > &A, vector<double> &b, int n){
+void SistemaEcuaciones::factorizarLU(vector<vector<double> > &A, vector<double> &b, int n){
 	//obtener L y U, va a ser lo que quede en A
 	for (int i = 0; i < dimMatriz-1; ++i) {//fila
 		for (int j = i+1; j < dimMatriz; ++j) {//fila

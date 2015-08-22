@@ -15,13 +15,13 @@ using namespace std;
 
 class AltoHorno{
 	public:
-		AltoHorno(const char* entrada, bool lu);
+		AltoHorno(const char* entrada);
 		double darIsoterma();
 		vector<pair<vector<double>, vector<double> > > darInstancias();
-		void generarSoluciones(const char* salida);
+		void generarSoluciones(const char* salida, TipoResolucion tipo);
 
 	private:
-		void cargar(istream& entrada, bool lu);
+		void cargar(istream& entrada);
 		void guardar(ostream& salida, vector<double> &x);
 		void generarSistema();
 		double jesimoRadio(int j);
@@ -32,7 +32,6 @@ class AltoHorno{
 		int cantAngulos;
 		double isoterma;
 		int cantInstancias;
-		bool usaLU;
 		vector<pair<vector<double>, vector<double> > > instancias;
 		SistemaEcuaciones sistemaTemperaturas;
 };

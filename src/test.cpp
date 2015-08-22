@@ -17,7 +17,7 @@ void check_carga_alto_horno_instancias_una(){
 
 	// cargamos el horno
 	string entrada = "tests/test_carga_1.inn";
-	AltoHorno altoHorno(entrada.c_str(), false);
+	AltoHorno altoHorno(entrada.c_str());
 
 	ASSERT(altoHorno.darInstancias()[0] == temperaturas);
 }
@@ -39,12 +39,15 @@ void check_carga_alto_horno_instancias_dos(){
 
 	// cargamos el horno
 	string entrada = "tests/test_carga_2.inn";
-	AltoHorno altoHorno(entrada.c_str(), false);
+	AltoHorno altoHorno(entrada.c_str());
 
 	ASSERT(altoHorno.darInstancias()[0] == temperaturasUno);
 	ASSERT(altoHorno.darInstancias()[1] == temperaturasDos);
 }
 
+void check_sistema_ecuaciones_LU(){
+
+}
 
 // para correr un test: ./test test.in test.expected {0: EG, 1: LU}
 int main(int argc, char *argv[])
@@ -53,13 +56,14 @@ int main(int argc, char *argv[])
 	if(argc == 4){
 		char* entrada = argv[1];
 		char* salida = argv[2];
-		bool usaLu = argv[3][0] == '1';
-		AltoHorno altoHorno(entrada, usaLu);
-		altoHorno.generarSoluciones(salida);
+		TipoResolucion tipo = argv[3][0] == '0' ? GAUSS : LU; // enum definido en sistema_ecuaciones.h
+		AltoHorno altoHorno(entrada);
+		altoHorno.generarSoluciones(salida, tipo);
 	}
 	else{
 		RUN_TEST(check_carga_alto_horno_instancias_una);
 		RUN_TEST(check_carga_alto_horno_instancias_dos);
+		RUN_TEST(check_sistema_ecuaciones_LU);
 	}
 	return 0;
 }
