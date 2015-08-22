@@ -17,6 +17,7 @@ void AltoHorno::cargar(istream& entrada, bool lu){
 	entrada >> this->cantAngulos;
 	entrada >> this->isoterma;
 	entrada >> this->cantInstancias;
+	this->instancias = vector<pair<vector<double>, vector<double> > >(cantInstancias);
 	for(int i = 0; i < this->cantInstancias; i++){
 		double tmp;
 		vector<double> tempInterior(this->cantAngulos), tempExterior(this->cantAngulos);
@@ -72,7 +73,7 @@ void AltoHorno::generarSistema(){
 		gamma = 1/(difR*rj);
 		alpha = 1/(difA*difA*rj*rj);
 
-		A[f][f] = gamma - 2*beta + 2*alpha;
+		A[f][f] = gamma - 2*beta - 2*alpha;
 		A[f][f - n] = beta - gamma;
 		A[f][f + n] = beta;
 		A[f][f + (((k - 1) == -1) ? n-1 : -1)] = alpha;
