@@ -19,11 +19,14 @@ class SistemaEcuaciones{
 		vector<vector<double> > factorizacionLU;
 		int dimMatriz;
 		int cantAngulos;
-		vector<double> resolverTriangular(vector<vector<double> > &U, vector<double> &b, int n);
+		vector<double> resolverTriangularSuperior(const vector<vector<double> > &U, const vector<double> &b, int n);
+		vector<double> resolverTriangularInferior(const vector<vector<double> > &U, const vector<double> &b, int n);
+		vector<double> resolverTriangularInferiorLU(const vector<vector<double> > &U, const vector<double> &b, int n);
 		void eliminacionGaussiana(vector<vector<double> > &A, vector<double> &b, int n);
 		void eliminacionGaussianaBanda(vector<vector<double> > &A, vector<double> &b, int n, int cantAngulos);
-		void factorizarLU(vector<vector<double> > &A, vector<double> &b, int n);
+		void factorizarLU(const vector<vector<double> > &A);
 		void imprimirSistema(vector<vector<double> > &mA, vector<double> &b );
+		void imprimirLU();
 };
 
 #endif // SISTEMA_ECUACIONES_H_INCLUDED

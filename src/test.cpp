@@ -46,7 +46,11 @@ void check_carga_alto_horno_instancias_dos(){
 }
 
 void check_sistema_ecuaciones_LU(){
-
+	//veamos que no tenga ninguna excepcion rara
+	vector<vector<double> > A {{4, 2, 1},{20, 7, 12},{8, 13, 17}};
+	vector<vector<double> > b {{1, 2, 3}};
+	SistemaEcuaciones solver = SistemaEcuaciones(A, b, 3, 0);
+	solver.resolverSistema(0, LU);
 }
 
 // para correr un test: ./test test.in test.expected {0: EG, 1: LU}
@@ -57,6 +61,7 @@ int main(int argc, char *argv[])
 		char* entrada = argv[1];
 		char* salida = argv[2];
 		TipoResolucion tipo = argv[3][0] == '0' ? GAUSS : LU; // enum definido en sistema_ecuaciones.h
+		tipo = LU;
 		AltoHorno altoHorno(entrada);
 		altoHorno.generarSoluciones(salida, tipo);
 	}

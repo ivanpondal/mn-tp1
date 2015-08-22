@@ -19,26 +19,60 @@ vector<double> SistemaEcuaciones::resolverSistema(int instancia, TipoResolucion 
 	vector<double> b = this->instB[instancia];
 
 	if (tipo == LU) {
-		// resolver utilizando factorización lu
-		return vector<double>(this->dimMatriz, 0);
+		//calculo la factorizacion LU de A y la guardo en this->factorizacionLU (si no la habia calculado previamente)
+		if (factorizacionLU.size()==0){
+			factorizarLU(this->A);
+		}
+		//ahora como L*U*x = A*x = b, sea U*x = y => L*y = b
+		vector<double> y = resolverTriangularInferiorLU(this->factorizacionLU, b, this->dimMatriz);
+		for (int i = 0; i<y.size(); ++i) cout <<y[i]<<endl;
+		//ya obtuve 'y', ahora hallo 'x' resolviendo U*x = y
+		vector<double> x = resolverTriangularSuperior(this->factorizacionLU, y, this->dimMatriz);
+		for (int i = 0; i<x.size(); ++i) cout <<x[i]<<endl;
+		return x;
 	} else {
 		if (BANDA) {
 			eliminacionGaussianaBanda(mA, b, this->dimMatriz, this->cantAngulos);
-			return resolverTriangular(mA, b, this->dimMatriz);	
+			return resolverTriangularSuperior(mA, b, this->dimMatriz);	
 		} else {
 			eliminacionGaussiana(mA, b, this->dimMatriz);
-			return resolverTriangular(mA, b, this->dimMatriz);	
+			return resolverTriangularSuperior(mA, b, this->dimMatriz);	
 		}
 	}
 }
 
-vector<double> SistemaEcuaciones::resolverTriangular(vector<vector<double> > &U, vector<double> &b, int n){
+vector<double> SistemaEcuaciones::resolverTriangularSuperior(const vector<vector<double> > &U, const vector<double> &b, int n){
 	vector<double> x(n, 0);
 	for(int i = n-1; i >= 0; --i) {
+		x[i] = b[i];
 		for(int j = i+1; j < n; j++) {
-			b[i] -= U[i][j] * x[j];
+			x[i] -= U[i][j] * x[j];
 		}
-		x[i] = b[i] / U[i][i];
+		x[i] /= U[i][i];
+	}
+	return x;
+}
+
+vector<double> SistemaEcuaciones::resolverTriangularInferior(const vector<vector<double> > &U, const vector<double> &b, int n){
+	vector<double> x(n, 0);
+	for(int i = 0; i < n; ++i) {
+		x[i] = b[i];
+		for (int j = 0; j < i; ++j) {
+			x[i] -= x[i] * U[i][j];
+		}
+		x[i] /= U[i][i];
+	}
+	return x;
+}
+
+vector<double> SistemaEcuaciones::resolverTriangularInferiorLU(const vector<vector<double> > &U, const vector<double> &b, int n){
+	vector<double> x(n, 0);
+	for(int i = 0; i < n; ++i) {
+		x[i] = b[i];
+		for (int j = 0; j < i; ++j) {
+			x[i] -= x[i] * U[i][j];
+		}
+		// la diagonal es 1, asi que no hay que dividir por nada
 	}
 	return x;
 }
@@ -86,24 +120,17 @@ void SistemaEcuaciones::eliminacionGaussianaBanda(vector<vector<double> > &A, ve
 	}
 }
 
-void SistemaEcuaciones::factorizarLU(vector<vector<double> > &A, vector<double> &b, int n){
+void SistemaEcuaciones::factorizarLU(const vector<vector<double> > &A){
 	//obtener L y U, va a ser lo que quede en A
+	this->factorizacionLU = A;
 	for (int i = 0; i < dimMatriz-1; ++i) {//fila
 		for (int j = i+1; j < dimMatriz; ++j) {//fila
-			if (A[j][i] != 0) {
-				double c = A[j][i]/A[i][i];
-				A[j][i] = c;
-				for (int k = i+1; k < n; ++k) {//columnas
-					A[j][k] -= c*A[i][k];
-				}
+			double c = factorizacionLU[j][i]/factorizacionLU[i][i];
+			factorizacionLU[j][i] = c;
+			for (int k = i+1; k < dimMatriz; ++k) {//columnas
+				factorizacionLU[j][k]-= c*factorizacionLU[i][k];
 			}
 		}
-	}
-	for (int i = 0; i < dimMatriz; ++i){
-		for (int j = 0; j < dimMatriz; ++j){
-			cout << A[i][j] << " ";
-		}
-		cout << endl;
 	}
 }
 
@@ -114,5 +141,25 @@ void SistemaEcuaciones::imprimirSistema(vector<vector<double> > &mA, vector<doub
 			cout<<" "<<mA[j][k];
 		}
 		cout<<" | "<<b[j]<<" ]"<<endl;
+	}
+}
+
+void SistemaEcuaciones::imprimirLU(){
+	cout << endl;
+	for (int i = 0; i < dimMatriz; ++i){
+		for (int j = 0; j < dimMatriz; ++j){
+			if (i==j) cout << "1 ";
+			if (j<i) cout << this->factorizacionLU[i][j] << " ";
+			if (j>i) cout << "0 ";
+		}
+		cout << endl;
+	}
+	cout << endl;
+	for (int i = 0; i < dimMatriz; ++i){
+		for (int j = 0; j < dimMatriz; ++j){
+			if (j>=i) cout << this->factorizacionLU[i][j] << " ";
+			if (j<i) cout << "0 ";
+		}
+		cout << endl;
 	}
 }
