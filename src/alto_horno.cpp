@@ -35,7 +35,7 @@ void AltoHorno::cargar(istream& entrada){
 	}
 }
 
-void AltoHorno::guardar(ostream& salida, vector<double> &x){
+void AltoHorno::guardar(ostream& salida, vector<double> x){
 	int dimMatriz = this->cantParticiones*this->cantAngulos;
 	for(int i = 0; i < dimMatriz; i++){
 		salida << setprecision(25) << x[i] << endl;
@@ -115,6 +115,13 @@ void AltoHorno::generarSoluciones(const char* salida, TipoResolucion tipo){
 		guardar(archivoSalida, soluciones[i]);
 	}
 
+	archivoSalida.close();
+}
+
+void AltoHorno::escribirIsoterma(const char* salida, TipoIsoterma tipo) {
+	ofstream archivoSalida;
+	archivoSalida.open(salida);
+	guardar(archivoSalida, calcularIsoterma(tipo));
 	archivoSalida.close();
 }
 
@@ -205,6 +212,7 @@ vector<double> AltoHorno::calcularIsotermaAVG(int instancia) {
 			lower_bound_iso = soluciones[instancia][radio*cantParticiones+angulo];
 			upper_bound_iso = soluciones[instancia][(radio+1)*cantParticiones+angulo];
 			if (lower_bound_iso <= isoterma && upper_bound_iso >= isoterma) {
+				//cout << "angulo: " << angulo << " -> entre: " << jesimoRadio(radio) << "-" << jesimoRadio(radio+1) << endl;
 				solucion[angulo] = (jesimoRadio(radio) + jesimoRadio(radio+1))/2.0;
 			}
 		}

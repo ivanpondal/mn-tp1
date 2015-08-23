@@ -55,18 +55,20 @@ void check_sistema_ecuaciones_LU(){
 
 void check_isoterma_binaria(){
 	string entrada = "tests/test_isoterma.inn";
-	string salida = "tests/test_isoterma_binaria.out";
+	string salida_sistema = "tests/test_isoterma.out";
+	string salida_isoterma = "tests/test_isoterma_binaria.out";
 	AltoHorno altoHorno(entrada.c_str());
-	altoHorno.generarSoluciones(salida.c_str(), GAUSS);
-	altoHorno.calcularIsoterma(BINARIA);
+	altoHorno.generarSoluciones(salida_sistema.c_str(), GAUSS);
+	altoHorno.escribirIsoterma(salida_isoterma.c_str(), BINARIA);
 }
 
 void check_isoterma_avg(){
 	string entrada = "tests/test_isoterma.inn";
-	string salida = "tests/test_isoterma_avg.out";
+	string salida_sistema = "tests/test_isoterma.out";
+	string salida_isoterma = "tests/test_isoterma_avg.out";
 	AltoHorno altoHorno(entrada.c_str());
-	altoHorno.generarSoluciones(salida.c_str(), GAUSS);
-	altoHorno.calcularIsoterma(AVG);
+	altoHorno.generarSoluciones(salida_sistema.c_str(), GAUSS);
+	altoHorno.escribirIsoterma(salida_isoterma.c_str(), AVG);
 }
 
 // para correr un test: ./test test.in test.expected {0: EG, 1: LU}
