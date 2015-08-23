@@ -53,12 +53,20 @@ void check_sistema_ecuaciones_LU(){
 	solver.resolverSistema(0, LU);
 }
 
-void check_isoterma(){
+void check_isoterma_binaria(){
 	string entrada = "tests/test_isoterma.inn";
-	string salida = "tests/test_isoterma.out";
+	string salida = "tests/test_isoterma_binaria.out";
 	AltoHorno altoHorno(entrada.c_str());
 	altoHorno.generarSoluciones(salida.c_str(), GAUSS);
 	altoHorno.calcularIsoterma(BINARIA);
+}
+
+void check_isoterma_avg(){
+	string entrada = "tests/test_isoterma.inn";
+	string salida = "tests/test_isoterma_avg.out";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida.c_str(), GAUSS);
+	altoHorno.calcularIsoterma(AVG);
 }
 
 // para correr un test: ./test test.in test.expected {0: EG, 1: LU}
@@ -76,7 +84,8 @@ int main(int argc, char *argv[])
 		RUN_TEST(check_carga_alto_horno_instancias_una);
 		RUN_TEST(check_carga_alto_horno_instancias_dos);
 		RUN_TEST(check_sistema_ecuaciones_LU);
-		RUN_TEST(check_isoterma);
+		RUN_TEST(check_isoterma_binaria);
+		RUN_TEST(check_isoterma_avg);
 	}
 	return 0;
 }

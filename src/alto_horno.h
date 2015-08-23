@@ -11,7 +11,7 @@
 
 #include <sistema_ecuaciones.h>
 
-enum TipoIsoterma : int {BINARIA = 0};
+enum TipoIsoterma : int {BINARIA = 0, AVG = 1, POL_FIT = 2};
 
 using namespace std;
 
@@ -29,6 +29,7 @@ class AltoHorno{
 		void generarSistema();
 		double jesimoRadio(int j);
 		double kesimoAngulo(int k);
+		vector<double> calcularIsotermaAVG(int instancia);
 		vector<double> calcularIsotermaBinaria(int instancia);
 		double radioInterior;
 		double radioExterior;

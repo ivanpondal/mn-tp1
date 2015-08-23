@@ -119,7 +119,15 @@ void AltoHorno::generarSoluciones(const char* salida, TipoResolucion tipo){
 }
 
 vector<double> AltoHorno::calcularIsoterma(TipoIsoterma tipo) {
-	return calcularIsotermaBinaria(0);
+	if (tipo == AVG) {
+		return calcularIsotermaAVG(0);
+	} else if (tipo == BINARIA){
+		return calcularIsotermaBinaria(0);
+	} else if (tipo == POL_FIT){
+		return calcularIsotermaBinaria(0);
+	} else {
+		return vector<double>();
+	}
 }
 
 vector<double> AltoHorno::calcularIsotermaBinaria(int instancia){
@@ -183,6 +191,22 @@ vector<double> AltoHorno::calcularIsotermaBinaria(int instancia){
 			// cout << endl;
 			solucion[angulo] = (radioActual+radioSiguiente)/2.0;
 			// cout << solucion[angulo] << endl;
+		}
+	}
+	return solucion;
+}
+
+vector<double> AltoHorno::calcularIsotermaAVG(int instancia) {
+	vector<double> solucion = vector<double>(cantAngulos);
+	for(int angulo = 0; angulo < cantAngulos; ++angulo) {
+		double lower_bound_iso = 0;
+		double upper_bound_iso = 0;
+		for(int radio = 0; radio < cantParticiones-1; ++radio) {
+			lower_bound_iso = soluciones[instancia][radio*cantParticiones+angulo];
+			upper_bound_iso = soluciones[instancia][(radio+1)*cantParticiones+angulo];
+			if (lower_bound_iso <= isoterma && upper_bound_iso >= isoterma) {
+				solucion[angulo] = (jesimoRadio(radio) + jesimoRadio(radio+1))/2.0;
+			}
 		}
 	}
 	return solucion;
