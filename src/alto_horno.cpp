@@ -1,5 +1,4 @@
 #include "alto_horno.h"
-#include <math.h>
 
 AltoHorno::AltoHorno(const char* entrada){
 	ifstream archivoEntrada;
@@ -129,8 +128,8 @@ vector<double> AltoHorno::calcularIsoterma(TipoIsoterma tipo) {
 		return calcularIsotermaAVG(0);
 	} else if (tipo == BINARIA){
 		return calcularIsotermaBinaria(0);
-	} else if (tipo == POL_FIT){
-		return calcularIsotermaBinaria(0);
+	} else if (tipo == LINEAR_FIT){
+		return calcularIsotermaLinearFit(0);
 	} else {
 		return vector<double>();
 	}
@@ -216,6 +215,44 @@ vector<double> AltoHorno::calcularIsotermaAVG(int instancia) {
 				solucion[angulo] = (jesimoRadio(radio) + jesimoRadio(radio+1))/2.0;
 			}
 		}
+	}
+	return solucion;
+}
+
+vector<double> AltoHorno::calcularIsotermaLinearFit(int instancia) {
+	vector<double> solucion = vector<double>(cantAngulos);
+	for(int angulo = 0; angulo < cantAngulos; ++angulo) {
+		// calcular linear fit
+		double avgX = 0;
+		double avgY = 0;
+		for(int radio = 0; radio < cantParticiones; ++radio) {
+			avgX += jesimoRadio(radio);
+			avgY += soluciones[instancia][radio*cantParticiones+angulo];
+		}
+		avgX /= cantParticiones;
+		avgY /= cantParticiones;
+
+		double slope_numerator = 0.0;
+		double slope_denominator = 0.0;
+
+		for(int radio = 0; radio < cantParticiones; ++radio){
+			double x = jesimoRadio(radio);
+			double y = soluciones[instancia][radio*cantParticiones+angulo];
+			slope_numerator += (x - avgX) * (y - avgY);
+			slope_denominator += (x - avgX) * (x - avgX);
+		}
+
+		if(slope_denominator == 0){
+			// cout << "slope_denominator is zero" << endl;
+			slope_denominator = 1;
+		}
+
+		double slope = slope_numerator / slope_denominator;
+		double intercept = (avgY - slope * avgX) / cantParticiones;
+		// cout << "slope: " << slope << endl;
+		// cout << "intercept: " << intercept << endl;
+
+		solucion[angulo] = fabs((isoterma - intercept) / slope);
 	}
 	return solucion;
 }

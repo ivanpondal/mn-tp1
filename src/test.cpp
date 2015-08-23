@@ -71,6 +71,15 @@ void check_isoterma_avg(){
 	altoHorno.escribirIsoterma(salida_isoterma.c_str(), AVG);
 }
 
+void check_isoterma_linear_fit(){
+	string entrada = "tests/test_isoterma.inn";
+	string salida_sistema = "tests/test_isoterma.out";
+	string salida_isoterma = "tests/test_isoterma_linear_fit.out";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), GAUSS);
+	altoHorno.escribirIsoterma(salida_isoterma.c_str(), LINEAR_FIT);
+}
+
 // para correr un test: ./test test.in test.expected {0: EG, 1: LU}
 int main(int argc, char *argv[])
 {
@@ -88,6 +97,7 @@ int main(int argc, char *argv[])
 		RUN_TEST(check_sistema_ecuaciones_LU);
 		RUN_TEST(check_isoterma_binaria);
 		RUN_TEST(check_isoterma_avg);
+		RUN_TEST(check_isoterma_linear_fit);
 	}
 	return 0;
 }

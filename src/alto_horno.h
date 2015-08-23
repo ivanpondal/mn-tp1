@@ -8,10 +8,11 @@
 #include <utility>
 #include <vector>
 #include <iomanip>
+#include <math.h>
 
 #include <sistema_ecuaciones.h>
 
-enum TipoIsoterma : int {BINARIA = 0, AVG = 1, POL_FIT = 2};
+enum TipoIsoterma : int {BINARIA = 0, AVG = 1, LINEAR_FIT = 2};
 
 using namespace std;
 
@@ -32,6 +33,7 @@ class AltoHorno{
 		double kesimoAngulo(int k);
 		vector<double> calcularIsotermaAVG(int instancia);
 		vector<double> calcularIsotermaBinaria(int instancia);
+		vector<double> calcularIsotermaLinearFit(int instancia);
 		double radioInterior;
 		double radioExterior;
 		int cantParticiones;
