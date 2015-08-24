@@ -13,8 +13,9 @@
 \usepackage{makeidx}
 \usepackage{float}
 \usepackage{amsmath, amsthm, amssymb}
-\newtheorem{theorem}{Teorema}[section]
+\newtheorem{theorem}{Teorema}
 \newtheorem{corollary}{Corolario}[theorem]
+\newtheorem{proposition}[theorem]{Proposición}
 \newtheorem{lemma}[theorem]{Lema}
 \usepackage{amsfonts}
 \usepackage{sectsty}
@@ -57,6 +58,7 @@
 \usepackage{etoolbox}
 %\newcommand{\noindex}{\hspace*{-0.8em}}%
 \lstset{breaklines=true}
+\newcommand{\subscript}[2]{$#1 _ #2$}
 % *********************** %
 
 % ******************************************************** %

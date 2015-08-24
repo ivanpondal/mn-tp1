@@ -1,7 +1,94 @@
-\begin{lemma}
-    Sea $A \in \mathbb{R}^{n \times n}$ la matriz obtenida para el sistema definido por las ecuaciones del Modelo. Demostrar que es posible aplicar Eliminación Gaussiana sin pivoteo.
-\end{lemma}
+\begin{proposition}
+    Sea $A \in \mathbb{R}^{n \times n}$ la matriz obtenida para el sistema definido por las ecuaciones del Modelo, en donde $u$ y $v$ corresponden a la cantidad de radios y angulos, tal que $n = uv$. Demostrar que es posible aplicar Eliminación Gaussiana sin pivoteo.
+\end{proposition}
 \begin{proof}[Demostración]
+  Para poder demostrar la proposición, utilizamos los siguientes lemas (que luego seran demostrados):
 
-   Sugerencia: Notar que la matriz es diagonal dominante (no estrictamente) y analizar qué sucede al aplicar un paso de Eliminación Gaussiana con los elementos de una fila.
+  \begin{enumerate}[label=(\subscript{L}{\arabic*})]
+    \item $A$ es una matriz banda.
+    \item $A$ es diagonal dominante (no estricta).
+    \item En cada paso $k$, con $0 \leq k \leq n-1$, de la Eliminación Gaussiana, para cada fila $i$ de $A^{(k)}$, existe, al menos, un $a_{i,j}$ $\neq$ 0, con $j = 0,..., n-1$
+  \end{enumerate}
+
+Por $L_{2}$ sabemos que $A$ es diagonal dominante (no estricta) y por definicion del Modelo sabemos que $a_{0,0} = 1$. Sea $A^{(1)}$ la matriz resultante luego de aplicar un paso de la Eliminación Gaussiana. Para toda fila $i = 1,...,n-1$ se cumple que:
+
+\begin{equation*}
+    \begin{aligned}
+      a^{(1)}_{i,j} &= a^{(0)}_{i,j} - \frac{a^{(0)}_{0,j}a^{(0)}_{i,j}}{a^{(0)}_{0,0}}, para 1 \leq j \leq n-1
+    \end{aligned}
+\end{equation*}
+
+Sabemos que $a^{(1)}_{i,0} = 0$. Luego:
+
+\begin{equation*}
+    \begin{aligned}
+      \sum\limits_{\substack{j=1  \\ j \neq i}}^{n-1} |a^{1}_{i,j}| &= \sum\limits_{\substack{j=1  \\ j \neq i}}^{n-1} |a^{(0)}_{i,j} - \frac{a^{(0)}_{0,j}a^{(0)}_{i,0}}{a^{(0)}_{0,0}}| \\
+      &\leq \sum\limits_{\substack{j=1  \\ j \neq i}}^{n-1} |a^{(0)}_{i,j}| + \sum\limits_{\substack{j=1  \\ j \neq i}}^{n-1} |\frac{a^{(0)}_{0,j}a^{(0)}_{i,0}}{a^{(0)}_{0,0}}| \\
+      &\leq |a^{(0)}_{i,i}| - |a^{(0)}_{i,0}| +  \frac{|a^{(0)}_{i,0}|}{|a^{(0)}_{0,0}|} \sum\limits_{\substack{j=1  \\ j \neq i}}^{n-1} |a^{(0)}_{0,j}| \\
+      &\leq |a^{(0)}_{i,i}| - |a^{(0)}_{i,0}| +  \frac{|a^{(0)}_{i,0}|}{|a^{(0)}_{0,0}|} (|a^{(0)}_{0,0}| - |a^{(0)}_{0,i}|) \\
+      &= |a^{(0)}_{i,i}| - \frac{|a^{(0)}_{i,0}||a^{(0)}_{0,i}|}{|a^{(0)}_{0,0}|} \\
+      &\leq |a^{(0)}_{i,i} - \frac{a^{(0)}_{i,0}a^{(0)}_{0,i}}{a^{(0)}_{0,0}}| = |a^{(1)}_{i,i}|
+    \end{aligned}
+\end{equation*}
+
+Por lo tanto, el dominio diagonal no estricto se establece en los renglones $1,..,n-1$, y como el primer renglon de $A^{(1)}$ y de $A$ son iguales, $A^{(1)}$ sera diagonal dominante no estricto.
+\newline
+Este proceso lo podemos repetir hasta obtener $A^{(n-1)}$ que sera diagonal dominante no estricto. Por $L_{3}$ podemos afimar que todos los elementos de la diagonal son no cero, por lo tanto es posible aplicar Eliminación Gaussiana sin pivoteo.
 \end{proof}
+  \begin{lemma}
+    $A$ es una matriz banda
+  \end{lemma}
+
+  \begin{proof}
+    COMPLETAR
+  \end{proof}
+
+  \begin{lemma}
+    $A$ es diagonal dominante (no estricta).
+  \end{lemma}
+
+  \begin{proof}
+    Por definición, una matriz es diagonal dominante (no estricamente) cuando se cumple que, $\forall i = 0,1,...,n-1$:
+    \begin{equation*}
+        \begin{aligned}
+          |a_{i,i}| &\geq \sum\limits_{\substack{j=0  \\ j \neq i}}^{n-1} |a_{i,j}| \\
+        \end{aligned}
+    \end{equation*}
+    Esta desigualdad es evidente para las primeras  y ultimas $u$ filas, ya que el unico valor distinto de 0 se encuentra en la diagonal.
+    Falta ver el caso para el resto de $A$. Tenemos que probar que para fila, se cumple:
+    \begin{equation*}
+        \begin{aligned}
+          |-2\alpha-2\beta+\gamma| \geq |\beta - \gamma| + |\alpha| + |\alpha| + |\beta|
+        \end{aligned}
+    \end{equation*}
+    Por definicion sabemos que $|\alpha| = \alpha$ y $|\beta| = \beta$
+    \newline
+    COMPLETAR
+  \end{proof}
+
+  \begin{lemma}
+    En cada paso $k$, con $0 \leq k \leq n-1$, de la Eliminación Gaussiana, para cada fila $i$ de $A^{(k)}$, existe, al menos, un $a_{i,j}$ $\neq$ 0, con $j = 0,..., n-1$
+  \end{lemma}
+
+  \begin{proof}
+
+    Lo probamos por Induccion en la cantidad $k$ de pasos de la Eliminación Gaussiana, utilizando $L_{1}$.
+    \newline
+    Caso base: $A^{(0)} = A$
+    \begin{enumerate}
+      \item Para las primeras y ultimas $u$ filas, el elemento de la diagonal es 1.
+      \item Para el resto de las filas, basta ver que algun valor es distinto de 0. Por definicion sabemos que $\beta \neq 0$
+    \end{enumerate}
+    Paso Inductivo: Queremos ver que en el paso $k$ de la Eliminación Gaussiana, para cada fila $i$ de $A^{(k)}$, existe, al menos, un $a_{i,j}$ $\neq$ 0, con $j = 0,..., n-1$
+    \newline
+    Sabemos, por definición del procedimiento de Eliminación Gaussiana, que las filas $i = 0,..,k$ de $A^{(k)}$ son iguales a las de $A^{(k-1)}$, por lo tanto, por Hipotesis Inductiva,
+    existe, al menos, un $a_{i,j}$ $\neq$ 0, con $j = 0,..., n-1$.
+    \newline
+    Queda por ver que sucede con las filas $i = k+1,..n-1$ de $A^{(k)}$. Tenemos dos casos:
+    \begin{enumerate}
+      \item Filas que tienen un valor ($\beta$) como extremo derecho de la banda
+      \item Filas que no tienen valores en los extremos de las bandas (las filas correspondientes a las $u$ primeras y ultimas de $A$)
+    \end{enumerate}
+    COMPLETAR (POSIBLE PROBLEMA)
+
+  \end{proof}
