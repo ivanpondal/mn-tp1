@@ -31,14 +31,14 @@
 %   \colorbox{litegrey}{\TheSbox}
 % }
 
-\newenvironment{codesnippet}{\VerbatimEnvironment%
+\newenvironment{codesnippet}{%
   \noindent
   %      {\columnwidth-\leftmargin-\rightmargin-2\fboxsep-2\fboxrule-4pt}
   \begin{Sbox}
   \begin{minipage}{\linewidth}
-  \begin{Verbatim}
-}{%
-  \end{Verbatim}
+  \begin{lstlisting}
+}{
+  \end{lstlisting}
   \end{minipage}
   \end{Sbox}%
   \colorbox{litegrey}{\TheSbox}

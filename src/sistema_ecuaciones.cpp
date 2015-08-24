@@ -77,17 +77,17 @@ vector<double> SistemaEcuaciones::resolverTriangularInferiorLU(const vector<vect
 
 void SistemaEcuaciones::eliminacionGaussiana(vector<vector<double> > &A, vector<double> &b, int n){
 	// encuentro matriz triangular inferior:
-	for(int i = 0; i < n; i++){
-		double pivote = A[i][i];
-		for(int j = i+1; j < n; j++){
+	for(int j = 0; j < n; j++){
+		double pivote = A[j][j];
+		for(int i = j+1; i < n; i++){
 			// sabemos de antemano que el pivote no es cero.
-			double coef = A[j][i] / pivote;
-			// modifico la fila j usando la fila i
-			A[j][i] = 0;
-			for(int k = i+1; k < n; k++){
-				A[j][k] -= coef * A[i][k];
+			double coef = A[i][j] / pivote;
+			// modifico la fila i usando la fila j
+			A[i][j] = 0;
+			for(int k = j+1; k < n; k++){
+				A[i][k] -= coef * A[j][k];
 			}
-			b[j] -= coef * b[i];
+			b[i] -= coef * b[j];
 		}
 	}
 }
@@ -97,22 +97,22 @@ void SistemaEcuaciones::eliminacionGaussianaBanda(vector<vector<double> > &A, ve
 
 	// sabemos  que las ecuaciones de los puntos t(0,0) a t(0,n-1) y t(m,0) a t(m,n-1) ya tienen ceros en toda la fila (excepto en la diagonal, que es uno)
 	// empezamos a laburar en las ecuaciones t(1,0), y terminamos en la ecuacion t(m-1, n-1)
-	for(int i = 0; i < n; i++){
-		double pivote = A[i][i];
+	for(int j = 0; j < n; j++){
+		double pivote = A[j][j];
 		
-		int inicioBanda = max(i+1,cantAngulos);
+		int inicioBanda = max(j+1,cantAngulos);
 		int finBanda = min(n,inicioBanda + cantAngulos);
 
-		for(int j = inicioBanda; j < finBanda; j++){
-			if (A[j][i] != 0) {
-				// modifico la fila j usando la fila i
-				double coef = A[j][i] / pivote;
+		for(int i = inicioBanda; i < finBanda; i++){
+			if (A[i][j] != 0) {
+				// modifico la fila i usando la fila j
+				double coef = A[i][j] / pivote;
 
-				A[j][i] = 0;
-				for(int k = i+1; k < n; k++){
-					A[j][k] -= coef * A[i][k];
+				A[i][j] = 0;
+				for(int k = j+1; k < n; k++){
+					A[i][k] -= coef * A[j][k];
 				}
-				b[j] -= coef * b[i];
+				b[i] -= coef * b[j];
 			}
 		}
 	}

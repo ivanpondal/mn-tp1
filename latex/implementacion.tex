@@ -2,6 +2,74 @@
 
 \subsubsection{Descripción del método}
 
+El método de Eliminación Gaussiana consiste en una serie de pasos que permiten resolver un sistema de ecuaciones lineales de, en principio, $n$ ecuaciones y $n$ variables.
+
+Sea A $\in \mathbb{R}^{n \times\ n}$ la matriz tal que el elemento en la fila $i$ y columna $j$ ($a_{i,j}$) representa el coeficiente de la variable $j$ en la ecuación $i$.
+Y sea b $\in \mathbb{R}^{n}$ el vector tal que el elemento en la fila $i$ ($b_{i}$) representa el termino independiente en la ecuación $i$.
+
+Podemos dividir el método en 2 partes centrales:
+\begin{enumerate}
+    \item Llevar la matriz A a una forma \textbf{Triangular Superior}, es decir, una matriz equivalente a A tal que tiene ceros debajo de los elementos de la diagonal. El siguiente pseudocódigo muestra como es el algoritmo para realizar esta tarea:
+
+\begin{lstlisting}
+Para j desde 0 hasta n-1 hacer:
+    Poner pivote = A[j][j]
+    Para i desde j+1 hasta n-1 hacer:
+        Poner coeficiente = A[i][j] / pivote
+        Poner A[i][j] = 0
+        Para k desde j+1 hasta n-1 hacer:
+            Poner A[i][k] = A[i][k] - coeficiente * A[j][k]
+        Fin para
+        b[i] = b[i] - coeficiente * b[j]
+    Fin para
+Fin para
+\end{lstlisting}
+
+		Notese que no validamos que la variable ``pivote'' sea distinta de cero. Esto es así ya que por la forma en la que se modeló el problema el pivote siempre es distinto de cero.
+
+    \item \textbf{Resolver el sistema equivalente} que obtuvimos en el paso anterior. Para esto, vamos a utilizar que la matriz es Triangular Superior. La idea es empezar despejando el valor de la $n$-ésima variable, luego usar este valor para despejar la $(n-1)$-ésima variable, y así sucesivamente hasta la primera variable. En pseudocódigo:
+
+\begin{lstlisting}
+Poner X = vector de n elementos
+Para i desde n-1 hasta 0 hacer:
+    Poner X[i] = b[i]
+    Para j desde i+1 hasta n-1 hacer:
+        Poner X[i] = X[i] - U[i][j] * X[j]
+    Fin para
+    Poner X[i] = X[i] / U[i][i]
+Fin para
+\end{lstlisting}
+
+		Donde $U$ es la matriz que calculamos en el paso 1.
+
+  \end{enumerate}
+  
+
+\subsubsection{Utilizando que la matriz es Banda}
+
+Si miramos la matriz con la cual representamos el modelo del problema, podemos ver que alrededor de los elementos de la diagonal hay una ``banda'' de tamaño $2n$.
+Es decir, si quisieramos poner elementos debajo del elemento $a_{i,i}$, nos bastaría con modificar las filas desde $i+1$ hasta $i+2n+1$, ya que $\forall\ a_{j,i},\ j> i+2n+1 \implies a_{j,i} = 0$.
+
+Usando esto podemos optimizar significativamente el primer paso de la Elminación Gaussiana, que consiste en hallar la matriz equivalente Triangular Superior. El pseudocódigo es el siguiente:
+
+\begin{lstlisting}
+Para j desde 0 hasta n-1 hacer:
+    Poner pivote = A[j][j]
+    Poner inicioBanda = max(i+1, n)
+    Poner finBanda = min(n, inicioBanda + n)
+    Para i desde inicioBanda hasta finBanda hacer:
+        Si A[i][j] != 0 hacer:
+            Poner coeficiente = A[i][j] / pivote
+            Poner A[i][j] = 0
+            Para k desde j+1 hasta n-1 hacer:
+                Poner A[i][k] = A[i][k] - coeficiente * A[j][k]
+            Fin para
+            b[i] = b[i] - coeficiente * b[j]
+        Fin si
+    Fin para
+Fin para
+\end{lstlisting}
+
 \subsection{Factorización LU}
 
 \subsubsection{Descripción del método}
