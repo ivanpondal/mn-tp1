@@ -76,9 +76,21 @@ Fin para
 
 \subsection{Determinación de la Isoterma}
 
-Dada la solucion del sistema de ecuaciones, proponer una forma de estimar en cada ángulo de la discretización la posición de la isoterma 500.
+Recordemos que nuestra discretización particiona una sección circular del Alto Horno de la siguiente forma:
+ \begin{itemize}
+ 	\item $0 = \theta_0 < \theta_1 < ... < \theta_n = 2\pi$ en $n$ \'angulos discretos, y
+ 	\item $r_i = r_0 < r_1 < ... < r_m = r_e$ en $m+1$ radios discretos
+ \end{itemize}
+
+Luego, para cada ángulo $j$ tenemos los puntos: $t_{i,j}$ con $0 \leq i \leq m$.
+
+Entonces, hallar la isoterma $C$ equivale a, para cada ángulo $j$, hallar el radio $r_C$ tal que $T(r_C, \theta_j) = C$.
 
 \subsubsection{Promedio simple}
+
+Este método consiste en, dado un ángulo $j$, buscar un punto $t_{i,j}$ tal que $t_{i,j} \leq C \leq t_{i+1,j}$.
+
+Una vez hallado este punto, tenemos que $r_C = \frac{r_i + r_{i+1}}{2}$.
 
 \subsubsection{Búsqueda binaria mediante sistemas de ecuaciones}
 
