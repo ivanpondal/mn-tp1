@@ -43,7 +43,7 @@ Fin para
 		Donde $U$ es la matriz que calculamos en el paso 1.
 
   \end{enumerate}
-  
+
 
 \subsubsection{Utilizando que la matriz es Banda}
 
@@ -88,7 +88,7 @@ Entonces, hallar la isoterma $C$ equivale a, para cada ángulo $j$, hallar el ra
 
 \subsubsection{Promedio simple}
 
-Este método consiste en, dado un ángulo $j$, buscar un punto $t_{i,j}$ tal que $t_{i,j} \leq C \leq t_{i+1,j}$.
+Este método consiste en, dado un ángulo $j$, buscar un punto $t_{i,j}$ en la solución del sistema tal que $t_{i,j} \leq C \leq t_{i+1,j}$.
 
 Una vez hallado este punto, tenemos que $r_C = \frac{r_i + r_{i+1}}{2}$.
 
@@ -96,6 +96,52 @@ Una vez hallado este punto, tenemos que $r_C = \frac{r_i + r_{i+1}}{2}$.
 
 \subsubsection{Regresión lineal (Linear fit)}
 
+Este método utiliza el algoritmo de regresión lineal para, dado un ángulo $j$, y usando todos los puntos $t_{i,j}$ con $0 \leq i \leq m$, hallar una función lineal que aproxime dichos puntos lo mejor posible.
+Como la función que estamos buscando es lineal, es de la forma: $y(x) = a + bx$, donde $b$ es el coeficiente principal, $a$ el termino independiente, $x$ es un radio sobre el ángulo $j$ e $y(x)$ es la temperatura para dicho radio.
+
+Luego, el algoritmo de regresion lineal basicamente utiliza la minimización de la suma de las distancias al cuadradado desde los puntos a la función linea. Esto se logra calculando la derivada con respecto a $a$ y $b$ y fijando estos en cero.
+
+Si definimos:
+
+$$\overline{x} = \frac{1}{m}\sum_{i=0}^{m}{r_i} \quad\quad\quad \overline{y} = \frac{1}{m}\sum_{i=0}^{m}{t_{i,j}}$$
+
+$$S_x = \sum_{i=0}^{m}{(r_i - \overline{x})^2} \quad\quad\quad S_{xy} = \sum_{i=0}^{m}{(r_i - \overline{x})(t_{i,j} - \overline{y})}$$
+
+Luego, tenemos que:
+
+$$b = \frac{S_{xy}}{S_x}  \quad\quad\quad a = \frac{\overline{y} - b\overline{x}}{m}$$
+
+Una vez obtenidos $a$ y $b$, para hallar la isoterma $C$ en el ángulo $j$, basta con calcular:
+
+$$r_C = |C - a|/b$$
+
+En pseudocódigo:
+
+\begin{lstlisting}[mathescape=true]
+Poner solucion = vector de n elementos
+Para j desde 0 hasta n hacer:
+    Poner avgX = 0
+    Poner avgY = 0
+    Para i desde 0 hasta m hacer:
+        Poner avgX = avgX + $r_i$
+        Poner avgY = avgY + $t_{i,j}$
+    Fin para
+    Poner avgX = avgX / m
+    Poner avgY = avgY / m
+    Poner numerador = 0
+    Poner denominador = 0
+    Para i desde 0 hasta m hacer:
+        Poner numerador = numerador + ($r_i$ - avgX) * ($t_{i,j}$ - avgY)
+        Poner denominador = denominador + ($r_i$ - avgX) * ($r_i$ - avgX)
+    Fin para
+    Si denominador == 0 hacer:
+        Poner denominador = 1
+    Fin si
+    Poner coeficiente = numerador / denominador
+    Poner independiente = (avgY - slope * coeficiente) / m
+    Poner solucion[j] = abs(C - independiente) / coeficiente
+Fin para
+\end{lstlisting}
 
 \subsection{Evaluación del peligro de la estructura}
 
