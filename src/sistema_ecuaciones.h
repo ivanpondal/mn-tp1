@@ -5,6 +5,7 @@ enum TipoResolucion : bool {GAUSS = 0, LU = 1};
 
 #include <iostream>
 #include <vector>
+#include <math.h>
 
 using namespace std;
 
@@ -13,6 +14,7 @@ class SistemaEcuaciones{
 		SistemaEcuaciones();
 		SistemaEcuaciones(vector<vector<double> > A, vector<vector<double> > instB, int dimMatriz, int cantAngulos);
 		vector<double> resolverSistema(int instancia, TipoResolucion tipo);
+		double calcularNumeroCondicion();
 	private:
 		vector<vector<double> > A;
 		vector<vector<double> > instB;
@@ -25,6 +27,8 @@ class SistemaEcuaciones{
 		void eliminacionGaussiana(vector<vector<double> > &A, vector<double> &b, int n);
 		void eliminacionGaussianaBanda(vector<vector<double> > &A, vector<double> &b, int n, int cantAngulos);
 		void factorizarLU(const vector<vector<double> > &A);
+		double normaInfinitoMatriz(const vector< vector<double> > &M);
+		double normaInfinitoVector(const vector<double> &v);
 		void imprimirSistema(vector<vector<double> > &mA, vector<double> &b );
 		void imprimirLU();
 };

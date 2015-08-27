@@ -80,6 +80,63 @@ void check_isoterma_linear_fit(){
 	altoHorno.escribirIsoterma(salida_isoterma.c_str(), LINEAR_FIT);
 }
 
+void check_numero_condicion_1(){
+	string entrada = "tests/test_numero_condicion_1.inn";
+	string salida_sistema = "/dev/null";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), GAUSS);
+	vector<double> iso = altoHorno.calcularIsoterma(BINARIA);
+	double numero_condicion = altoHorno.calcularNumeroCondicion();
+	cout << endl;
+	cout << "\t" << numero_condicion << endl;
+}
+
+void check_numero_condicion_2(){
+	// este test duplica la discretizacion en check_numero_condicion_1
+	string entrada = "tests/test_numero_condicion_2.inn";
+	string salida_sistema = "/dev/null";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), GAUSS);
+	vector<double> iso = altoHorno.calcularIsoterma(BINARIA);
+	double numero_condicion = altoHorno.calcularNumeroCondicion();
+	cout << endl;
+	cout << "\t" << numero_condicion << endl;
+}
+
+void check_numero_condicion_3(){
+	// este test triplica la discretizacion en check_numero_condicion_1
+	string entrada = "tests/test_numero_condicion_3.inn";
+	string salida_sistema = "/dev/null";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), GAUSS);
+	vector<double> iso = altoHorno.calcularIsoterma(BINARIA);
+	double numero_condicion = altoHorno.calcularNumeroCondicion();
+	cout << endl;
+	cout << "\t" << numero_condicion << endl;
+}
+
+void check_numero_condicion_4(){
+	// este test triplica la discretizacion en check_numero_condicion_1, pero ademas triplica el espacio entre r_i y r_e
+	string entrada = "tests/test_numero_condicion_4.inn";
+	string salida_sistema = "/dev/null";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), GAUSS);
+	vector<double> iso = altoHorno.calcularIsoterma(BINARIA);
+	double numero_condicion = altoHorno.calcularNumeroCondicion();
+	cout << endl;
+	cout << "\t" << numero_condicion << endl;
+}
+
+void check_calidad_isoterma(){
+	string entrada = "tests/test_isoterma.inn";
+	string salida_sistema = "tests/test_isoterma.out";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), LU);
+	vector<double> iso_avg = altoHorno.calcularIsoterma(AVG);
+	vector<double> iso_linear_fit = altoHorno.calcularIsoterma(LINEAR_FIT);
+	vector<double> iso_binaria = altoHorno.calcularIsoterma(BINARIA);
+}
+
 // para correr un test: ./test test.in test.expected {0: EG, 1: LU}
 int main(int argc, char *argv[])
 {
@@ -98,6 +155,11 @@ int main(int argc, char *argv[])
 		RUN_TEST(check_isoterma_binaria);
 		RUN_TEST(check_isoterma_avg);
 		RUN_TEST(check_isoterma_linear_fit);
+		RUN_TEST(check_numero_condicion_1);
+		//RUN_TEST(check_numero_condicion_2);
+		//RUN_TEST(check_numero_condicion_3);
+		//RUN_TEST(check_numero_condicion_4);
+		//RUN_TEST(check_calidad_isoterma);
 	}
 	return 0;
 }

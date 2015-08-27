@@ -22,6 +22,7 @@ class AltoHorno{
 		void generarSoluciones(const char* salida, TipoResolucion tipo);
 		void escribirIsoterma(const char* salida, TipoIsoterma tipo);
 		vector<double> calcularIsoterma(TipoIsoterma tipo);
+		double calcularNumeroCondicion();
 		vector<pair<vector<double>, vector<double> > > darInstancias();
 		vector<vector<double> > darSoluciones();
 

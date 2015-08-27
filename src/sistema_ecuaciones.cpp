@@ -31,10 +31,10 @@ vector<double> SistemaEcuaciones::resolverSistema(int instancia, TipoResolucion 
 	} else {
 		if (BANDA) {
 			eliminacionGaussianaBanda(mA, b, this->dimMatriz, this->cantAngulos);
-			return resolverTriangularSuperior(mA, b, this->dimMatriz);	
+			return resolverTriangularSuperior(mA, b, this->dimMatriz);
 		} else {
 			eliminacionGaussiana(mA, b, this->dimMatriz);
-			return resolverTriangularSuperior(mA, b, this->dimMatriz);	
+			return resolverTriangularSuperior(mA, b, this->dimMatriz);
 		}
 	}
 }
@@ -51,24 +51,24 @@ vector<double> SistemaEcuaciones::resolverTriangularSuperior(const vector<vector
 	return x;
 }
 
-vector<double> SistemaEcuaciones::resolverTriangularInferior(const vector<vector<double> > &U, const vector<double> &b, int n){
+vector<double> SistemaEcuaciones::resolverTriangularInferior(const vector<vector<double> > &L, const vector<double> &b, int n){
 	vector<double> x(n, 0);
 	for(int i = 0; i < n; ++i) {
 		x[i] = b[i];
 		for (int j = 0; j < i; ++j) {
-			x[i] -= x[j] * U[i][j];
+			x[i] -= x[j] * L[i][j];
 		}
-		x[i] /= U[i][i];
+		x[i] /= L[i][i];
 	}
 	return x;
 }
 
-vector<double> SistemaEcuaciones::resolverTriangularInferiorLU(const vector<vector<double> > &U, const vector<double> &b, int n){
+vector<double> SistemaEcuaciones::resolverTriangularInferiorLU(const vector<vector<double> > &L, const vector<double> &b, int n){
 	vector<double> x(n, 0);
 	for(int i = 0; i < n; ++i) {
 		x[i] = b[i];
 		for (int j = 0; j < i; ++j) {
-			x[i] -= x[j] * U[i][j];
+			x[i] -= x[j] * L[i][j];
 		}
 		// la diagonal es 1, asi que no hay que dividir por nada
 	}
@@ -99,7 +99,7 @@ void SistemaEcuaciones::eliminacionGaussianaBanda(vector<vector<double> > &A, ve
 	// empezamos a laburar en las ecuaciones t(1,0), y terminamos en la ecuacion t(m-1, n-1)
 	for(int j = 0; j < n; j++){
 		double pivote = A[j][j];
-		
+
 		int inicioBanda = max(j+1,cantAngulos);
 		int finBanda = min(n,inicioBanda + cantAngulos);
 
@@ -131,6 +131,56 @@ void SistemaEcuaciones::factorizarLU(const vector<vector<double> > &A){
 		}
 	}
 }
+
+double SistemaEcuaciones::calcularNumeroCondicion() {
+	// preliminar: calculo la factorizacion LU de A y la guardo en this->factorizacionLU (si no la habia calculado previamente)
+	if (factorizacionLU.size()==0){
+		factorizarLU(this->A);
+	}
+
+	// primero, calculo la matriz inversa. Esto lo vamos a hacer resolviendo los sistemas e1,..., en
+	vector<vector<double> > Ainversa(dimMatriz, vector<double>(dimMatriz, 0));
+
+	for (int i = 0; i < dimMatriz; ++i) {
+		// construyo el canonico
+		vector<double> canonico(dimMatriz, 0);
+		canonico[i] = 1;
+		// ahora como L*U*x = A*x = b, sea U*x = y => L*y = e
+		vector<double> y = resolverTriangularInferiorLU(this->factorizacionLU, canonico, this->dimMatriz);
+		// ya obtuve 'y', ahora hallo 'x' resolviendo U*x = y
+		vector<double> x = resolverTriangularSuperior(this->factorizacionLU, y, this->dimMatriz);
+		// guardo el resultado
+		Ainversa[i] = x;
+	}
+
+	double normaMatriz = normaInfinitoMatriz(A);
+	double normaMatrizInversa = normaInfinitoMatriz(Ainversa);
+
+	return normaMatriz * normaMatrizInversa;
+}
+
+double SistemaEcuaciones::normaInfinitoMatriz(const vector< vector<double> > &M) {
+	double max = normaInfinitoVector(M[0]);
+	for (int i = 1; i < (int)M.size(); ++i) {
+		double norma = normaInfinitoVector(M[i]);
+		if (norma > max) {
+			max = norma;
+		}
+	}
+	return max;
+}
+
+
+double SistemaEcuaciones::normaInfinitoVector(const vector<double> &v) {
+	double max = fabs(v[0]);
+	for (int i = 1; i < (int)v.size(); ++i) {
+		if (fabs(v[i]) > max) {
+			max = fabs(v[i]);
+		}
+	}
+	return max;
+}
+
 
 void SistemaEcuaciones::imprimirSistema(vector<vector<double> > &mA, vector<double> &b){
 	for(int j = 0; j < dimMatriz; j++){

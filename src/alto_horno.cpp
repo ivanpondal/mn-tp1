@@ -256,3 +256,7 @@ vector<double> AltoHorno::calcularIsotermaLinearFit(int instancia) {
 	}
 	return solucion;
 }
+
+double AltoHorno::calcularNumeroCondicion() {
+	return sistemaTemperaturas.calcularNumeroCondicion();
+}
