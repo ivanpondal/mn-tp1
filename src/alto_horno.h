@@ -25,6 +25,7 @@ class AltoHorno{
 		double calcularNumeroCondicion();
 		vector<pair<vector<double>, vector<double> > > darInstancias();
 		vector<vector<double> > darSoluciones();
+		double darTemperaturaIsoterma();
 
 	private:
 		void cargar(istream& entrada);

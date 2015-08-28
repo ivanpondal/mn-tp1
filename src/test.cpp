@@ -97,7 +97,6 @@ void check_numero_condicion_2(){
 	string salida_sistema = "/dev/null";
 	AltoHorno altoHorno(entrada.c_str());
 	altoHorno.generarSoluciones(salida_sistema.c_str(), GAUSS);
-	vector<double> iso = altoHorno.calcularIsoterma(BINARIA);
 	double numero_condicion = altoHorno.calcularNumeroCondicion();
 	cout << endl;
 	cout << "\t" << numero_condicion << endl;
@@ -109,7 +108,6 @@ void check_numero_condicion_3(){
 	string salida_sistema = "/dev/null";
 	AltoHorno altoHorno(entrada.c_str());
 	altoHorno.generarSoluciones(salida_sistema.c_str(), GAUSS);
-	vector<double> iso = altoHorno.calcularIsoterma(BINARIA);
 	double numero_condicion = altoHorno.calcularNumeroCondicion();
 	cout << endl;
 	cout << "\t" << numero_condicion << endl;
@@ -121,7 +119,6 @@ void check_numero_condicion_4(){
 	string salida_sistema = "/dev/null";
 	AltoHorno altoHorno(entrada.c_str());
 	altoHorno.generarSoluciones(salida_sistema.c_str(), GAUSS);
-	vector<double> iso = altoHorno.calcularIsoterma(BINARIA);
 	double numero_condicion = altoHorno.calcularNumeroCondicion();
 	cout << endl;
 	cout << "\t" << numero_condicion << endl;
@@ -129,12 +126,22 @@ void check_numero_condicion_4(){
 
 void check_calidad_isoterma(){
 	string entrada = "tests/test_isoterma.inn";
-	string salida_sistema = "tests/test_isoterma.out";
+	string salida_sistema = "/dev/null";
 	AltoHorno altoHorno(entrada.c_str());
 	altoHorno.generarSoluciones(salida_sistema.c_str(), LU);
+	// imprimo numero de condicion
+	double numero_condicion = altoHorno.calcularNumeroCondicion();
+	cout << endl;
+	cout << "\t" << numero_condicion << endl;
+	// calculo la isoterma con los distintos metodos
 	vector<double> iso_avg = altoHorno.calcularIsoterma(AVG);
 	vector<double> iso_linear_fit = altoHorno.calcularIsoterma(LINEAR_FIT);
 	vector<double> iso_binaria = altoHorno.calcularIsoterma(BINARIA);
+	// 
+}
+
+double calidad_isoterma(double temperatura, const vector<double> &isoterma) {
+	
 }
 
 // para correr un test: ./test test.in test.expected {0: EG, 1: LU}
