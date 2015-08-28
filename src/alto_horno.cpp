@@ -260,3 +260,29 @@ vector<double> AltoHorno::calcularIsotermaLinearFit(int instancia) {
 double AltoHorno::calcularNumeroCondicion() {
 	return sistemaTemperaturas.calcularNumeroCondicion();
 }
+
+bool AltoHorno::evaluarEstructura(const vector<double> &isoterma, double epsilon, TipoEvaluacion tipo) {
+	// calculo los deltas para cada angulo
+	vector<double> deltas(cantAngulos);
+	bool delta_mayor_epsilon = false;
+	double aux = radioExterior - radioInterior;
+	for(int i = 0; i < cantAngulos; i++) {
+		double delta = (radioExterior - isoterma[i])/aux;
+		deltas[i] = delta;
+		if (epsilon >= epsilon) {
+			delta_mayor_epsilon = true;
+		}
+	}
+
+	if(tipo == SIMPLE) {
+		return delta_mayor_epsilon;
+	} else {
+		// tomo el promedio de los deltas
+		double sum = 0;
+		for(int i = 0; i < cantAngulos; i++) {
+			sum += deltas[i];
+		}
+		sum = sum / cantAngulos;
+		return epsilon >= sum;
+	}
+}

@@ -13,6 +13,7 @@
 #include <sistema_ecuaciones.h>
 
 enum TipoIsoterma : int {BINARIA = 0, AVG = 1, LINEAR_FIT = 2};
+enum TipoEvaluacion : int {SIMPLE = 0, PROM = 1};
 
 using namespace std;
 
@@ -23,6 +24,7 @@ class AltoHorno{
 		void escribirIsoterma(const char* salida, TipoIsoterma tipo);
 		vector<double> calcularIsoterma(TipoIsoterma tipo);
 		double calcularNumeroCondicion();
+		bool evaluarEstructura(const vector<double> &isoterma, double epsilon, TipoEvaluacion tipo);
 		vector<pair<vector<double>, vector<double> > > darInstancias();
 		vector<vector<double> > darSoluciones();
 

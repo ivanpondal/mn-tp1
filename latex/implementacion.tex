@@ -27,7 +27,7 @@ Fin para
 
 		Notese que no validamos que la variable ``pivote'' sea distinta de cero. Esto es así ya que por la forma en la que se modeló el problema el pivote siempre es distinto de cero.
 
-    \item \textbf{Resolver el sistema equivalente} que obtuvimos en el paso anterior. Para esto, vamos a utilizar que la matriz es Triangular Superior. La idea es empezar despejando el valor de la $n$-ésima variable, luego usar este valor para despejar la $(n-1)$-ésima variable, y así sucesivamente hasta la primera variable. En pseudocódigo:
+    \item \textbf{Resolver el sistema equivalente}. Para esto, vamos a utilizar que la matriz es Triangular Superior. La idea es empezar despejando el valor de la $n$-ésima variable, luego usar este valor para despejar la $(n-1)$-ésima variable, y así sucesivamente hasta la primera variable. En pseudocódigo:
 
 \begin{lstlisting}
 Poner X = vector de n elementos
@@ -99,15 +99,15 @@ Una vez hallado este punto, tenemos que $r_C = \frac{r_i + r_{i+1}}{2}$.
 Este método utiliza el algoritmo de regresión lineal para, dado un ángulo $j$, y usando todos los puntos $t_{i,j}$ con $0 \leq i \leq m$, hallar una función lineal que aproxime dichos puntos lo mejor posible.
 Como la función que estamos buscando es lineal, es de la forma: $y(x) = a + bx$, donde $b$ es el coeficiente principal, $a$ el termino independiente, $x$ es un radio sobre el ángulo $j$ e $y(x)$ es la temperatura para dicho radio.
 
-Luego, el algoritmo de regresion lineal basicamente utiliza la minimización de la suma de las distancias al cuadradado desde los puntos a la función linea. Esto se logra calculando la derivada con respecto a $a$ y $b$ y fijando estos en cero.
+Luego, el algoritmo de regresion lineal basicamente utiliza la minimización de la suma de las distancias al cuadradado desde los puntos a la función lineal. Esto se logra calculando la derivada con respecto a $a$ y $b$ y fijando estos en cero.
 
-Si definimos:
+Entonces, si definimos:
 
 $$\overline{x} = \frac{1}{m}\sum_{i=0}^{m}{r_i} \quad\quad\quad \overline{y} = \frac{1}{m}\sum_{i=0}^{m}{t_{i,j}}$$
 
 $$S_x = \sum_{i=0}^{m}{(r_i - \overline{x})^2} \quad\quad\quad S_{xy} = \sum_{i=0}^{m}{(r_i - \overline{x})(t_{i,j} - \overline{y})}$$
 
-Luego, tenemos que:
+Tenemos que:
 
 $$b = \frac{S_{xy}}{S_x}  \quad\quad\quad a = \frac{\overline{y} - b\overline{x}}{m}$$
 
@@ -145,4 +145,24 @@ Fin para
 
 \subsection{Evaluación del peligro de la estructura}
 
-En función de la aproximación de la isoterma, proponer una forma (o medida) a utilizar para evaluar la peligrosidad de la estructura en función de la distancia a la pared externa del horno.
+Una vez obtenida la isoterma $C$, queremos evaluar la peligrosidad de la estructura en función de la distancia de la isoterma a la pared externa del horno. En este sentido, estamos asumiendo que la temperatura $C$ es elevada y que mientras más cercana está la temperatura de la pared externa a $C$, entonces más peligrosa es la estructura.
+
+En base a esto, proponemos dos medidas distintas para evaluar la peligrosidad.
+
+\subsubsection{Proximidad porcentual simple}
+
+Para cada ángulo $j$, podemos calcular el coeficiente porcentual $\Delta_j(C) = (r_e - r_C)/(r_e - r_i)$, donde $r_e$ es el radio de la pared externa del horno, $r_i$ el radio de la pared interna, y $r_C$ el radio de la isoterma $C$ para el ángulo $j$.
+
+Notese que $r_i \leq r_C \leq r_e$, y por lo tanto si $r_C = r_i \implies \Delta_j(C) = 1$, y si $r_C = r_e \implies \Delta_j(C) = 0$.
+
+De esta forma, podemos definir un $\varepsilon_C$, con $0 < \varepsilon_C < 1 $, tal que decimos que la estructura se encuentra en peligro si:
+
+$$\varepsilon_C \geq \min\limits_{\substack{1 \leq j \leq n-1}}(\Delta_j(C))$$
+
+\subsubsection{Proximidad porcentual promediada}
+
+En la medida anterior, podría pasar que para un $j'$ dado $\Delta_{j'}(C) < \varepsilon_C$ pero el resto de los $\Delta_j(C)$ sean mayores a $\varepsilon_C$, en cuyo caso, igualmente la estructura sería catalogada como peligrosa.
+
+Entonces, querriamos dar una medida de la peligrosidad de la estructura que tome en cuenta todos los angulos. Para esto, vamos a tomar el promedio de todos los $\Delta_j(C)$, definidos como en la medida anterior para cada ángulo $j$, y decimos que la estructura se encuentra en peligro si:
+
+$$\Delta(C)= \frac{\sum\limits_{j=1}^{n}{\Delta_j(C)}}{n} \leq  \varepsilon_C$$
