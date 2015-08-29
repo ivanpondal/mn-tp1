@@ -1,24 +1,21 @@
 \begin{proposition}
-    Sea $A \in \mathbb{R}^{n \times n}$ la matriz obtenida para el sistema definido por las ecuaciones del Modelo, en donde $u$ y $v$ corresponden a la cantidad de radios y angulos respectivamente de la discretizacion, tal que $n = uv$. Demostrar que es posible aplicar Eliminación Gaussiana sin pivoteo.
+    Sea $A \in \mathbb{R}^{n(m+1) \times n(m+1)}$ la matriz obtenida para el sistema definido por las ecuaciones del Modelo, en donde $m+1$ y $n$ corresponden a la cantidad de radios y angulos respectivamente de la discretizacion. Demostrar que es posible aplicar Eliminación Gaussiana sin pivoteo.
 \end{proposition}
-%\begin{proof}[Demostración]
+
 Para poder demostrar la proposición, utilizamos los siguientes lemas, que demostramos a continuacion:
 
   \begin{enumerate}[label=(\subscript{L}{\arabic*})]
     \item $A$ es una matriz banda.
     \item $A$ es diagonal dominante (no estricta).
-    %\item En cada paso $k$, con $0 \leq k \leq n-1$, de la Eliminación Gaussiana, para cada fila $i$ de $A^{(k)}$, existe, al menos, un $a_{i,j}$ $\neq$ 0, con $j = 0,..., n-1$
-  \end{enumerate}
 
-%\end{proof}
+  \end{enumerate}
 
   \begin{lemma}
     $A$ es una matriz banda
   \end{lemma}
 
   \begin{proof}
-    MUESTRO LA MATRIZ Y SU FORMA
-    Vease Figura \ref{fig:matriz}
+    A partir del Modelo descripto en el punto anterior, vease figura \ref{fig:matriz}, podemos concluir que la matriz es banda, más concretamente que si.
   \end{proof}
 
   \begin{lemma}
@@ -32,19 +29,66 @@ Para poder demostrar la proposición, utilizamos los siguientes lemas, que demos
           |a_{i,i}| &\geq \sum\limits_{\substack{j=0  \\ j \neq i}}^{n-1} |a_{i,j}| \\
         \end{aligned}
     \end{equation*}
-    Esta desigualdad es evidente para las primeras  y ultimas $v$ filas, ya que el unico valor distinto de 0 se encuentra en la diagonal.
-    Falta ver el caso para el resto de $A$. Tenemos que probar que para fila, se cumple:
+    Esta desigualdad es evidente para las primeras  y ultimas $n$ filas, ya que el unico valor distinto de 0 se encuentra en la diagonal.
+    Falta ver el caso para el resto de $A$. Tenemos que probar que para fila, $i$, se cumple:
     \begin{equation*}
         \begin{aligned}
           |-2\alpha-2\beta+\gamma| \geq |\beta - \gamma| + |\alpha| + |\alpha| + |\beta|
         \end{aligned}
     \end{equation*}
-    Por definicion sabemos que $|\alpha| = \alpha$ y $|\beta| = \beta$
-    \newline
-    COMPLETAR
+    Por definicion sabemos que $|\alpha| = \alpha$ y $|\beta| = \beta$.  
+    
+    Veamos que $|\beta - \gamma| = \beta - \gamma$, supongamos que $\beta - \gamma < 0$:
+    
+    \begin{equation*}
+        \begin{aligned}
+          \beta &< \gamma \\
+          %\text{Por definicion de  $\beta$ y $\gamma$:} \\
+          \frac{1}{(\Delta\ r)^2}  &< \frac{1}{(\Delta\ r) * r_{j}} \\
+          1 &< \frac{\Delta\ r}{r_{j}} \\
+          %\text{Sabemos que } \Delta\ r = r_{j} - r_{j-1} \text{ para $j=1,...,m$. Reemplazando:} \\
+          1 &< \frac{r_{j} - r_{j-1}}{r_{j}} \\
+          1 &< 1 - \frac{r_{j-1}}{r_{j}} \\
+          %\text{ Como los radios son todos mayores a 0, llegamos a un absurdo, que vino de suponer }\beta - \gamma &< 0, \text{por lo tanto }\beta - \gamma \geq 0.
+        \end{aligned}
+    \end{equation*}
+
+    Deberiamos probar que la desigualdad se cumple para los siguientes casos:
+
+    \begin{enumerate}
+      \item $-2\alpha-2\beta+\gamma \geq 0$
+      \item $-2\alpha-2\beta+\gamma < 0$
+    \end{enumerate}
+    Veamos caso por caso:
+    \begin{enumerate}
+      \item \bm{$-2\alpha-2\beta+\gamma \geq 0$}:
+       
+        \begin{equation*}
+          \begin{aligned}
+          -2\alpha-2\beta+\gamma &\geq \beta - \gamma + \alpha + \alpha + \beta \\
+           2\gamma &\geq 4\beta + 4\alpha \\
+           \gamma &\geq 2\beta + 2\alpha \\
+           \gamma - 2\beta - 2\alpha& \geq 0
+          \end{aligned}
+        \end{equation*}
+
+      \item \bm{$-2\alpha-2\beta+\gamma < 0$}:
+
+        \begin{equation*}
+          \begin{aligned}
+           -2\alpha-2\beta+\gamma &\leq -\beta+\gamma-\alpha-\alpha-\beta \\
+           \gamma - \gamma &\leq 2\beta - 2\beta + 2\alpha - 2\alpha \\
+           0 &\leq 0 
+          \end{aligned}
+        \end{equation*}
+
+
+    \end{enumerate}
+
+
   \end{proof}
 
-\begin{proof}[Demostración]
+\begin{proof}[Demostración Proposición]
 
 Por $L_{2}$ sabemos que $A$ es diagonal dominante (no estricta) y por definicion del Modelo sabemos que $a_{0,0} = 1$.
 
@@ -69,51 +113,22 @@ Sabemos que $a^{(1)}_{i,0} = 0$. Luego:
     \end{aligned}
 \end{equation*}
 
-Por lo tanto, el dominio diagonal no estricto se establece en los renglones $1,..,n-1$, y como el primer renglon de $A^{(1)}$ y de $A$ son iguales,
-$A^{(1)}$ sera diagonal dominante no estricto.
-
-Este proceso lo podemos repetir hasta obtener $A^{(n-1)}$ que sera diagonal dominante no estricto.
-
-Sin embargo, falta ver que para cada paso, $k$, de la Eliminación Gaussiana, el elemento de la diagonal, $a_{k,k}$ de $A^{(k)}$, es distinto de 0.
-Para poder demostrar esto, usamos $L_{2}$ y la forma especifica de $A$ dada por el Modelo. Veamos los distintos casos:
-
 \begin{itemize}
-  \item Para $0 \leq k \leq v-1$, sabemos que $a^{(k)}_{k,k} = a^{(0)}_{k,k} = 1$, ya que $\forall j=0,...,n-1 \land j \neq k, a^{(k)}_{k,j} = 0$,
-  es decir los valores de la diagonal de las $v$ primeras filas no cambian en los primeros $v$ pasos de la Eliminación Gaussiana, debido a que
-  esas filas solo tienen un valor distinto de 0 en la diagonal, valor que no es afectado por las filas que las preceden, por definicion del procedimiento de Eliminación Gaussiana.
-  \item Para $v \leq k \leq n-v-1$, sabemos que para $k = v$, $a^{(k)}_{k,k} = a^{(0)}_{k,k}$, (mismo argumento del punto anterior), basta ver que sucede en el resto de los casos.
-  Sabemos, por la forma del Modelo, que esta franja de filas definen la banda de $A^{(0)}$, en particular la banda $q$ en $A^{(0)}$ esta compuesta por los valores $\beta_{i}$, donde $i$ representa su fila.
-  Por lo tanto estos valores no varian cuando $k \leq i$, es decir $a^{(k)}_{i,j} = a^{(0)}_{i,j}$ donde $j$ es la columna de $\beta_{i}$ , y como ya vimos que todos los $\beta_{i} \neq 0$, sumado al hecho, ya demostrado,
-  que se preserva la caracteristica de diagonal dominante, podemos concluir que $a^{(k)}_{k,k} \neq 0$.
-  \item Por ultimo para $n-v \leq k \leq n-1$, tenemos la misma situacion que las primeras $v$ filas.
-\end{itemize}
 
-Habiendo demostrado que los elementos de la diagonal, en cada paso de la Eliminación Gaussiana, son distintos de 0, podemos concluir que es posible aplicar Eliminación Gaussiana sin pivoteo.
+
+\item Por lo tanto, el dominio diagonal no estricto se establece en los renglones $1,..,n-1$, y como el primer renglon de $A^{(1)}$ y de $A$ son iguales,
+$A^{(1)}$ sera diagonal dominante no estricto. 
+
+\item Para poder aplicar un paso más de la Eliminación Gaussiana, es necesario que $a^{(1)}_{1,1} \neq 0$. Sabemos por definición del Modelo que $a^{(0)}_{1,1} = 1$, y como $a^{(0)}_{1,0} = 0$, por definición de la Eliminación Gaussiana $a^{(1)}_{1,1} = 1$. Esta situación se repite para las $n$ primeras flas de $A$, ya que para $\forall i=0,...,n-1$ $\forall j=0,...,n(m+1)-1 \land j \neq i, a^{(0)}_{i,j} = 0$, por lo tanto podemos afimar que podemos realizar los primeros $n-1$ pasos de la Eliminación Gaussiana, y que la matriz $A^{(n-1)}$ será diagonal dominante no estricta (repitiendo el procedmiento hecho para $A^{(1)}$).
+
+\item Queda ver que sucede para los pasos $n \leq k \leq n(m+1)-n-1$ de la Eliminación Gaussiana. Para el paso $k=n$, utilizamos que $A$ es una matriz banda ($L_{1}$), en particular la banda esta definida por las filas $i=n,..,n(m+1)-n-1$, en donde el valor ubicado en el extremo derecho de cada fila, $\beta_{i}$, es el valor de la banda derecha, $q$, y que $\beta_{i} \neq 0$. Al realizar el paso $k$, sabemos que la matriz resultante $A^{(k)}$ será diagonal dominante no estricta, (mismo procedimientos que en las filas precedentes) y también sabemos que $\beta^{k}_{k} = \beta^{0}_{k}$, debido al hecho que $\forall u=0,..,k-1, a^{(u)}_{u,j} = 0$, donde $j$ es el indice de la columna de $\beta^{0}_{k}$. Por lo tanto podemos afimar que $a^{(k)}_{k,k} \neq 0$, en particular es $a^{(k)}_{k,k} \geq \beta^{k}_{k}$ (por ser $A^{(k)}$ diagonal dominante no estricto). Como $a^{(k)}_{k,k} \neq 0$, podemos realizar un paso de la Eliminación Gaussiana. Esta situación de repite para el resto de las pasos $n+1 \leq k \leq n(m+1)-n-1$.
+
+\item Por último queda por ver que sucede con los pasos $ n(m+1)-n \leq k \leq n(m+1)-1$. Esta situacion es idéntica al de los primeros $n$ pasos, ya que en $A$  $\forall i=n(m+1)-n,...,n(m+1)-1$ $\forall j=0,...,n(m+1)-1 \land j \neq i, a^{(0)}_{i,j} = 0$. Es decir, el valor de la diagonal de estas filas no será alterado por la Eliminación Gaussiana, y como en $A$ su valor es $1$, podemos aplicar los pasos de la Eliminación Gaussiana.
+
+\item Por todo lo expuesto, podemos concluir que es posible aplicar a $A$ Eliminación Gaussiana sin pivoteo.
+
+\end{itemize}
 
 \end{proof}
 
-%  \begin{lemma}
-%    En cada paso $k$, con $0 \leq k \leq n-1$, de la Eliminación Gaussiana, para cada fila $i$ de $A^{(k)}$, existe, al menos, un $a_{i,j}$ $\neq$ 0, con $j = 0,..., n-1$
-%  \end{lemma}
 
-%  \begin{proof}
-
-%    Lo probamos por Induccion en la cantidad $k$ de pasos de la Eliminación Gaussiana, utilizando $L_{1}$.
-%    \newline
-%    Caso base: $A^{(0)} = A$
-%    \begin{enumerate}
-%      \item Para las primeras y ultimas $u$ filas, el elemento de la diagonal es 1.
-%      \item Para el resto de las filas, basta ver que algun valor es distinto de 0. Por definicion sabemos que $\beta \neq 0$
-%    \end{enumerate}
-%    Paso Inductivo: Queremos ver que en el paso $k$ de la Eliminación Gaussiana, para cada fila $i$ de $A^{(k)}$, existe, al menos, un $a_{i,j}$ $\neq$ 0, con $j = 0,..., n-1$
-%    \newline
-%    Sabemos, por definición del procedimiento de Eliminación Gaussiana, que las filas $i = 0,..,k$ de $A^{(k)}$ son iguales a las de $A^{(k-1)}$, por lo tanto, por Hipotesis Inductiva,
-%    existe, al menos, un $a_{i,j}$ $\neq$ 0, con $j = 0,..., n-1$.
-%    \newline
-%    Queda por ver que sucede con las filas $i = k+1,..n-1$ de $A^{(k)}$. Tenemos dos casos:
-%    \begin{enumerate}
-%      \item Filas que tienen un valor ($\beta$) como extremo derecho de la banda
-%      \item Filas que no tienen valores en los extremos de las bandas (las filas correspondientes a las $u$ primeras y ultimas de $A$)
-%    \end{enumerate}
-%    COMPLETAR (POSIBLE PROBLEMA)
- %\end{proof}
