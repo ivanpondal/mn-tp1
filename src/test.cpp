@@ -4,6 +4,9 @@
 #include <string>
 #include <sstream>
 
+// ----------------------------------------------------------------------------
+// tests generales para evaluar las funciones
+
 void check_carga_alto_horno_instancias_una(){
 	// mock
 	vector<double> tempInterna(3),  tempExterna(3);
@@ -85,7 +88,6 @@ void check_numero_condicion_1(){
 	string salida_sistema = "/dev/null";
 	AltoHorno altoHorno(entrada.c_str());
 	altoHorno.generarSoluciones(salida_sistema.c_str(), GAUSS);
-	vector<double> iso = altoHorno.calcularIsoterma(BINARIA);
 	double numero_condicion = altoHorno.calcularNumeroCondicion();
 	cout << endl;
 	cout << "\t" << numero_condicion << endl;
@@ -97,7 +99,6 @@ void check_numero_condicion_2(){
 	string salida_sistema = "/dev/null";
 	AltoHorno altoHorno(entrada.c_str());
 	altoHorno.generarSoluciones(salida_sistema.c_str(), GAUSS);
-	vector<double> iso = altoHorno.calcularIsoterma(BINARIA);
 	double numero_condicion = altoHorno.calcularNumeroCondicion();
 	cout << endl;
 	cout << "\t" << numero_condicion << endl;
@@ -109,7 +110,6 @@ void check_numero_condicion_3(){
 	string salida_sistema = "/dev/null";
 	AltoHorno altoHorno(entrada.c_str());
 	altoHorno.generarSoluciones(salida_sistema.c_str(), GAUSS);
-	vector<double> iso = altoHorno.calcularIsoterma(BINARIA);
 	double numero_condicion = altoHorno.calcularNumeroCondicion();
 	cout << endl;
 	cout << "\t" << numero_condicion << endl;
@@ -121,7 +121,6 @@ void check_numero_condicion_4(){
 	string salida_sistema = "/dev/null";
 	AltoHorno altoHorno(entrada.c_str());
 	altoHorno.generarSoluciones(salida_sistema.c_str(), GAUSS);
-	vector<double> iso = altoHorno.calcularIsoterma(BINARIA);
 	double numero_condicion = altoHorno.calcularNumeroCondicion();
 	cout << endl;
 	cout << "\t" << numero_condicion << endl;
@@ -191,6 +190,189 @@ void check_evaluar_estructura_promedio(){
 	cout << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.01 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.01, PROM) << endl;
 }
 
+// ----------------------------------------------------------------------------
+// tests de datos para la experimentacion del informe
+
+void exp_discretizacion_horno_plomo_1_numero_condicion(){
+	string entrada = "tests/test_horno_plomo1.inn";
+	AltoHorno altoHorno(entrada.c_str());
+	cout << endl;
+	cout << "\tNumero condicion Horno Plomo 1: " << altoHorno.calcularNumeroCondicion() << endl;
+}
+
+void exp_discretizacion_horno_zinc_1_numero_condicion(){
+	string entrada = "tests/test_horno_zinc1.inn";
+	AltoHorno altoHorno(entrada.c_str());
+	cout << endl;
+	cout << "\tNumero condicion Horno Zinc 1: " << altoHorno.calcularNumeroCondicion() << endl;
+}
+
+void exp_discretizacion_horno_hierro_1_numero_condicion(){
+	string entrada = "tests/test_horno_hierro1.inn";
+	AltoHorno altoHorno(entrada.c_str());
+	cout << endl;
+	cout << "\tNumero condicion Horno Hierro 1: " << altoHorno.calcularNumeroCondicion() << endl;
+}
+
+void exp_discretizacion_horno_plomo_2_numero_condicion(){
+	string entrada = "tests/test_horno_plomo2.inn";
+	AltoHorno altoHorno(entrada.c_str());
+	cout << endl;
+	cout << "\tNumero condicion Horno Plomo 2: " << altoHorno.calcularNumeroCondicion() << endl;
+}
+
+void exp_discretizacion_horno_zinc_2_numero_condicion(){
+	string entrada = "tests/test_horno_zinc2.inn";
+	AltoHorno altoHorno(entrada.c_str());
+	cout << endl;
+	cout << "\tNumero condicion Horno Zinc 2: " << altoHorno.calcularNumeroCondicion() << endl;
+}
+
+void exp_discretizacion_horno_hierro_2_numero_condicion(){
+	string entrada = "tests/test_horno_hierro2.inn";
+	AltoHorno altoHorno(entrada.c_str());
+	cout << endl;
+	cout << "\tNumero condicion Horno Hierro 2: " << altoHorno.calcularNumeroCondicion() << endl;
+}
+
+void exp_isoterma_horno_plomo_1(){
+	string entrada = "tests/test_horno_plomo1.inn";
+	string salida_sistema = "tests/test_horno_plomo1.out";
+	string salida_isoterma_avg = "tests/test_isoterma_horno_plomo_1_avg.out";
+	string salida_isoterma_linear_fit = "tests/test_isoterma_horno_plomo_1_linear_fit.out";
+	string salida_isoterma_binaria = "tests/test_isoterma_horno_plomo_1_binaria.out";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), LU);
+	altoHorno.escribirIsoterma(salida_isoterma_avg.c_str(), AVG);
+	altoHorno.escribirIsoterma(salida_isoterma_linear_fit.c_str(), LINEAR_FIT);
+	altoHorno.escribirIsoterma(salida_isoterma_binaria.c_str(), BINARIA);
+
+	// generar imagenes:
+	cout << endl << "\tGenerando imagenes..." << endl;
+	char command[500];
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
+	system(command);
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
+	system(command);
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
+	system(command);
+}
+
+void exp_isoterma_horno_zinc_1(){
+	string entrada = "tests/test_horno_zinc1.inn";
+	string salida_sistema = "tests/test_horno_zinc1.out";
+	string salida_isoterma_avg = "tests/test_isoterma_horno_zinc_1_avg.out";
+	string salida_isoterma_linear_fit = "tests/test_isoterma_horno_zinc_1_linear_fit.out";
+	string salida_isoterma_binaria = "tests/test_isoterma_horno_zinc_1_binaria.out";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), LU);
+	altoHorno.escribirIsoterma(salida_isoterma_avg.c_str(), AVG);
+	altoHorno.escribirIsoterma(salida_isoterma_linear_fit.c_str(), LINEAR_FIT);
+	altoHorno.escribirIsoterma(salida_isoterma_binaria.c_str(), BINARIA);
+
+	// generar imagenes:
+	cout << endl << "\tGenerando imagenes..." << endl;
+	char command[500];
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
+	system(command);
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
+	system(command);
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
+	system(command);
+}
+
+void exp_isoterma_horno_hierro_1(){
+	string entrada = "tests/test_horno_hierro1.inn";
+	string salida_sistema = "tests/test_horno_hierro1.out";
+	string salida_isoterma_avg = "tests/test_isoterma_horno_hierro_1_avg.out";
+	string salida_isoterma_linear_fit = "tests/test_isoterma_horno_hierro_1_linear_fit.out";
+	string salida_isoterma_binaria = "tests/test_isoterma_horno_hierro_1_binaria.out";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), LU);
+	altoHorno.escribirIsoterma(salida_isoterma_avg.c_str(), AVG);
+	altoHorno.escribirIsoterma(salida_isoterma_linear_fit.c_str(), LINEAR_FIT);
+	altoHorno.escribirIsoterma(salida_isoterma_binaria.c_str(), BINARIA);
+
+	// generar imagenes:
+	cout << endl << "\tGenerando imagenes..." << endl;
+	char command[500];
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
+	system(command);
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
+	system(command);
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
+	system(command);
+}
+
+void exp_isoterma_horno_plomo_2(){
+	string entrada = "tests/test_horno_plomo2.inn";
+	string salida_sistema = "tests/test_horno_plomo2.out";
+	string salida_isoterma_avg = "tests/test_isoterma_horno_plomo_2_avg.out";
+	string salida_isoterma_linear_fit = "tests/test_isoterma_horno_plomo_2_linear_fit.out";
+	string salida_isoterma_binaria = "tests/test_isoterma_horno_plomo_2_binaria.out";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), LU);
+	altoHorno.escribirIsoterma(salida_isoterma_avg.c_str(), AVG);
+	altoHorno.escribirIsoterma(salida_isoterma_linear_fit.c_str(), LINEAR_FIT);
+	altoHorno.escribirIsoterma(salida_isoterma_binaria.c_str(), BINARIA);
+
+	// generar imagenes:
+	cout << endl << "\tGenerando imagenes..." << endl;
+	char command[500];
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
+	system(command);
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
+	system(command);
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
+	system(command);
+}
+
+void exp_isoterma_horno_zinc_2(){
+	string entrada = "tests/test_horno_zinc2.inn";
+	string salida_sistema = "tests/test_horno_zinc2.out";
+	string salida_isoterma_avg = "tests/test_isoterma_horno_zinc_2_avg.out";
+	string salida_isoterma_linear_fit = "tests/test_isoterma_horno_zinc_2_linear_fit.out";
+	string salida_isoterma_binaria = "tests/test_isoterma_horno_zinc_2_binaria.out";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), LU);
+	altoHorno.escribirIsoterma(salida_isoterma_avg.c_str(), AVG);
+	altoHorno.escribirIsoterma(salida_isoterma_linear_fit.c_str(), LINEAR_FIT);
+	altoHorno.escribirIsoterma(salida_isoterma_binaria.c_str(), BINARIA);
+
+	// generar imagenes:
+	cout << endl << "\tGenerando imagenes..." << endl;
+	char command[500];
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
+	system(command);
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
+	system(command);
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
+	system(command);
+}
+
+void exp_isoterma_horno_hierro_2(){
+	string entrada = "tests/test_horno_hierro2.inn";
+	string salida_sistema = "tests/test_horno_hierro2.out";
+	string salida_isoterma_avg = "tests/test_isoterma_horno_hierro_2_avg.out";
+	string salida_isoterma_linear_fit = "tests/test_isoterma_horno_hierro_2_linear_fit.out";
+	string salida_isoterma_binaria = "tests/test_isoterma_horno_hierro_2_binaria.out";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), LU);
+	altoHorno.escribirIsoterma(salida_isoterma_avg.c_str(), AVG);
+	altoHorno.escribirIsoterma(salida_isoterma_linear_fit.c_str(), LINEAR_FIT);
+	altoHorno.escribirIsoterma(salida_isoterma_binaria.c_str(), BINARIA);
+
+	// generar imagenes:
+	cout << endl << "\tGenerando imagenes..." << endl;
+	char command[500];
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
+	system(command);
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
+	system(command);
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
+	system(command);
+}
+
 // para correr un test: ./test test.in test.expected {0: EG, 1: LU}
 int main(int argc, char *argv[])
 {
@@ -203,19 +385,40 @@ int main(int argc, char *argv[])
 		altoHorno.generarSoluciones(salida, tipo);
 	}
 	else{
-		RUN_TEST(check_carga_alto_horno_instancias_una);
+		// tests generales para evaluar las funciones
+		/*RUN_TEST(check_carga_alto_horno_instancias_una);
 		RUN_TEST(check_carga_alto_horno_instancias_dos);
 		RUN_TEST(check_sistema_ecuaciones_LU);
 		RUN_TEST(check_isoterma_binaria);
 		RUN_TEST(check_isoterma_avg);
 		RUN_TEST(check_isoterma_linear_fit);
 		RUN_TEST(check_numero_condicion_1);
+		RUN_TEST(check_evaluar_estructura_simple);
+		RUN_TEST(check_evaluar_estructura_promedio);*/
+		// tests pesados que tardan un poco más:
 		//RUN_TEST(check_numero_condicion_2);
 		//RUN_TEST(check_numero_condicion_3);
 		//RUN_TEST(check_numero_condicion_4);
 		//RUN_TEST(check_calidad_isoterma);
-		RUN_TEST(check_evaluar_estructura_simple);
-		RUN_TEST(check_evaluar_estructura_promedio);
+
+		// tests de datos para la experimentacion del informe
+		/*RUN_TEST(exp_discretizacion_horno_plomo_1_numero_condicion);
+		RUN_TEST(exp_discretizacion_horno_zinc_1_numero_condicion);
+		RUN_TEST(exp_discretizacion_horno_hierro_1_numero_condicion);*/
+		// tests pesados que tardan un poco más:
+		// RUN_TEST(exp_discretizacion_horno_plomo_2_numero_condicion);
+		// RUN_TEST(exp_discretizacion_horno_zinc_2_numero_condicion);
+		// RUN_TEST(exp_discretizacion_horno_hierro_2_numero_condicion);
+		RUN_TEST(exp_isoterma_horno_plomo_1);
+		RUN_TEST(exp_isoterma_horno_zinc_1);
+		RUN_TEST(exp_isoterma_horno_hierro_1);
+		// tests pesados que tardan un poco más:
+		RUN_TEST(exp_isoterma_horno_plomo_2);
+		RUN_TEST(exp_isoterma_horno_zinc_2);
+		RUN_TEST(exp_isoterma_horno_hierro_2);
+
+		// script importante:
+		// octave --path tools/ --eval 'horno tests/test_horno_hierro1.inn tests/test_horno_hierro1.out tests/test_isoterma_horno_hierro_1_binaria.out'
 	}
 	return 0;
 }

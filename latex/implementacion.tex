@@ -109,7 +109,7 @@ $$S_x = \sum_{i=0}^{m}{(r_i - \overline{x})^2} \quad\quad\quad S_{xy} = \sum_{i=
 
 Tenemos que:
 
-$$b = \frac{S_{xy}}{S_x}  \quad\quad\quad a = \frac{\overline{y} - b\overline{x}}{m}$$
+$$b = \frac{S_{xy}}{S_x}  \quad\quad\quad a = \overline{y} - b\overline{x}$$
 
 Una vez obtenidos $a$ y $b$, para hallar la isoterma $C$ en el ángulo $j$, basta con calcular:
 
@@ -138,7 +138,7 @@ Para j desde 0 hasta n hacer:
         Poner denominador = 1
     Fin si
     Poner coeficiente = numerador / denominador
-    Poner independiente = (avgY - slope * coeficiente) / m
+    Poner independiente = avgY - slope * coeficiente
     Poner solucion[j] = abs(C - independiente) / coeficiente
 Fin para
 \end{lstlisting}

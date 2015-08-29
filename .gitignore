@@ -24,7 +24,8 @@
 
 # Executables
 *.exe
-*.out
+latex/*.out
+src/*.out
 *.app
 
 #Latex

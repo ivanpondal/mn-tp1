@@ -4,8 +4,13 @@ AltoHorno::AltoHorno(const char* entrada){
 	ifstream archivoEntrada;
 	archivoEntrada.open(entrada);
 
-	cargar(archivoEntrada);
-	generarSistema();
+	if (archivoEntrada.good()) {
+		cargar(archivoEntrada);
+		generarSistema();
+	} else {
+		cout << endl;
+		cout << "\tNo se pudo cargar el horno definido por el archivo: " << entrada << endl;
+	}
 
 	archivoEntrada.close();
 }
@@ -248,7 +253,7 @@ vector<double> AltoHorno::calcularIsotermaLinearFit(int instancia) {
 		}
 
 		double slope = slope_numerator / slope_denominator;
-		double intercept = (avgY - slope * avgX) / cantParticiones;
+		double intercept = avgY - slope * avgX;
 		// cout << "slope: " << slope << endl;
 		// cout << "intercept: " << intercept << endl;
 

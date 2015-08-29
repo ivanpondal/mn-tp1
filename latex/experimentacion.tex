@@ -1,8 +1,141 @@
+% Funcion para poner imagenes que tienen nombre con underscore:
+\newcommand{\imagenB}[2]{%
+\includegraphics[width=#1\textwidth]{#2}
+\endgroup}
+
+\def\imagen{\begingroup
+\catcode`\_=12
+\imagenB}
+% -----------------------------------------
+\subsection{Instancias de prueba}
+
+Para ser lo más realista posible, se investigó\footnote{\url{http://www.britannica.com/technology/blast-furnace}} acerca de los diferentes tamaños de Altos Hornos, así como de las temperaturas que alcanzan.
+En base a esto, se armaron 3 instancias de prueba distintas (las discretizaciones se eligen después):
+\begin{itemize}
+    \item Alto Horno de Plomo:
+        \begin{itemize}
+            \item Radio pared interna: $r_i = 5$
+            \item Radio pared externa: $r_e = 6$
+            \item Temperatura pared interna: $T(r_i, \theta_j) = 327\ Cº$, $\forall\ 1 \leq j \leq n$
+            \item Temperatura pared externa: $T(r_e, \theta_j) = 20\ Cº$, $\forall\ 1 \leq j \leq n$
+        \end{itemize}
+    \item Alto Horno de Zinc:
+        \begin{itemize}
+            \item Radio pared interna: $r_i = 7$
+            \item Radio pared externa: $r_e = 9$
+            \item Temperatura pared interna: $T(r_i, \theta_j) = 419.5\ Cº$, $\forall\ 1 \leq j \leq n$
+            \item Temperatura pared externa: $T(r_e, \theta_j) = 20\ Cº$, $\forall\ 1 \leq j \leq n$
+        \end{itemize}
+    \item Alto Horno de Hierro:
+        \begin{itemize}
+            \item Radio pared interna: $r_i = 11$
+            \item Radio pared externa: $r_e = 15$
+            \item Temperatura pared interna: $T(r_i, \theta_j) = 1538\ Cº$, $\forall\ 1 \leq j \leq n$
+            \item Temperatura pared externa: $T(r_e, \theta_j) = 20\ Cº$, $\forall\ 1 \leq j \leq n$
+        \end{itemize}
+\end{itemize}
+
+\subsection{Número de condición}
+
+Antes de empezar a experimentar, queremos saber para cada instancia de prueba que tamaño de discretizaciones son aceptables, en terminos del Número de Condición.
+En el caso de que este fuera muy grande, al resolver el sistema no tendríamos garantía de que la solución hallada sea efectivamente buena.
+
+Tomando una discretización inicial de 30 ángulos ($n = 30$) y 30 radios ($m = 30$), tenemos que:
+\begin{itemize}
+    \item Para el Alto Horno de Plomo, el número de condición es: 1678.42
+    \item Para el Alto Horno de Zinc, el número de condición es: 419.448
+    \item Para el Alto Horno de Hiero, el número de condición es: 104.844
+\end{itemize}
+
+Pero observemos cual es el espesor para cada instancia de prueba:
+\begin{itemize}
+    \item Para el Alto Horno de Plomo, el espesor de la pared es de $r_e - r_i = 1$.
+    \item Para el Alto Horno de Zinc, el espesor de la pared es de $r_e - r_i = 2$.
+    \item Para el Alto Horno de Hiero, el espesor de la pared es de $r_e - r_i = 4$.
+\end{itemize}
+
+Luego, plantemos la siguiente \textbf{Hipotesis:} \textit{el número de condición aumenta con la cantidad de ecuaciones y disminuye con el espesor de la pared.} Intuitivamente, podemos pensar el espesor de la pared como el espacio a resolver, y al aumentar las ecuaciones aumenta la redundancia del sistema.
+
+Podemos entonces probar con una discretización de 60 ángulos ($n = 60$) y 60 radios ($m = 60$);
+\begin{itemize}
+    \item Para el Alto Horno de Plomo, el número de condición es: 6957.49
+    \item Para el Alto Horno de Zinc, el número de condición es: 1739.99
+    \item Para el Alto Horno de Hiero, el número de condición es: 435.281
+\end{itemize}
+
+Vemos que el resultado corrobora nuestra hipotesis.
+
+Más aún, el mayor número de condición (con las discretizaciones vistas) es 6957.49, que es relativamente aceptable\footnote{De Wikipedia: \url{https://en.wikipedia.org/wiki/Condition_number}, con un número de condición de $10^k$, se pierde $k$ dígitos de precisión. Como el formato \textit{double} maneja una precisión de al menos 15 dígitos, los valores obtenidos son aceptables.}.
+
+\subsection{Calidad de las soluciones}
+
 \subsection{Comportamiento del sistema}
 
 \subsubsection{Distintas discretizaciones}
+% Considerar al menos dos instancias de prueba, generando distintas discretizaciones para
+% cada una de ellas y comparando la ubicaci ́on de la isoterma buscada respecto de la pared
+% externa del horno. Se sugiere presentar gr ́aficos de temperatura o curvas de nivel para los
+% mismos, ya sea utilizando las herramientas provistas por la c ́atedra o implementando sus
+% propias herramientas de graficaci ́on.
+
+En primer lugar, para cada ``horno'' mencionado en las instancias de pruebas, vamos a definir una isoterma.
+\begin{itemize}
+    \item Para el Alto Horno de Plomo, la isoterma buscada será de: $200\ Cº$
+    \item Para el Alto Horno de Zinc, la isoterma buscada será de: $350\ Cº$
+    \item Para el Alto Horno de Hiero, la isoterma buscada será de: $1300\ Cº$
+\end{itemize}
+
+Luego, para cada ``horno'' se resolvió el sistema de ecuaciones mediante factorización LU, y se utilizaron los distintos métodos propuestos en la sección Implementación para hallar las isotermas correspondientes a partir de las soluciones de los sistemas.
+
+Los resultados obtenidos se muestran a continuación:
+
+\begin{table}[H]
+    \begin{center}
+        \begin{tabular}{| l | c | c | c |}
+            \hline
+            Instancia de prueba & Isoterma Promedio & Isoterma Regresión Lineal & Isoterma Búsqueda Binaria \\ \hline
+            H. Plomo - 30x30    & 5.3965            & 5.3988                    & 5.3916                    \\
+            H. Plomo - 60x60    & 5.3983            & 5.3986                    & 5.3916                    \\
+            H. Zinc - 30x30     & 7.3103            & 7.3060                    & 7.3126                    \\
+            H. Zinc - 60x60     & 7.3220            & 7.3053                    & 7.3127                    \\
+            H. Hierro - 30x30   & 11.4827           & 11.5226                   & 11.5477                   \\
+            H. Hierro - 60x60   & 11.5762           & 11.5208                   & 11.5479                   \\
+            \hline
+        \end{tabular}
+        \captionsetup{justification=centering}
+        \caption{Resultados obtenidos para las distintas instancias de prueba\\ y distintos métodos para hallar la isoterma.}
+    \end{center}
+\end{table}
+\textit{Nota: como las instancias de prueba tienen la misma temperatura de la pared interior para todos sus ángulos, y la misma temperatura de la pared exterior para todos sus ángulos, el radio de la isoterma tiene el mismo valor para todos los ángulos. Es por eso que solo se presenta un valor en el Cuadro 1 y no $n$ valores.}
+
+\medskip
+
+Y, a modo de ejemplo, los siguientes gráficos muestran para el Alto Horno de Hierro la úbicación de la isoterma con respecto a las paredes, y la evolución de la temperatura dentro de las mismas. Los gráficos para los otros Hornos son muy similares por lo que se omiten.
+
+\begin{figure}[H]
+    \begin{center}
+        \imagen{0.7}{imagenes/test_horno_hierro1.png}
+        \caption{Evolución de las temperaturas para el Alto Horno de Hierro}
+        \label{fig:solucion_hierro_1}
+    \end{center}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \imagen{0.50}{imagenes/test_isoterma_horno_hierro_1_binaria.png}
+        \captionsetup{justification=centering}
+        \caption{Ubicación de la isoterma para el Alto Horno de Hierro\\ (utilizando el método de Búsqueda Binaria)}
+        \label{fig:isoterma_binaria_hierro_1}
+    \end{center}
+\end{figure}
+
+DISCUSION DE LOS RESULTADOS OBTENIDOS
 
 \subsubsection{Proximidad de la isoterma}
+
+% Estudiar la proximidad de la isoterma buscada respecto de la pared exterior del horno en
+% funci ́
+% on de distintas granularidades de discretizaci ́on y las condiciones de borde.
 
 \subsection{Evaluación de los métodos}
 
