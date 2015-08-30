@@ -53,10 +53,50 @@ Para encontrar estos valores, transformamos la ecuaci\'on (\ref{calor}) en un co
 \frac{\partial^2T(r,\theta)}{\partial \theta^2}(r_j,\theta_k) \cong \frac{t_{j,k-1}-2t_{jk}+t_{j,k+1}}{(\Delta \theta)^2}
 \end{equation}
 
+\begin{equation}\label{5}
+\frac{\partial^2T(r,\theta)}{\partial r^2}+\frac{1}{r}\frac{\partial T(r,\theta)}{\partial r}+\frac{1}{r^2}\frac{\partial^2T(r,\theta)}{\partial \theta^2} \cong \frac{t_{j-1,k}-2t_{jk}+t_{j+1,k}}{(\Delta r)^2} + \frac{1}{r}\frac{t_{j,k}-t_{j-1,k}}{\Delta r} + \frac{1}{r^2}\frac{t_{j,k-1}-2t_{jk}+t_{j,k+1}}{(\Delta \theta)^2}
+\end{equation}
+
+Si agrupamos los términos para los $t$, la ecuación (\ref{5}) nos queda:
+
+\begin{equation}
+   \begin{aligned}
+    &(\frac{1}{(\Delta\ r)^2} - \frac{1}{(\Delta\ r) * r})t_{j-1,k} + (\frac{1}{(\Delta\theta)^2 * r^2})t_{j,k-1} +  (-\frac{2}{(\Delta\theta)^2 * r^2}-\frac{2}{(\Delta\ r)^2} +\\
+    &(\frac{1} {(\Delta\ r) * r})t_{j,k} + (\frac{1}{(\Delta\theta)^2 * r^2})t_{j,k+1} + (\frac{1}{(\Delta\ r)^2})t_{j+1,k} = 0
+    \end{aligned}
+\end{equation}
 
 \subsection{Representación del sistema}
+Sea:
 
-Para representar el sistema de ecuaciones presentado, se utilizará una matriz simple, implementada como un vector de vectores. A continuación, se muestra como quedaría la matriz para las ecuaciones de los puntos $t_{0,0}, t_{0,n-1}, t_{i,j}, t_{m,0}$ y $t_{m,n-1}$.
+\begin{itemize}
+    \item $\alpha = \frac{1}{(\Delta\theta)^2 * r^2}$
+    \item $\beta = \frac{1}{(\Delta\ r)^2}$
+    \item $\gamma = \frac{1}{(\Delta\ r) * r}$
+    \item $0 < i < n$
+    \item $0 < j < m+1$
+\end{itemize}
+
+A partir de lo detallado previamente, armamos el siguiente sistema de ecuaciones:
+    \begin{equation*}
+        \begin{aligned}
+          t_{r_{i},0} &= T_{i} \\
+          ...& \\
+          t_{r_{i},n} &= T_{i} \\
+          (\beta - \gamma)t_{i-1,0} + (\alpha)t_{i,n-1} + (-2\alpha-2\beta+\gamma)t_{i,0} + (\alpha)t_{i,1} + (\beta)t_{i+1,0} &= 0\\
+          ...& \\
+          (\beta - \gamma)t_{i-1,j} + (\alpha)t_{i,j-1} + (-2\alpha-2\beta+\gamma)t_{i,j} + (\alpha)t_{i,j+1} + (\beta)t_{i+1,j} &= 0\\
+          ...& \\
+          (\beta - \gamma)t_{m-2,n} + (\alpha)t_{m-1,n-1} + (-2\alpha-2\beta+\gamma)t_{m-1,n} + (\alpha)t_{m,0} + (\beta)t_{m,n} &= 0\\
+          t_{r_{e},0} &= T_{e}(0) \\
+          ...& \\
+          t_{r_{e},n} &= T_{e}(n) \\
+        \end{aligned}
+    \end{equation*}
+En donde las primeras $n$ ecuaciones, son las ecuaciones correspondientes al radio de la pared interior, $r_{i}$, para los distintos $\theta$ de la discretización. Luego para cada radio $r \neq r_{i}$ y $r \neq r_{e}$ , se listan las ecuaciones correspondientes a los distintos $\theta$ de la discretización. Por último las últimas $n$ ecuaciones son las ecuaciones correspondientes al radio de la pared exterior, $r_{e}$, para los distintos $\theta$ de la discretización.
+\newline
+\newline
+Para representar el sistema de ecuaciones presentado, se utilizará una matriz cuadrada simple de tamaño $n(m+1)$, en donde las filas representan las ecuaciones detalladas previamente y las columnas cada punto de la discretización, $t_{i,j}$, implementada como un vector de vectores. A continuación, se muestra como quedaría la matriz para las ecuaciones de los puntos $t_{0,0}, t_{0,n-1}, t_{i,j}, t_{m,0}$ y $t_{m,n-1}$.
 
 \[
     % reduce columns padding:
@@ -78,16 +118,9 @@ Para representar el sistema de ecuaciones presentado, se utilizará una matriz s
 \]
 \captionof{figure}{Matriz del Sistema}\label{fig:matriz}
 
-Donde,
-\begin{itemize}
-    \item $\alpha = \frac{1}{(\Delta\theta)^2 * r^2}$
-    \item $\beta = \frac{1}{(\Delta\ r)^2}$
-    \item $\gamma = \frac{1}{(\Delta\ r) * r}$
-    \item $0 < i < n$
-    \item $0 < j < m+1$
-\end{itemize}
-
 \medskip
+Notese que, para las filas que representan las ecuaciones de los puntos de la pared distintos del interior e exterior, los coeficientes distintos de 0 se ubican en $t_{i-1,j}$, $t_{i,j}$, $t_{i+1j0}$, $t_{i,j-1}$ y $t_{i,j+1}$.
+Es importante destacar que el primer coeficiente distinto de 0 es siempre $\beta - \gamma$, mientras que el ultimo es siempre $\beta$, siendo la distancia entre ellos $2n$. Esto se debe al hecho de que, en nuestra disposicion de las ecuaciones del sistema en la matriz,
+en las columnas fijamos el radio y luego avanzamos con los distintos angulos para ese radio, para luego avanzar de radio, por lo cual $t_{i-1,j}$ y $t_{i+1,j}$ seran siempre el primer e ultimo coeficiente distinto de 0 en ese tipo de fila.
 
-Notese que la ecuación del punto $t_{i,j}$ tiene ceros en todas sus celdas, excepto en las corresponiendentes a $t_{i-1,j}$, $t_{i,j}$, $t_{i+1j0}$, $t_{i,j-1}$ y $t_{i,j+1}$.
-Se puede ver que para cada fila de la matriz, hay una ``banda'' de tamaño $2n$ alrededor de la diagonal donde hay 5 elementos que no son cero.
+Esta caracteristica de la matriz la hace una matriz banda, en donde las diagonales $p, q = n$, estan compuestas por los valores $\beta - \gamma$ y $\beta$ respectivamente.
