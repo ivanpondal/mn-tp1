@@ -15,7 +15,7 @@ Para poder demostrar la proposición, utilizamos los siguientes lemas, que demos
   \end{lemma}
 
   \begin{proof}
-    A partir del Modelo descripto en el punto anterior, vease figura \ref{fig:matriz}, podemos concluir que la matriz es banda, más concretamente que si.
+    A partir del Modelo descripto en el punto anterior, vease figura \ref{fig:matriz}, podemos concluir que $A$ es una matriz banda.
   \end{proof}
 
   \begin{lemma}
@@ -23,7 +23,7 @@ Para poder demostrar la proposición, utilizamos los siguientes lemas, que demos
   \end{lemma}
 
   \begin{proof}
-    Por definición, una matriz es diagonal dominante (no estricamente) cuando se cumple que, $\forall i = 0,1,...,n-1$:
+    Por definición, una matriz es diagonal dominante (no estrictamente) cuando se cumple que, $\forall i = 0,1,...,n-1$:
     \begin{equation*}
         \begin{aligned}
           |a_{i,i}| &\geq \sum\limits_{\substack{j=0  \\ j \neq i}}^{n-1} |a_{i,j}| \\
@@ -36,10 +36,12 @@ Para poder demostrar la proposición, utilizamos los siguientes lemas, que demos
           |-2\alpha-2\beta+\gamma| \geq |\beta - \gamma| + |\alpha| + |\alpha| + |\beta|
         \end{aligned}
     \end{equation*}
-    Por definicion sabemos que $|\alpha| = \alpha$ y $|\beta| = \beta$.  
-    
-    Veamos que $|\beta - \gamma| = \beta - \gamma$, supongamos que $\beta - \gamma < 0$:
-    
+    \newline
+    Por definicion sabemos que $|\alpha| = \alpha$ y $|\beta| = \beta$.
+    \newline
+    \newline
+    Veamos que $|\beta - \gamma| = \beta - \gamma$. Supongamos que $\beta - \gamma < 0$:
+
     \begin{equation*}
         \begin{aligned}
           \beta &< \gamma \\
@@ -52,7 +54,9 @@ Para poder demostrar la proposición, utilizamos los siguientes lemas, que demos
           %\text{ Como los radios son todos mayores a 0, llegamos a un absurdo, que vino de suponer }\beta - \gamma &< 0, \text{por lo tanto }\beta - \gamma \geq 0.
         \end{aligned}
     \end{equation*}
-
+    Como los radios son todos mayores a 0, llegamos a un absurdo, que vino de suponer $\beta - \gamma < 0$, por lo tanto $\beta - \gamma \geq 0$.
+    \newline
+    \newline
     Deberiamos probar que la desigualdad se cumple para los siguientes casos:
 
     \begin{enumerate}
@@ -62,7 +66,7 @@ Para poder demostrar la proposición, utilizamos los siguientes lemas, que demos
     Veamos caso por caso:
     \begin{enumerate}
       \item \bm{$-2\alpha-2\beta+\gamma \geq 0$}:
-       
+
         \begin{equation*}
           \begin{aligned}
           -2\alpha-2\beta+\gamma &\geq \beta - \gamma + \alpha + \alpha + \beta \\
@@ -78,7 +82,7 @@ Para poder demostrar la proposición, utilizamos los siguientes lemas, que demos
           \begin{aligned}
            -2\alpha-2\beta+\gamma &\leq -\beta+\gamma-\alpha-\alpha-\beta \\
            \gamma - \gamma &\leq 2\beta - 2\beta + 2\alpha - 2\alpha \\
-           0 &\leq 0 
+           0 &\leq 0
           \end{aligned}
         \end{equation*}
 
@@ -96,7 +100,7 @@ Sea $A^{(1)}$ la matriz resultante luego de aplicar un paso de la Eliminación G
 
 \begin{equation*}
     \begin{aligned}
-      a^{(1)}_{i,j} &= a^{(0)}_{i,j} - \frac{a^{(0)}_{0,j}a^{(0)}_{i,j}}{a^{(0)}_{0,0}}, para 1 \leq j \leq n-1
+      a^{(1)}_{i,j} &= a^{(0)}_{i,j} - \frac{a^{(0)}_{0,j}a^{(0)}_{i,j}}{a^{(0)}_{0,0}}, \text{para } 1 \leq j \leq n-1
     \end{aligned}
 \end{equation*}
 
@@ -117,7 +121,7 @@ Sabemos que $a^{(1)}_{i,0} = 0$. Luego:
 
 
 \item Por lo tanto, el dominio diagonal no estricto se establece en los renglones $1,..,n-1$, y como el primer renglon de $A^{(1)}$ y de $A$ son iguales,
-$A^{(1)}$ sera diagonal dominante no estricto. 
+$A^{(1)}$ sera diagonal dominante no estricto.
 
 \item Para poder aplicar un paso más de la Eliminación Gaussiana, es necesario que $a^{(1)}_{1,1} \neq 0$. Sabemos por definición del Modelo que $a^{(0)}_{1,1} = 1$, y como $a^{(0)}_{1,0} = 0$, por definición de la Eliminación Gaussiana $a^{(1)}_{1,1} = 1$. Esta situación se repite para las $n$ primeras flas de $A$, ya que para $\forall i=0,...,n-1$ $\forall j=0,...,n(m+1)-1 \land j \neq i, a^{(0)}_{i,j} = 0$, por lo tanto podemos afimar que podemos realizar los primeros $n-1$ pasos de la Eliminación Gaussiana, y que la matriz $A^{(n-1)}$ será diagonal dominante no estricta (repitiendo el procedmiento hecho para $A^{(1)}$).
 
@@ -130,5 +134,3 @@ $A^{(1)}$ sera diagonal dominante no estricto.
 \end{itemize}
 
 \end{proof}
-
-
