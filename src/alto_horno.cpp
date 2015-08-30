@@ -274,7 +274,7 @@ bool AltoHorno::evaluarEstructura(const vector<double> &isoterma, double epsilon
 	for(int i = 0; i < cantAngulos; i++) {
 		double delta = (radioExterior - isoterma[i])/aux;
 		deltas[i] = delta;
-		if (epsilon >= epsilon) {
+		if (epsilon >= delta) {
 			delta_mayor_epsilon = true;
 		}
 	}

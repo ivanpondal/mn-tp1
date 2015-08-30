@@ -137,6 +137,105 @@ DISCUSION DE LOS RESULTADOS OBTENIDOS
 % funci ́
 % on de distintas granularidades de discretizaci ́on y las condiciones de borde.
 
+Para estudiar la proximidad de la isoterma buscada respecto de la pared exterior del horno vamos a usar las siguientes instancias de prueba:
+\begin{itemize}
+    \item Alto Horno de Plomo, variando la temperatura de la pared externa a $180\ Cº$, con una discretización de 15 ángulos y 15 radios.
+    \item Alto Horno de Plomo, variando la temperatura de la pared externa a $180\ Cº$, con una discretización de 30 ángulos y 30 radios.
+    \item Alto Horno de Plomo, variando la temperatura de la pared externa a $180\ Cº$, con una discretización de 60 ángulos y 60 radios.
+\end{itemize}
+
+Se experimentará con los 3 métodos propuestos para hallar isotermas (Promedio, Regresión Lineal y Búsqueda Binaria) y con las 2 medidas de peligrosidad propuestas (Proximidad Porcentual Simple y Promediada).
+
+La siguiente tabla muestra los resultados obtenidos:
+
+\begin{table}[H]
+    \begin{center}
+        \begin{tabular}{| l | c | c | c |}
+            \hline
+            Instancia de prueba & Isoterma Promedio & Isoterma Regresión Lineal & Isoterma Búsqueda Binaria \\ \hline
+            H. Plomo - 15x15    & 5.8214            & 5.8500                    & 5.8529                    \\
+            H. Plomo - 30x30    & 5.8448            & 5.8495                    & 5.8529                    \\
+            H. Plomo - 60x60    & 5.8559            & 5.8493                    & 5.8529                    \\
+            \hline
+        \end{tabular}
+        \captionsetup{justification=centering}
+        \caption{Resultados obtenidos para las distintas instancias de prueba\\ y distintos métodos para hallar la isoterma.}
+    \end{center}
+\end{table}
+
+Luego, si tomamos un $\varepsilon_C = 0.25$ tenemos que para todos lo métodos y discretizaciones la estructura se encuentra en peligro.
+Y tomando un $\varepsilon_C = 0.10$ tenemos que para todos lo métodos y discretizaciones la estructura \textbf{no} se encuentra en peligro.
+Por último, tomando un valor intermedio de $\varepsilon_C = 0.15$ tenemos que:
+
+\begin{table}[H]
+    \begin{center}
+        \begin{tabular}{| l | c | c | c |}
+            \hline
+            Instancia de prueba & Isoterma Promedio  & Isoterma Regresión Lineal & Isoterma Búsqueda Binaria \\ \hline
+            H. Plomo - 15x15    & Fuera de peligro   & \textbf{Peligrosa}        & \textbf{Peligrosa}        \\
+            H. Plomo - 30x30    & Fuera de peligro   & Fuera de peligro          & \textbf{Peligrosa}        \\
+            H. Plomo - 60x60    & \textbf{Peligrosa} & 5.8493                    & \textbf{Peligrosa}        \\
+            \hline
+        \end{tabular}
+        \captionsetup{justification=centering}
+        \caption{Evaluación de la peligrosidad de la estructura con $\varepsilon_C = 0.15$}
+    \end{center}
+\end{table}
+
+DISCUSION DE LOS RESULTADOS OBTENIDOS
+
+% exp_isoterma_horno_plomo_3a...
+% 	Generando imagenes...
+%
+% 	Evaluando estructura...
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.25, iso_avg): true
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.25, iso_linear_fit): true
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.25, iso_binaria): true
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.15, iso_avg): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.15, iso_linear_fit): true
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.15, iso_binaria): true
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.1, iso_avg): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.1, iso_linear_fit): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.1, iso_binaria): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.05, iso_avg): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.05, iso_linear_fit): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.05, iso_binaria): false
+% ok
+% exp_isoterma_horno_plomo_3b...
+% 	Generando imagenes...
+%
+% 	Evaluando estructura...
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.25, iso_avg): true
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.25, iso_linear_fit): true
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.25, iso_binaria): true
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.15, iso_avg): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.15, iso_linear_fit): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.15, iso_binaria): true
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.1, iso_avg): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.1, iso_linear_fit): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.1, iso_binaria): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.05, iso_avg): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.05, iso_linear_fit): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.05, iso_binaria): false
+% ok
+% exp_isoterma_horno_plomo_3c...
+% 	Generando imagenes...
+%
+% 	Evaluando estructura...
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.25, iso_avg): true
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.25, iso_linear_fit): true
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.25, iso_binaria): true
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.15, iso_avg): true
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.15, iso_linear_fit): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.15, iso_binaria): true
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.1, iso_avg): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.1, iso_linear_fit): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.1, iso_binaria): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.05, iso_avg): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.05, iso_linear_fit): false
+% 	La estructura esta en peligro (SIMPLE, epsilon: 0.05, iso_binaria): false
+% ok
+
 \subsection{Evaluación de los métodos}
 
 \subsubsection{Tiempo de cómputo}

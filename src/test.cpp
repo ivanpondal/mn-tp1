@@ -146,21 +146,21 @@ void check_evaluar_estructura_simple(){
 	vector<double> iso_binaria = altoHorno.calcularIsoterma(BINARIA);
 
 	cout << endl;
-	cout << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.25, SIMPLE) << endl;
-	cout << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.25, SIMPLE) << endl;
-	cout << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.25, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.25, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.25, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.25, SIMPLE) << endl;
 
-	cout << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.15, SIMPLE) << endl;
-	cout << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.15, SIMPLE) << endl;
-	cout << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.15, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.15, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.15, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.15, SIMPLE) << endl;
 
-	cout << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.05, SIMPLE) << endl;
-	cout << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.05, SIMPLE) << endl;
-	cout << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.05, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.05, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.05, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.05, SIMPLE) << endl;
 
-	cout << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.01 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.01, SIMPLE) << endl;
-	cout << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.01 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.01, SIMPLE) << endl;
-	cout << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.01 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.01, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.01 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.01, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.01 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.01, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.01 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.01, SIMPLE) << endl;
 }
 
 void check_evaluar_estructura_promedio(){
@@ -173,21 +173,21 @@ void check_evaluar_estructura_promedio(){
 	vector<double> iso_binaria = altoHorno.calcularIsoterma(BINARIA);
 
 	cout << endl;
-	cout << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.25, PROM) << endl;
-	cout << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.25, PROM) << endl;
-	cout << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.25, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.25, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.25, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.25, PROM) << endl;
 
-	cout << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.15, PROM) << endl;
-	cout << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.15, PROM) << endl;
-	cout << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.15, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.15, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.15, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.15, PROM) << endl;
 
-	cout << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.05, PROM) << endl;
-	cout << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.05, PROM) << endl;
-	cout << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.05, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.05, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.05, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.05, PROM) << endl;
 
-	cout << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.01 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.01, PROM) << endl;
-	cout << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.01 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.01, PROM) << endl;
-	cout << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.01 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.01, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.01 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.01, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.01 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.01, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.01 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.01, PROM) << endl;
 }
 
 // ----------------------------------------------------------------------------
@@ -251,11 +251,11 @@ void exp_isoterma_horno_plomo_1(){
 	cout << endl << "\tGenerando imagenes..." << endl;
 	char command[500];
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 }
 
 void exp_isoterma_horno_zinc_1(){
@@ -274,11 +274,11 @@ void exp_isoterma_horno_zinc_1(){
 	cout << endl << "\tGenerando imagenes..." << endl;
 	char command[500];
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 }
 
 void exp_isoterma_horno_hierro_1(){
@@ -297,11 +297,11 @@ void exp_isoterma_horno_hierro_1(){
 	cout << endl << "\tGenerando imagenes..." << endl;
 	char command[500];
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 }
 
 void exp_isoterma_horno_plomo_2(){
@@ -320,11 +320,11 @@ void exp_isoterma_horno_plomo_2(){
 	cout << endl << "\tGenerando imagenes..." << endl;
 	char command[500];
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 }
 
 void exp_isoterma_horno_zinc_2(){
@@ -343,11 +343,11 @@ void exp_isoterma_horno_zinc_2(){
 	cout << endl << "\tGenerando imagenes..." << endl;
 	char command[500];
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 }
 
 void exp_isoterma_horno_hierro_2(){
@@ -366,11 +366,197 @@ void exp_isoterma_horno_hierro_2(){
 	cout << endl << "\tGenerando imagenes..." << endl;
 	char command[500];
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
 	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
-	system(command);
+	if(system(command)) { cout << "System failed" << endl; };
+}
+
+void exp_isoterma_horno_plomo_3a(){
+	string entrada = "tests/test_horno_plomo3a.inn";
+	string salida_sistema = "tests/test_horno_plomo3a.out";
+	string salida_isoterma_avg = "tests/test_isoterma_horno_plomo_3a_avg.out";
+	string salida_isoterma_linear_fit = "tests/test_isoterma_horno_plomo_3a_linear_fit.out";
+	string salida_isoterma_binaria = "tests/test_isoterma_horno_plomo_3a_binaria.out";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), LU);
+	altoHorno.escribirIsoterma(salida_isoterma_avg.c_str(), AVG);
+	altoHorno.escribirIsoterma(salida_isoterma_linear_fit.c_str(), LINEAR_FIT);
+	altoHorno.escribirIsoterma(salida_isoterma_binaria.c_str(), BINARIA);
+
+	// generar imagenes:
+	cout << endl << "\tGenerando imagenes..." << endl;
+	char command[500];
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
+	if(system(command)) { cout << "System failed" << endl; };
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
+	if(system(command)) { cout << "System failed" << endl; };
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
+	if(system(command)) { cout << "System failed" << endl; };
+
+	// evaluando la peligrosidad de la estructura:
+	vector<double> iso_avg = altoHorno.calcularIsoterma(AVG);
+	vector<double> iso_linear_fit = altoHorno.calcularIsoterma(LINEAR_FIT);
+	vector<double> iso_binaria = altoHorno.calcularIsoterma(BINARIA);
+
+	cout << endl << "\tEvaluando estructura..." << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.25, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.25, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.25, SIMPLE) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.15, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.15, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.15, SIMPLE) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.10 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.10, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.10 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.10, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.10 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.10, SIMPLE) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.05, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.05, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.05, SIMPLE) << endl;
+
+	cout << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.25, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.25, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.25, PROM) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.15, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.15, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.15, PROM) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.10 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.10, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.10 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.10, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.10 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.10, PROM) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.05, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.05, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.05, PROM) << endl;
+}
+
+void exp_isoterma_horno_plomo_3b(){
+	string entrada = "tests/test_horno_plomo3b.inn";
+	string salida_sistema = "tests/test_horno_plomo3b.out";
+	string salida_isoterma_avg = "tests/test_isoterma_horno_plomo_3b_avg.out";
+	string salida_isoterma_linear_fit = "tests/test_isoterma_horno_plomo_3b_linear_fit.out";
+	string salida_isoterma_binaria = "tests/test_isoterma_horno_plomo_3b_binaria.out";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), LU);
+	altoHorno.escribirIsoterma(salida_isoterma_avg.c_str(), AVG);
+	altoHorno.escribirIsoterma(salida_isoterma_linear_fit.c_str(), LINEAR_FIT);
+	altoHorno.escribirIsoterma(salida_isoterma_binaria.c_str(), BINARIA);
+
+	// generar imagenes:
+	cout << endl << "\tGenerando imagenes..." << endl;
+	char command[500];
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
+	if(system(command)) { cout << "System failed" << endl; };
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
+	if(system(command)) { cout << "System failed" << endl; };
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
+	if(system(command)) { cout << "System failed" << endl; };
+
+	// evaluando la peligrosidad de la estructura:
+	vector<double> iso_avg = altoHorno.calcularIsoterma(AVG);
+	vector<double> iso_linear_fit = altoHorno.calcularIsoterma(LINEAR_FIT);
+	vector<double> iso_binaria = altoHorno.calcularIsoterma(BINARIA);
+
+	cout << endl << "\tEvaluando estructura..." << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.25, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.25, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.25, SIMPLE) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.15, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.15, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.15, SIMPLE) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.10 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.10, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.10 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.10, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.10 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.10, SIMPLE) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.05, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.05, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.05, SIMPLE) << endl;
+
+	cout << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.25, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.25, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.25, PROM) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.15, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.15, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.15, PROM) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.10 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.10, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.10 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.10, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.10 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.10, PROM) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.05, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.05, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.05, PROM) << endl;
+}
+
+void exp_isoterma_horno_plomo_3c(){
+	string entrada = "tests/test_horno_plomo3c.inn";
+	string salida_sistema = "tests/test_horno_plomo3c.out";
+	string salida_isoterma_avg = "tests/test_isoterma_horno_plomo_3c_avg.out";
+	string salida_isoterma_linear_fit = "tests/test_isoterma_horno_plomo_3c_linear_fit.out";
+	string salida_isoterma_binaria = "tests/test_isoterma_horno_plomo_3c_binaria.out";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones(salida_sistema.c_str(), LU);
+	altoHorno.escribirIsoterma(salida_isoterma_avg.c_str(), AVG);
+	altoHorno.escribirIsoterma(salida_isoterma_linear_fit.c_str(), LINEAR_FIT);
+	altoHorno.escribirIsoterma(salida_isoterma_binaria.c_str(), BINARIA);
+
+	// generar imagenes:
+	cout << endl << "\tGenerando imagenes..." << endl;
+	char command[500];
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_avg.c_str());
+	if(system(command)) { cout << "System failed" << endl; };
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_linear_fit.c_str());
+	if(system(command)) { cout << "System failed" << endl; };
+	sprintf(command, "octave --path tools/ --eval 'horno %s %s %s' >> /dev/null", entrada.c_str(), salida_sistema.c_str(), salida_isoterma_binaria.c_str());
+	if(system(command)) { cout << "System failed" << endl; };
+
+	// evaluando la peligrosidad de la estructura:
+	vector<double> iso_avg = altoHorno.calcularIsoterma(AVG);
+	vector<double> iso_linear_fit = altoHorno.calcularIsoterma(LINEAR_FIT);
+	vector<double> iso_binaria = altoHorno.calcularIsoterma(BINARIA);
+
+	cout << endl << "\tEvaluando estructura..." << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.25, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.25, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.25 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.25, SIMPLE) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.15, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.15, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.15 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.15, SIMPLE) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.10 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.10, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.10 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.10, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.10 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.10, SIMPLE) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.05, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.05, SIMPLE) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (SIMPLE, epsilon: "<< 0.05 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.05, SIMPLE) << endl;
+
+	cout << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.25, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.25, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.25 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.25, PROM) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.15, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.15, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.15 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.15, PROM) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.10 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.10, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.10 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.10, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.10 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.10, PROM) << endl;
+
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.05, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.05, PROM) << endl;
+	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.05, PROM) << endl;
 }
 
 // para correr un test: ./test test.in test.expected {0: EG, 1: LU}
@@ -402,6 +588,7 @@ int main(int argc, char *argv[])
 		//RUN_TEST(check_calidad_isoterma);
 
 		// tests de datos para la experimentacion del informe
+		// discretizacion:
 		/*RUN_TEST(exp_discretizacion_horno_plomo_1_numero_condicion);
 		RUN_TEST(exp_discretizacion_horno_zinc_1_numero_condicion);
 		RUN_TEST(exp_discretizacion_horno_hierro_1_numero_condicion);*/
@@ -409,13 +596,17 @@ int main(int argc, char *argv[])
 		// RUN_TEST(exp_discretizacion_horno_plomo_2_numero_condicion);
 		// RUN_TEST(exp_discretizacion_horno_zinc_2_numero_condicion);
 		// RUN_TEST(exp_discretizacion_horno_hierro_2_numero_condicion);
-		RUN_TEST(exp_isoterma_horno_plomo_1);
+		/*RUN_TEST(exp_isoterma_horno_plomo_1);
 		RUN_TEST(exp_isoterma_horno_zinc_1);
-		RUN_TEST(exp_isoterma_horno_hierro_1);
+		RUN_TEST(exp_isoterma_horno_hierro_1);*/
 		// tests pesados que tardan un poco más:
-		RUN_TEST(exp_isoterma_horno_plomo_2);
-		RUN_TEST(exp_isoterma_horno_zinc_2);
-		RUN_TEST(exp_isoterma_horno_hierro_2);
+		// RUN_TEST(exp_isoterma_horno_plomo_2);
+		// RUN_TEST(exp_isoterma_horno_zinc_2);
+		// RUN_TEST(exp_isoterma_horno_hierro_2);
+		// proximidad de la isoterma:
+		// RUN_TEST(exp_isoterma_horno_plomo_3a);
+		// RUN_TEST(exp_isoterma_horno_plomo_3b);
+		// RUN_TEST(exp_isoterma_horno_plomo_3c);
 
 		// script importante:
 		// octave --path tools/ --eval 'horno tests/test_horno_hierro1.inn tests/test_horno_hierro1.out tests/test_isoterma_horno_hierro_1_binaria.out'
