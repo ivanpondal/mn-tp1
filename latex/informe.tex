@@ -14,9 +14,13 @@
 \usepackage{float}
 \usepackage{amsmath, amsthm, amssymb}
 \newtheorem{theorem}{Teorema}
+\newtheorem{customthm}{Teorema}
 \newtheorem{corollary}{Corolario}[theorem]
 \newtheorem{proposition}[theorem]{Proposición}
-\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{innercustomlemma}{Lemma}
+\newenvironment{customlemma}[1]
+  {\renewcommand\theinnercustomlemma{#1}\innercustomlemma}
+  {\endinnercustomlemma}
 \usepackage{amsfonts}
 \usepackage{sectsty}
 \usepackage{charter}
