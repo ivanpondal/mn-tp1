@@ -1,5 +1,7 @@
 #include "mini_test.h"
 #include "alto_horno.h"
+#include "sistema_ecuaciones.h"
+#include "utils.cpp"
 
 #include <string>
 #include <sstream>
@@ -233,6 +235,19 @@ void exp_discretizacion_horno_hierro_2_numero_condicion(){
 	AltoHorno altoHorno(entrada.c_str());
 	cout << endl;
 	cout << "\tNumero condicion Horno Hierro 2: " << altoHorno.calcularNumeroCondicion() << endl;
+}
+
+void exp_calidad_solucion_horno_plomo_1() {
+	string entrada = "tests/test_horno_plomo1.inn";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones("/dev/null", GAUSS);
+
+	vector<vector<double> > X =  altoHorno.darSoluciones()[0];
+	SistemaEcuaciones sistema =  altoHorno.darSistema();
+	vector<vector<double> > A = sistema.darMatriz();
+	vector<double> b = sistema.darInstancias()[0];
+
+	vector<double> b_prime = utils.multiply(A, X);
 }
 
 void exp_isoterma_horno_plomo_1(){
@@ -596,6 +611,9 @@ int main(int argc, char *argv[])
 		// RUN_TEST(exp_discretizacion_horno_plomo_2_numero_condicion);
 		// RUN_TEST(exp_discretizacion_horno_zinc_2_numero_condicion);
 		// RUN_TEST(exp_discretizacion_horno_hierro_2_numero_condicion);
+		// calidad de la solucion:
+
+		// isotermas:
 		/*RUN_TEST(exp_isoterma_horno_plomo_1);
 		RUN_TEST(exp_isoterma_horno_zinc_1);
 		RUN_TEST(exp_isoterma_horno_hierro_1);*/
@@ -603,6 +621,7 @@ int main(int argc, char *argv[])
 		// RUN_TEST(exp_isoterma_horno_plomo_2);
 		// RUN_TEST(exp_isoterma_horno_zinc_2);
 		// RUN_TEST(exp_isoterma_horno_hierro_2);
+
 		// proximidad de la isoterma:
 		// RUN_TEST(exp_isoterma_horno_plomo_3a);
 		// RUN_TEST(exp_isoterma_horno_plomo_3b);

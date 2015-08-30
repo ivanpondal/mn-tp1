@@ -108,6 +108,10 @@ vector<pair<vector<double>, vector<double> > > AltoHorno::darInstancias(){
 	return this->instancias;
 }
 
+SistemaEcuaciones AltoHorno::darSistema(){
+	return this->sistemaTemperaturas;
+}
+
 void AltoHorno::generarSoluciones(const char* salida, TipoResolucion tipo){
 	ofstream archivoSalida;
 	archivoSalida.open(salida);

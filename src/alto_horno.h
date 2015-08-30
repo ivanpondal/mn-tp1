@@ -27,6 +27,7 @@ class AltoHorno{
 		bool evaluarEstructura(const vector<double> &isoterma, double epsilon, TipoEvaluacion tipo);
 		vector<pair<vector<double>, vector<double> > > darInstancias();
 		vector<vector<double> > darSoluciones();
+		SistemaEcuaciones darSistema();
 
 	private:
 		void cargar(istream& entrada);

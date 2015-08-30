@@ -13,6 +13,14 @@ SistemaEcuaciones::SistemaEcuaciones(vector<vector<double> > A, vector<vector<do
 	this->cantAngulos = cantAngulos;
 }
 
+vector<vector<double> > SistemaEcuaciones::darMatriz() {
+	return this->A;
+}
+
+vector<vector<double> > SistemaEcuaciones::darInstancias() {
+	return this->instB;
+}
+
 vector<double> SistemaEcuaciones::resolverSistema(int instancia, TipoResolucion tipo){
 	// copio por si luego quisiera usar otro método
 	vector<vector<double> > mA = this->A;

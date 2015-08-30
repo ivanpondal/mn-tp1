@@ -14,6 +14,8 @@ class SistemaEcuaciones{
 		SistemaEcuaciones();
 		SistemaEcuaciones(vector<vector<double> > A, vector<vector<double> > instB, int dimMatriz, int cantAngulos);
 		vector<double> resolverSistema(int instancia, TipoResolucion tipo);
+		vector<vector<double> > darMatriz();
+		vector<vector<double> > darInstancias();
 		double calcularNumeroCondicion();
 	private:
 		vector<vector<double> > A;
