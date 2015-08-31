@@ -5,6 +5,7 @@
 
 #include <string>
 #include <sstream>
+#include <math.h>
 
 // ----------------------------------------------------------------------------
 // tests generales para evaluar las funciones
@@ -242,12 +243,27 @@ void exp_calidad_solucion_horno_plomo_1() {
 	AltoHorno altoHorno(entrada.c_str());
 	altoHorno.generarSoluciones("/dev/null", GAUSS);
 
-	vector<vector<double> > X =  altoHorno.darSoluciones()[0];
+	vector<double> X =  altoHorno.darSoluciones()[0];
 	SistemaEcuaciones sistema =  altoHorno.darSistema();
 	vector<vector<double> > A = sistema.darMatriz();
 	vector<double> b = sistema.darInstancias()[0];
+	cout << endl << "b = ";
+	for (int i = 0; i < (int)b.size(); ++i) {
+		cout << b[i] << " ";
+	}
 
-	vector<double> b_prime = utils.multiply(A, X);
+	// traspongo X para poder multiplicarlo por A
+	vector<vector<double> > aux(X.size());
+	for (int i = 0; i < (int)X.size(); ++i) {
+		vector<double> elem;
+		elem.push_back(X[i]);
+		aux[i] = (elem);
+	}
+	cout << endl << "b' = ";
+	vector<vector<double> > b_prime = Utils::multiply(A, aux);
+	for (int i = 0; i < (int)b_prime.size(); ++i) {
+		cout << setprecision(5) << round(b_prime[i][0]) << " ";
+	}
 }
 
 void exp_isoterma_horno_plomo_1(){
@@ -612,6 +628,7 @@ int main(int argc, char *argv[])
 		// RUN_TEST(exp_discretizacion_horno_zinc_2_numero_condicion);
 		// RUN_TEST(exp_discretizacion_horno_hierro_2_numero_condicion);
 		// calidad de la solucion:
+		RUN_TEST(exp_calidad_solucion_horno_plomo_1);
 
 		// isotermas:
 		/*RUN_TEST(exp_isoterma_horno_plomo_1);

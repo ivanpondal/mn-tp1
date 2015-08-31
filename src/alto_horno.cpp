@@ -104,6 +104,10 @@ double AltoHorno::kesimoAngulo(int k){
 	return 2*PI*((k + this->cantAngulos) % this->cantAngulos)/this->cantAngulos;
 }
 
+vector<vector<double> > AltoHorno::darSoluciones(){
+	return this->soluciones;
+}
+
 vector<pair<vector<double>, vector<double> > > AltoHorno::darInstancias(){
 	return this->instancias;
 }
