@@ -53,11 +53,13 @@ Para encontrar estos valores, transformamos la ecuaci\'on (\ref{calor}) en un co
 \frac{\partial^2T(r,\theta)}{\partial \theta^2}(r_j,\theta_k) \cong \frac{t_{j,k-1}-2t_{jk}+t_{j,k+1}}{(\Delta \theta)^2}
 \end{equation}
 
-\begin{equation}\label{5}
+Luego,
+
+\begin{equation}\label{calor_discretizada}
 \frac{\partial^2T(r,\theta)}{\partial r^2}+\frac{1}{r}\frac{\partial T(r,\theta)}{\partial r}+\frac{1}{r^2}\frac{\partial^2T(r,\theta)}{\partial \theta^2} \cong \frac{t_{j-1,k}-2t_{jk}+t_{j+1,k}}{(\Delta r)^2} + \frac{1}{r}\frac{t_{j,k}-t_{j-1,k}}{\Delta r} + \frac{1}{r^2}\frac{t_{j,k-1}-2t_{jk}+t_{j,k+1}}{(\Delta \theta)^2}
 \end{equation}
 
-Si agrupamos los términos para los $t$, la ecuación (\ref{5}) nos queda:
+Si agrupamos los términos para los $t$, la ecuación (\ref{calor_discretizada}) nos queda:
 
 \begin{equation}
    \begin{aligned}
@@ -124,7 +126,7 @@ Para representar el sistema de ecuaciones presentado, se utilizará una matriz c
 \captionof{figure}{Matriz del Sistema}\label{fig:matriz}
 
 \medskip
-Notese que, para las filas que representan las ecuaciones de los puntos de la pared distintos del interior e exterior, los coeficientes distintos de 0 se ubican en $t_{i-1,j}$, $t_{i,j}$, $t_{i+1j0}$, $t_{i,j-1}$ y $t_{i,j+1}$.
+Notese que, para las filas que representan las ecuaciones de los puntos de la pared distintos del interior e exterior, los coeficientes distintos de 0 se ubican en $t_{i-1,j}$, $t_{i,j}$, $t_{i+1,j}$, $t_{i,j-1}$ y $t_{i,j+1}$.
 Es importante destacar que el primer coeficiente distinto de 0 es siempre $\beta_{k} - \gamma_{k}$, mientras que el ultimo es siempre $\beta_{k}$, siendo la distancia entre ellos $2n$. Esto se debe al hecho de que, en nuestra disposicion de las ecuaciones del sistema en la matriz,
 en las columnas fijamos el radio y luego avanzamos con los distintos angulos para ese radio, para luego avanzar de radio, por lo cual $t_{i-1,j}$ y $t_{i+1,j}$ seran siempre el primer e ultimo coeficiente distinto de 0 en ese tipo de fila.
 
