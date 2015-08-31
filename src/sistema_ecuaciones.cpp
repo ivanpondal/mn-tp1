@@ -22,29 +22,31 @@ vector<vector<double> > SistemaEcuaciones::darInstancias() {
 }
 
 vector<double> SistemaEcuaciones::resolverSistema(int instancia, TipoResolucion tipo){
-	// copio por si luego quisiera usar otro método
-	vector<vector<double> > mA = this->A;
 	vector<double> b = this->instB[instancia];
+	vector<double> x; // respuesta
 
 	if (tipo == LU) {
 		//calculo la factorizacion LU de A y la guardo en this->factorizacionLU (si no la habia calculado previamente)
 		if (factorizacionLU.size()==0){
 			factorizarLU(this->A);
+			//ahora como L*U*x = A*x = b, sea U*x = y => L*y = b
+			this->y = resolverTriangularInferiorLU(this->factorizacionLU, b, this->dimMatriz);
 		}
-		//ahora como L*U*x = A*x = b, sea U*x = y => L*y = b
-		vector<double> y = resolverTriangularInferiorLU(this->factorizacionLU, b, this->dimMatriz);
 		//ya obtuve 'y', ahora hallo 'x' resolviendo U*x = y
-		vector<double> x = resolverTriangularSuperior(this->factorizacionLU, y, this->dimMatriz);
-		return x;
+		x = resolverTriangularSuperior(this->factorizacionLU, this->y, this->dimMatriz);
 	} else {
+		// copio por si luego quisiera usar otro método
+		vector<vector<double> > mA = this->A;
 		if (BANDA) {
 			eliminacionGaussianaBanda(mA, b, this->dimMatriz, this->cantAngulos);
-			return resolverTriangularSuperior(mA, b, this->dimMatriz);
+			x = resolverTriangularSuperior(mA, b, this->dimMatriz);
 		} else {
 			eliminacionGaussiana(mA, b, this->dimMatriz);
-			return resolverTriangularSuperior(mA, b, this->dimMatriz);
+			x = resolverTriangularSuperior(mA, b, this->dimMatriz);
 		}
 	}
+
+	return x;
 }
 
 vector<double> SistemaEcuaciones::resolverTriangularSuperior(const vector<vector<double> > &U, const vector<double> &b, int n){

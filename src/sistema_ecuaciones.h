@@ -21,6 +21,7 @@ class SistemaEcuaciones{
 		vector<vector<double> > A;
 		vector<vector<double> > instB;
 		vector<vector<double> > factorizacionLU;
+		vector<double> y;
 		int dimMatriz;
 		int cantAngulos;
 		vector<double> resolverTriangularSuperior(const vector<vector<double> > &U, const vector<double> &b, int n);
