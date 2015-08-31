@@ -261,7 +261,7 @@ vector<double> AltoHorno::calcularIsotermaLinearFit(int instancia) {
 		}
 
 		double slope = slope_numerator / slope_denominator;
-		double intercept = avgY - slope * avgX;
+		double intercept = (avgY - slope * avgX) / this->cantParticiones;
 		// cout << "slope: " << slope << endl;
 		// cout << "intercept: " << intercept << endl;
 
