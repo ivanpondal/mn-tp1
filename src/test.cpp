@@ -6,8 +6,12 @@
 #include <string>
 #include <sstream>
 #include <math.h>
+#include <ctime>
+#include <chrono>
 
 // ----------------------------------------------------------------------------
+static chrono::time_point<chrono::high_resolution_clock> start_time;
+
 // tests generales para evaluar las funciones
 
 void check_carga_alto_horno_instancias_una(){
@@ -800,6 +804,80 @@ void exp_isoterma_horno_plomo_3c(){
 	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_avg): " << altoHorno.evaluarEstructura(iso_avg, 0.05, PROM) << endl;
 	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_linear_fit): " << altoHorno.evaluarEstructura(iso_linear_fit, 0.05, PROM) << endl;
 	cout << boolalpha << "\tLa estructura esta en peligro (PROM, epsilon: "<< 0.05 <<", iso_binaria): " << altoHorno.evaluarEstructura(iso_binaria, 0.05, PROM) << endl;
+}
+
+void start_timer() {
+    start_time = chrono::high_resolution_clock::now();
+}
+
+double stop_timer() {
+    chrono::time_point<chrono::high_resolution_clock> end_time = chrono::high_resolution_clock::now();
+    return double(chrono::duration_cast<chrono::nanoseconds>(end_time - start_time).count());
+}
+
+
+void exp_temporal() {
+	// Archivo donde guardo resultados
+	FILE* salida = fopen("exp/salida.txt","w+");	
+	fprintf(salida, "n*m t_G t_LU\n"); 
+	// Valores del horno de hierro
+	int ri = 11;
+	int re = 15;
+	int iso = 500;
+	int ninst = 1;
+	int Ti = 1538;
+	int Te = 20;
+	// Genero instancias del problema con valores del horno de hierro
+	int n = 4;
+	int m = 2;
+	// Valores de la experimentacion, fijando el m
+	int limite_m = 30;
+	int muestras = 10;
+	// Guardo tiempos
+	vector <int> tiempos_gauss(limite_m + m, 0);
+	vector <int> tiempos_LU(limite_m + m, 0);
+	
+	for (int i = m; i =< limite_m + m; i++) {
+		FILE* entrada = fopen("exp/entrada.txt","w+");
+		fprintf(entrada, "%d %d %d %d %d %d \n", ri, re, m, n, iso, ninst);
+	
+		for (int j = 0; j < n; j++) {
+			fprintf(entrada, "%d", Ti);
+		}
+
+		for (int j = 0; j < n; j++) {
+			fprintf(entrada, "%d", Te);
+		}
+
+		fclose(entrada);
+		double tiempo;
+		// Solucion para Gauss
+		for (int muestra = 0; muestra < muestras; muestra++) {
+			AltoHorno instancia(entrada); 
+			start_timer();
+			instancia.resolverSistema(GAUSS);
+			tiempo = stop_timer();
+			tiempos_gauss[i] += tiempo;
+
+		}
+		// Solucion LU
+		for (int muestra = 0; muestra < muestras; muestra++) {
+			AltoHorno instancia(entrada); 
+			start_timer();
+			instancia.resolverSistema(LU);
+			tiempo = stop_timer();
+			tiempos_LU[i] += tiempo;
+
+		}
+	
+	}
+
+	for (int i = m; i < tiempos_gauss.size(); i++) {
+		fprintf(salida, "%d %.0f %.0f\n", n*m, tiempos_gauss[i]/muestras, tiempos_LU[i]/muestras); 
+	}
+
+	fclose(salida);
+
 }
 
 // para correr un test: ./test test.in test.expected {0: EG, 1: LU}
