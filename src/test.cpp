@@ -247,10 +247,10 @@ void exp_calidad_solucion_horno_plomo_1() {
 	SistemaEcuaciones sistema =  altoHorno.darSistema();
 	vector<vector<double> > A = sistema.darMatriz();
 	vector<double> b = sistema.darInstancias()[0];
-	cout << endl << "b = ";
+	/*cout << endl << "b = ";
 	for (int i = 0; i < (int)b.size(); ++i) {
 		cout << b[i] << " ";
-	}
+	}*/
 
 	// traspongo X para poder multiplicarlo por A
 	vector<vector<double> > aux(X.size());
@@ -259,11 +259,223 @@ void exp_calidad_solucion_horno_plomo_1() {
 		elem.push_back(X[i]);
 		aux[i] = (elem);
 	}
-	cout << endl << "b' = ";
 	vector<vector<double> > b_prime = Utils::multiply(A, aux);
+	/*cout << endl << "b' = ";
 	for (int i = 0; i < (int)b_prime.size(); ++i) {
 		cout << setprecision(5) << round(b_prime[i][0]) << " ";
+	}*/
+
+	// encuentro la mayor diferencia entre los dos
+	double max = -1;
+	for (int i = 0; i < (int)b.size(); ++i) {
+		double aux = fabs(b[i] - b_prime[i][0]);
+		if(max < aux) {
+			max = aux;
+		}
 	}
+
+	cout << endl;
+	cout << "\tLa maxima diferencia encontrada entre dos elementos de b y b' es: " << max << endl;
+}
+
+void exp_calidad_solucion_horno_zinc_1() {
+	string entrada = "tests/test_horno_zinc1.inn";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones("/dev/null", GAUSS);
+
+	vector<double> X =  altoHorno.darSoluciones()[0];
+	SistemaEcuaciones sistema =  altoHorno.darSistema();
+	vector<vector<double> > A = sistema.darMatriz();
+	vector<double> b = sistema.darInstancias()[0];
+	/*cout << endl << "b = ";
+	for (int i = 0; i < (int)b.size(); ++i) {
+		cout << b[i] << " ";
+	}*/
+
+	// traspongo X para poder multiplicarlo por A
+	vector<vector<double> > aux(X.size());
+	for (int i = 0; i < (int)X.size(); ++i) {
+		vector<double> elem;
+		elem.push_back(X[i]);
+		aux[i] = (elem);
+	}
+	vector<vector<double> > b_prime = Utils::multiply(A, aux);
+	/*cout << endl << "b' = ";
+	for (int i = 0; i < (int)b_prime.size(); ++i) {
+		cout << setprecision(5) << round(b_prime[i][0]) << " ";
+	}*/
+
+	// encuentro la mayor diferencia entre los dos
+	double max = -1;
+	for (int i = 0; i < (int)b.size(); ++i) {
+		double aux = fabs(b[i] - b_prime[i][0]);
+		if(max < aux) {
+			max = aux;
+		}
+	}
+
+	cout << endl;
+	cout << "\tLa maxima diferencia encontrada entre dos elementos de b y b' es: " << max << endl;
+}
+
+void exp_calidad_solucion_horno_hierro_1() {
+	string entrada = "tests/test_horno_hierro1.inn";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones("/dev/null", GAUSS);
+
+	vector<double> X =  altoHorno.darSoluciones()[0];
+	SistemaEcuaciones sistema =  altoHorno.darSistema();
+	vector<vector<double> > A = sistema.darMatriz();
+	vector<double> b = sistema.darInstancias()[0];
+	/*cout << endl << "b = ";
+	for (int i = 0; i < (int)b.size(); ++i) {
+		cout << b[i] << " ";
+	}*/
+
+	// traspongo X para poder multiplicarlo por A
+	vector<vector<double> > aux(X.size());
+	for (int i = 0; i < (int)X.size(); ++i) {
+		vector<double> elem;
+		elem.push_back(X[i]);
+		aux[i] = (elem);
+	}
+	vector<vector<double> > b_prime = Utils::multiply(A, aux);
+	/*cout << endl << "b' = ";
+	for (int i = 0; i < (int)b_prime.size(); ++i) {
+		cout << setprecision(5) << round(b_prime[i][0]) << " ";
+	}*/
+
+	// encuentro la mayor diferencia entre los dos
+	double max = -1;
+	for (int i = 0; i < (int)b.size(); ++i) {
+		double aux = fabs(b[i] - b_prime[i][0]);
+		if(max < aux) {
+			max = aux;
+		}
+	}
+
+	cout << endl;
+	cout << "\tLa maxima diferencia encontrada entre dos elementos de b y b' es: " << max << endl;
+}
+
+void exp_calidad_solucion_horno_plomo_2() {
+	string entrada = "tests/test_horno_plomo2.inn";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones("/dev/null", GAUSS);
+
+	vector<double> X =  altoHorno.darSoluciones()[0];
+	SistemaEcuaciones sistema =  altoHorno.darSistema();
+	vector<vector<double> > A = sistema.darMatriz();
+	vector<double> b = sistema.darInstancias()[0];
+	/*cout << endl << "b = ";
+	for (int i = 0; i < (int)b.size(); ++i) {
+		cout << b[i] << " ";
+	}*/
+
+	// traspongo X para poder multiplicarlo por A
+	vector<vector<double> > aux(X.size());
+	for (int i = 0; i < (int)X.size(); ++i) {
+		vector<double> elem;
+		elem.push_back(X[i]);
+		aux[i] = (elem);
+	}
+	vector<vector<double> > b_prime = Utils::multiply(A, aux);
+	/*cout << endl << "b' = ";
+	for (int i = 0; i < (int)b_prime.size(); ++i) {
+		cout << setprecision(5) << round(b_prime[i][0]) << " ";
+	}*/
+
+	// encuentro la mayor diferencia entre los dos
+	double max = -1;
+	for (int i = 0; i < (int)b.size(); ++i) {
+		double aux = fabs(b[i] - b_prime[i][0]);
+		if(max < aux) {
+			max = aux;
+		}
+	}
+
+	cout << endl;
+	cout << "\tLa maxima diferencia encontrada entre dos elementos de b y b' es: " << max << endl;
+}
+
+void exp_calidad_solucion_horno_zinc_2() {
+	string entrada = "tests/test_horno_zinc2.inn";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones("/dev/null", GAUSS);
+
+	vector<double> X =  altoHorno.darSoluciones()[0];
+	SistemaEcuaciones sistema =  altoHorno.darSistema();
+	vector<vector<double> > A = sistema.darMatriz();
+	vector<double> b = sistema.darInstancias()[0];
+	/*cout << endl << "b = ";
+	for (int i = 0; i < (int)b.size(); ++i) {
+		cout << b[i] << " ";
+	}*/
+
+	// traspongo X para poder multiplicarlo por A
+	vector<vector<double> > aux(X.size());
+	for (int i = 0; i < (int)X.size(); ++i) {
+		vector<double> elem;
+		elem.push_back(X[i]);
+		aux[i] = (elem);
+	}
+	vector<vector<double> > b_prime = Utils::multiply(A, aux);
+	/*cout << endl << "b' = ";
+	for (int i = 0; i < (int)b_prime.size(); ++i) {
+		cout << setprecision(5) << round(b_prime[i][0]) << " ";
+	}*/
+
+	// encuentro la mayor diferencia entre los dos
+	double max = -1;
+	for (int i = 0; i < (int)b.size(); ++i) {
+		double aux = fabs(b[i] - b_prime[i][0]);
+		if(max < aux) {
+			max = aux;
+		}
+	}
+
+	cout << endl;
+	cout << "\tLa maxima diferencia encontrada entre dos elementos de b y b' es: " << max << endl;
+}
+
+void exp_calidad_solucion_horno_hierro_2() {
+	string entrada = "tests/test_horno_hierro2.inn";
+	AltoHorno altoHorno(entrada.c_str());
+	altoHorno.generarSoluciones("/dev/null", GAUSS);
+
+	vector<double> X =  altoHorno.darSoluciones()[0];
+	SistemaEcuaciones sistema =  altoHorno.darSistema();
+	vector<vector<double> > A = sistema.darMatriz();
+	vector<double> b = sistema.darInstancias()[0];
+	/*cout << endl << "b = ";
+	for (int i = 0; i < (int)b.size(); ++i) {
+		cout << b[i] << " ";
+	}*/
+
+	// traspongo X para poder multiplicarlo por A
+	vector<vector<double> > aux(X.size());
+	for (int i = 0; i < (int)X.size(); ++i) {
+		vector<double> elem;
+		elem.push_back(X[i]);
+		aux[i] = (elem);
+	}
+	vector<vector<double> > b_prime = Utils::multiply(A, aux);
+	/*cout << endl << "b' = ";
+	for (int i = 0; i < (int)b_prime.size(); ++i) {
+		cout << setprecision(5) << round(b_prime[i][0]) << " ";
+	}*/
+
+	// encuentro la mayor diferencia entre los dos
+	double max = -1;
+	for (int i = 0; i < (int)b.size(); ++i) {
+		double aux = fabs(b[i] - b_prime[i][0]);
+		if(max < aux) {
+			max = aux;
+		}
+	}
+
+	cout << endl;
+	cout << "\tLa maxima diferencia encontrada entre dos elementos de b y b' es: " << max << endl;
 }
 
 void exp_isoterma_horno_plomo_1(){
@@ -628,7 +840,12 @@ int main(int argc, char *argv[])
 		// RUN_TEST(exp_discretizacion_horno_zinc_2_numero_condicion);
 		// RUN_TEST(exp_discretizacion_horno_hierro_2_numero_condicion);
 		// calidad de la solucion:
-		RUN_TEST(exp_calidad_solucion_horno_plomo_1);
+		/*RUN_TEST(exp_calidad_solucion_horno_plomo_1);
+		RUN_TEST(exp_calidad_solucion_horno_zinc_1);
+		RUN_TEST(exp_calidad_solucion_horno_hierro_1);
+		RUN_TEST(exp_calidad_solucion_horno_plomo_2);
+		RUN_TEST(exp_calidad_solucion_horno_zinc_2);
+		RUN_TEST(exp_calidad_solucion_horno_hierro_2);*/
 
 		// isotermas:
 		/*RUN_TEST(exp_isoterma_horno_plomo_1);
