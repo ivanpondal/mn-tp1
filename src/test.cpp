@@ -831,7 +831,7 @@ int main(int argc, char *argv[])
 		//RUN_TEST(check_calidad_isoterma);
 
 		// tests de datos para la experimentacion del informe
-		// discretizacion:
+		// discretización:
 		/*RUN_TEST(exp_discretizacion_horno_plomo_1_numero_condicion);
 		RUN_TEST(exp_discretizacion_horno_zinc_1_numero_condicion);
 		RUN_TEST(exp_discretizacion_horno_hierro_1_numero_condicion);*/

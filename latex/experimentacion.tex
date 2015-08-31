@@ -37,10 +37,10 @@ En base a esto, se armaron 3 instancias de prueba distintas (las discretizacione
 
 \subsection{Número de condición}
 
-Antes de empezar a experimentar, queremos saber para cada instancia de prueba que tamaño de discretizaciones son aceptables, en terminos del Número de Condición.
-En el caso de que este fuera muy grande, al resolver el sistema no tendríamos garantía de que la solución hallada fuera efectivamente buena.
+Antes de empezar a experimentar, queremos saber para cada instancia de prueba que tamaño de discretizaciones son aceptables, en terminos del Número de Condición ($K$).
+En el caso de que este fuera muy grande, al resolver el sistema no tendríamos garantía de que la solución hallada fuera efectivamente buena. Esta medida se calcula de la forma:
 
-EXPLICAR COMO SE CALCULA
+$$K(A) = ||A||_{\infty} * ||A^{-1}||_{\infty} = \left( \max\limits_{1\leq i \leq n\times(m+1)}\sum_{j=1}^{n\times(m+1)}{|a_{i,j}|} \right) * \left( \max\limits_{1\leq i \leq n\times(m+1)}\sum_{j=1}^{n\times(m+1)}{|a_{i,j}^{-1}|} \right)$$
 
 Tomando una discretización inicial de 30 ángulos ($n = 30$) y 30 radios ($m = 30$), tenemos que:
 \begin{itemize}
@@ -143,7 +143,7 @@ Los resultados obtenidos se muestran a continuación:
 
 \medskip
 
-Y, a modo de ejemplo, los siguientes gráficos muestran para el Alto Horno de Hierro la úbicación de la isoterma con respecto a las paredes, y la evolución de la temperatura dentro de las mismas. Los gráficos para los otros Hornos son muy similares por lo que se omiten.
+Y, a modo de ejemplo, las figuras \ref{fig:solucion_hierro_1} y \ref{fig:isoterma_binaria_hierro_1} muestran para el Alto Horno de Hierro la úbicación de la isoterma con respecto a las paredes, y la evolución de la temperatura dentro de las mismas. Los gráficos para los otros Hornos son muy similares por lo que se omiten.
 
 \begin{figure}[H]
     \begin{center}
@@ -162,7 +162,15 @@ Y, a modo de ejemplo, los siguientes gráficos muestran para el Alto Horno de Hi
     \end{center}
 \end{figure}
 
-DISCUSION DE LOS RESULTADOS OBTENIDOS
+Analizando los valores obtenidos en el Cuadro \ref{tablaisoterma}:
+\begin{itemize}
+    \item En todas las instancias de pruebas, la diferencia entre la discretización de 30x30 y la discretización de 60x60 no supera nunca $0.1$, con lo que podemos concluir que el aumento en la discretización es significativo a nivel de 1 decimal. Esto es importante ya que en el Alto Horno de Plomo por ejemplo, el espesor es de 1 metro por lo que la isoterma hallada con una discretización de 30x30 podría variar $\pm 0.1m$, que en este espesor es exactamente $\pm 0.1\%$.
+    \item Teniendo en cuenta que al realizar la discretización de la ecuación del calor para construir la representación del sistema tenemos cierta perdida de precisión, y que la naturaleza misma de la arítmetica finita que realiza el computador puede llevar a errores de precisión, no podemos garantizar que las isotermas halladas sean 100\% confiables.
+
+        Sin embargo, al comparar los distintos métodos para hallar la isoterma, dentro del mismo error de precisión, podemos ver que el mejor método es el de \textit{Búsqueda Binaria}, ya que con una discretización de 30x30 obtiene unos resultados muy similares (mirando los primeros 4 decimales) que con una discretización de 60x60. En el otro extremo, tenemos que el método de \textit{Promedio} es el más burdo, teniendo una variación importante entre las diferentes discretizaciones. Esto último lo atribuimos que este método no tiene en cuenta la forma en la que se se resuelve el sistema original, realizando un simple promedio entre dos cotas de la isoterma, mientras que el método \textit{Búsqueda Binaria} utiliza internamente el método de Eliminación Gaussiana.
+
+        En un punto intermedio se encuentra el método de \textit{Regresión Lineal}, que varía al aumentar la discretización pero cada vez menos, estabilizandose en un valor a medida que se aumenta la discretización.
+\end{itemize}
 
 \subsubsection{Proximidad de la isoterma}
 
@@ -193,12 +201,14 @@ La siguiente tabla muestra los resultados obtenidos:
         \end{tabular}
         \captionsetup{justification=centering}
         \caption{Resultados obtenidos para las distintas instancias de prueba\\ y distintos métodos para hallar la isoterma.}
+        \label{tabla-isoterma-plomo}
     \end{center}
 \end{table}
 
-Luego, si tomamos un $\varepsilon_C = 0.25$ tenemos que para todos lo métodos y discretizaciones la estructura se encuentra en peligro.
-Y tomando un $\varepsilon_C = 0.10$ tenemos que para todos lo métodos y discretizaciones la estructura \textbf{no} se encuentra en peligro.
-Por último, tomando un valor intermedio de $\varepsilon_C = 0.15$ tenemos que:
+Luego, si tomamos un $\varepsilon_C = 0.25$ tenemos que para todos lo métodos y discretizaciones la estructura se encuentra en peligro ($r_e - (r_e - r_i)*0.25 = 5.75$).
+Y tomando un $\varepsilon_C = 0.10$ tenemos que para todos lo métodos y discretizaciones la estructura \textbf{no} se encuentra en peligro ($r_e - (r_e - r_i)*0.10 = 5.90$).
+
+Por último, tomando un valor intermedio de $\varepsilon_C = 0.15$ ($r_e - (r_e - r_i)*0.15 = 5.85$) tenemos que:
 
 \begin{table}[H]
     \begin{center}
@@ -212,10 +222,22 @@ Por último, tomando un valor intermedio de $\varepsilon_C = 0.15$ tenemos que:
         \end{tabular}
         \captionsetup{justification=centering}
         \caption{Evaluación de la peligrosidad de la estructura con $\varepsilon_C = 0.15$}
+        \label{tabla-peligro-estructura-plomo}
     \end{center}
 \end{table}
 
-DISCUSION DE LOS RESULTADOS OBTENIDOS
+\textit{Nota: en el Cuadro \ref{tabla-peligro-estructura-plomo} es indistinto si la medida de peligrosidad utilizada es la Proximidad Porcentual Simple o Promediada, ya que las instancias de prueba tienen la misma temperatura de la pared interior para todos sus ángulos, la misma temperatura de la pared exterior para todos sus ángulos,y por lo tanto el radio de la isoterma tiene el mismo valor para todos los ángulos, por lo que es equivalente realizar el promedio de todos los ángulos a evaluar cualquiera de los ángulos de la isoterma.}
+
+\medskip
+
+Analizando los valores obtenidos en el Cuadro \ref{tabla-isoterma-plomo}:
+\begin{itemize}
+    \item Para el método de \textit{Búsqueda Binaria} no influyó los primero 4 decimales que se varíe la discretización. Esto lo atribuimos a que éste método utiliza la misma mecánica que el método de Eliminación Gaussiana y continúa hasta que satisface una precisión determinada, por lo que es entendible que las distintas discretizaciones den resultados parecidos en los primeros decimales.
+    \item El método de \textit{Regresión Lineal} converge a medida que aumentamos la discretización, cada vez variando menos. Esto lo atribuimos a que a medida que aumentamos la discretización, también aumenta la cantidad de puntos que tiene en cuenta el método para cada ángulo, convergiendo en una función lineal en particular.
+    \item Para el método de \textit{Promedio}, la variación entre las distintas discretizacion es bastante, pero podemos ver que para la última discretización (60x60), este método calcula una isoterma muy similar al método de \textit{Búsqueda Binaria}.
+    \item En base a esto último, es interesante notar que lo que parece ser el valor más confiable de la isoterma ($5.85\dots$) es aproximado tanto utilizando \textit{Búsqueda Binaria} con discretización 15x15 como haciendo \textit{Promedio} con discretización 60x60. En este aspecto, podemos inferir que el primero de los dos, por la forma en la que funciona, puede partir de cualquier discretización y arrivar a resultados parecidos.
+    \item Para finalizar, tomando el promedio de las distintas isotermas halladas para la discretización de 60x60 tenemos: $5.8527$, que usando un $\varepsilon_C = 0.15$ definiriamos como \textbf{Peligrosa}, lo que se corresponde con el promedio de la ``peligrosidad'': \textit{Promedio} y \textit{Búsqueda Binaria} dicen que la estructura es \textbf{Peligrosa} y \textit{Regresión Lineal} dice que está fuera de peligro.
+\end{itemize}
 
 % exp_isoterma_horno_plomo_3a...
 % 	Generando imagenes...
