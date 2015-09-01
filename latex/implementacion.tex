@@ -74,6 +74,19 @@ Fin para
 
 \subsubsection{Descripción del método}
 
+Dada la matriz A $\in \mathbb{R}^{n \times\ n}$, los vectores x $\in \mathbb{R}^{n}$ y b $\in \mathbb{R}^{n}$ y la ecuación $Ax = b$, esta técnica de resolución descompone la matriz en cuestión de la siguiente manera:
+
+\begin{lstlisting}
+
+\end{lstlisting}
+
+
+\begin{itemize}
+    \item $Ax = b$, $A = LU$ tal que L es triangular inferior con 1's en los elementos de su diagonal y U es traingular superior.
+    \item $LUx = b$
+    \item $Ux = y$, $Ly = b$
+\end{itemize}
+
 \subsection{Determinación de la Isoterma}
 
 Recordemos que nuestra discretización particiona una sección circular del Alto Horno de la siguiente forma:
@@ -93,6 +106,8 @@ Este método consiste en, dado un ángulo $j$, buscar un punto $t_{i,j}$ en la s
 Una vez hallado este punto, tenemos que $r_C = \frac{r_i + r_{i+1}}{2}$.
 
 \subsubsection{Búsqueda binaria mediante sistemas de ecuaciones}
+
+
 
 \subsubsection{Regresión lineal (Linear fit)}
 
