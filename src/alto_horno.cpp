@@ -240,7 +240,7 @@ vector<double> AltoHorno::calcularIsotermaLinearFit(int instancia) {
 		double avgY = 0;
 		for(int radio = 0; radio < cantParticiones; ++radio) {
 			avgX += jesimoRadio(radio);
-			avgY += soluciones[instancia][radio*cantParticiones+angulo];
+			avgY += soluciones[instancia][radio*cantAngulos+angulo];
 		}
 		avgX /= cantParticiones;
 		avgY /= cantParticiones;
@@ -250,18 +250,18 @@ vector<double> AltoHorno::calcularIsotermaLinearFit(int instancia) {
 
 		for(int radio = 0; radio < cantParticiones; ++radio){
 			double x = jesimoRadio(radio);
-			double y = soluciones[instancia][radio*cantParticiones+angulo];
+			double y = soluciones[instancia][radio*cantAngulos+angulo];
 			slope_numerator += (x - avgX) * (y - avgY);
 			slope_denominator += (x - avgX) * (x - avgX);
 		}
 
 		if(slope_denominator == 0){
-			// cout << "slope_denominator is zero" << endl;
+			cout << "slope_denominator in Linear Regression is zero" << endl;
 			slope_denominator = 1;
 		}
 
 		double slope = slope_numerator / slope_denominator;
-		double intercept = (avgY - slope * avgX) / this->cantParticiones;
+		double intercept = avgY - slope * avgX;
 		// cout << "slope: " << slope << endl;
 		// cout << "intercept: " << intercept << endl;
 
