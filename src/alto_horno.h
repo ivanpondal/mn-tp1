@@ -21,6 +21,7 @@ class AltoHorno{
 	public:
 		AltoHorno(const char* entrada);
 		void generarSoluciones(const char* salida, TipoResolucion tipo);
+		void resolverSistema(TipoResolucion tipo);
 		void escribirIsoterma(const char* salida, TipoIsoterma tipo);
 		vector<double> calcularIsoterma(TipoIsoterma tipo);
 		double calcularNumeroCondicion();
