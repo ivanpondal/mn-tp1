@@ -214,7 +214,7 @@ vector<double> AltoHorno::calcularIsotermaBinaria(int instancia){
 					}
 				}
 			}
-			solucion[angulo] = (radioActual+radioSiguiente)/2.0;
+			solucion[angulo] = radioActual;
 		}
 	}
 	return solucion;

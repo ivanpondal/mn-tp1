@@ -204,6 +204,29 @@ Una vez hallado este punto, tenemos que $r_C = \frac{r_i + r_{i+1}}{2}$.
 
 \subsubsection{Búsqueda binaria mediante sistemas de ecuaciones}
 
+Lo que hacemos en este método es, una vez halladas las temperaturas del alto horno según nuestra discretización, sub-discretizar los radios hasta encontrar la isoterma. Esto se realiza encontrando, para cada angulo, dos radios entre los cuáles está la isoterma. Sean $r_{i1}$ y $r_{i2}$ estos radios, creamos un nuevo sistema de ecuaciones con tres radios: los dos anteriores (de los cuales ya sabemos su temperatura) y el radio medio entre esos dos (cuya temperatura queremos hallar). De alguna manera se puede ver como un nuevo horno discretizado con 3 radios, $r_{i1}$ y $r_{i2}$ y el del medio. Este procedimiento se realiza varias veces (tomando radios medios todo el tiempo) asi convergiendo a la isoterma de la misma forma que en el algoritmo de Búsqueda Binaria. Es decir, ya teniendo $t_{i,j}$ para todo i,j con $0 \leq i \leq m$ y $0 \leq j \leq n-1$, hacemos lo siguiente:
+
+\begin{lstlisting}[mathescape=true]
+Sea PRECISION = 0.00001 \\ valor configurable, en este caso el mismo que nuestro codigo
+
+CalcularIsotermaBinaria
+    Poner solucion = Crear vector de n elementos (para contener el radio en el que esta la isoterma en cada angulo)
+    Para j desde 0 hasta n-1
+        Poner i2 = el primer radio que cumple $t_{i2,j}$ < isoterma
+        Poner i1 = i2-1 \\tener en cuenta que a menores radio, mayores temperaturas
+        Poner a2 = $r_{i2}$
+        Poner a1 = $r_{i1}$
+        Mientras (Valor Absoluto($T(a1,\theta_j)$-isoterma) > PRECISION)
+            Poner ah = (a1+a2)/2
+            Hallar $T(ah,\theta_j)$
+            Si ($T(ah,\theta_j)$ < isoterma) {
+                Poner a2 = ah
+            Sino
+                Poner a1 = ah
+            }
+        Poner solucion[j] = a1
+    devolver solucion
+\end{lstlisting}
 
 
 \subsubsection{Regresión lineal (Linear fit)}
