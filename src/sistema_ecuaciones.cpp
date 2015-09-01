@@ -29,11 +29,12 @@ vector<double> SistemaEcuaciones::resolverSistema(int instancia, TipoResolucion 
 		//calculo la factorizacion LU de A y la guardo en this->factorizacionLU (si no la habia calculado previamente)
 		if (factorizacionLU.size()==0){
 			factorizarLU(this->A);
-			//ahora como L*U*x = A*x = b, sea U*x = y => L*y = b
-			this->y = resolverTriangularInferiorLU(this->factorizacionLU, b, this->dimMatriz);
 		}
+		vector<double> y;
+		//ahora como L*U*x = A*x = b, sea U*x = y => L*y = b
+		y = resolverTriangularInferiorLU(this->factorizacionLU, b, this->dimMatriz);
 		//ya obtuve 'y', ahora hallo 'x' resolviendo U*x = y
-		x = resolverTriangularSuperior(this->factorizacionLU, this->y, this->dimMatriz);
+		x = resolverTriangularSuperior(this->factorizacionLU, y, this->dimMatriz);
 	} else {
 		// copio por si luego quisiera usar otro método
 		vector<vector<double> > mA = this->A;
