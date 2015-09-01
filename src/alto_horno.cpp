@@ -161,7 +161,7 @@ vector<double> AltoHorno::calcularIsotermaBinaria(int instancia){
 	for(int angulo = 0; angulo < cantAngulos; ++angulo) {
 		int radio = 0;
 		while (radio < cantParticiones) {
-			if (soluciones[instancia][radio*cantParticiones+angulo] < isoterma) break;
+			if (soluciones[instancia][radio*cantAngulos+angulo] < isoterma) break;
 			++radio;
 		}
 		if (radio==0) {
@@ -177,12 +177,12 @@ vector<double> AltoHorno::calcularIsotermaBinaria(int instancia){
 			vector<vector<double> > b = vector<vector<double> >(1, vector<double>(dimension, 0));
 			for (int i = 0; i < n; i++){
 				A[i][i] = 1;
-				b[0][i] = soluciones[instancia][(radio-1)*cantParticiones+angulo];
+				b[0][i] = soluciones[instancia][(radio-1)*cantAngulos+angulo];
 				A[i+2*n][i+2*n] = 1;
-				b[0][i+2*n] = soluciones[instancia][radio*cantParticiones+angulo];
+				b[0][i+2*n] = soluciones[instancia][radio*cantAngulos+angulo];
 			}
-			double temperaturaActual = soluciones[instancia][(radio-1)*cantParticiones+angulo];
-			while (fabs(temperaturaActual-isoterma) > 0.0001 && fabs(radioActual-radioSiguiente) > 0.0001){
+			double temperaturaActual = soluciones[instancia][(radio-1)*cantAngulos+angulo];
+			while (fabs(temperaturaActual-isoterma) > 0.0001){
 				double beta, gamma, alpha, radioMedio = (radioActual+radioSiguiente)/2.0, difR = radioMedio - radioActual, difA;
 				for(int f = n; f < 2*n; ++f){
 					int k = f-n;
@@ -213,11 +213,8 @@ vector<double> AltoHorno::calcularIsotermaBinaria(int instancia){
 						b[0][i] = solucionAuxiliar[i+n];
 					}
 				}
-				// cout << "(" << radioActual << ", " << radioSiguiente << ", " <<  temperaturaActual << ") ";
 			}
-			// cout << endl;
 			solucion[angulo] = (radioActual+radioSiguiente)/2.0;
-			// cout << solucion[angulo] << endl;
 		}
 	}
 	return solucion;
