@@ -129,6 +129,14 @@ void AltoHorno::generarSoluciones(const char* salida, TipoResolucion tipo){
 	archivoSalida.close();
 }
 
+void AltoHorno::resolverSistema(TipoResolucion tipo){
+
+	for(int i = 0; i < this->cantInstancias; i++){
+		soluciones[i] = sistemaTemperaturas.resolverSistema(i, tipo);
+	}
+
+}
+
 void AltoHorno::escribirIsoterma(const char* salida, TipoIsoterma tipo) {
 	ofstream archivoSalida;
 	archivoSalida.open(salida);
