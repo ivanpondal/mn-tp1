@@ -819,7 +819,7 @@ double stop_timer() {
 void exp_temporal() {
 	// Archivo donde guardo resultados
 	FILE* salida = fopen("exp/salida.txt","w+");
-	//fprintf(salida, "n*m t_G t_LU\n");
+	//fprintf(salida, "n*m t_G t_LU t_G/n^2 t_LU/n^2 t_G/n^3 t_LU/n^3\n");
 	// Valores del horno de hierro
 	int ri = 11;
 	int re = 15;
@@ -831,7 +831,7 @@ void exp_temporal() {
 	int n = 3;
 	int m = 3;
 	// Valores de la experimentacion, fijando el n
-	int limite_m = 60;
+	int limite_m = 58;
 	int muestras = 30;
 	// Guardo tiempos
 	vector <double> tiempos_gauss(limite_m, 0);
@@ -869,7 +869,14 @@ void exp_temporal() {
 		}
 	}
 	for (unsigned int i = 0; i < tiempos_gauss.size(); i++) {
-		fprintf(salida, "%d %.0f %.0f\n", n*(i+m), tiempos_gauss[i]/muestras, tiempos_LU[i]/muestras);
+		double tamanio = n*(i+m);
+		double tiempo_gauss = tiempos_gauss[i]/muestras;
+		double tiempo_LU = tiempos_LU[i]/muestras;
+		double tiempo_gauss_cuad = tiempo_gauss/(tamanio*tamanio);
+		double tiempo_LU_cuad = tiempo_LU/(tamanio*tamanio);
+		double tiempo_gauss_cub = tiempo_gauss_cuad/tamanio;
+		double tiempo_LU_cub = tiempo_LU_cuad/tamanio;
+		fprintf(salida, "%d %.5f %.5f %.5f %.5f %.5f %.5f\n", n*(i+m), tiempo_gauss , tiempo_LU, tiempo_gauss_cuad, tiempo_LU_cuad, tiempo_gauss_cub, tiempo_LU_cub);
 	}
 	fclose(salida);
 }
