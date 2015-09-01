@@ -294,5 +294,43 @@ Analizando los valores obtenidos en el Cuadro \ref{tabla-isoterma-plomo}:
 \subsection{Evaluación de los métodos}
 
 \subsubsection{Tiempo de cómputo}
+\begin{center}
+
+    \begin{tikzpicture}
+    \begin{axis}[
+        title={},
+        xlabel={n*(m+1)},
+        ylabel={Tiempos de ejecucion (nanoseconds)},
+        scaled x ticks=false,
+        scaled y ticks=false,
+        enlargelimits=0.05,
+        width=0.5\textwidth,
+        height=0.5\textwidth,
+        legend pos=north west,
+        xmin=5
+    ]
+    \addplot[color=black] table[x index=0,y index=1]{datos/salida.txt};
+    \legend{GAUSS}
+    \end{axis}
+    \end{tikzpicture}
+    \begin{tikzpicture}
+    \begin{axis}[
+        title={},
+        xlabel={n*(m+1)},
+        ylabel={},
+        scaled x ticks=false,
+        scaled y ticks=false,
+        enlargelimits=0.05,
+        width=0.5\textwidth,
+        height=0.5\textwidth,
+        legend pos=north west,
+        xmin=5
+    ]
+    \addplot[color=black] table[x index=0,y index=2]{datos/salida.txt};
+    \legend{LU}
+    \end{axis}
+    \end{tikzpicture}
+\end{center}
+
 
 \subsubsection{Variación a lo largo del tiempo}
