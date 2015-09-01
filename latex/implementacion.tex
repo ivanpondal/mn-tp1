@@ -135,6 +135,7 @@ En términos de espacio, guardar las matrices L y U se puede hacer en una 'misma
 Además, como ya demostramos que la matriz se puede triangular mediante eliminación gaussiana sin pivoteo, sabemos que la factorización LU existe (y no tenemos que tomar matrices de permutación). \\
 Teniendo todo eso en cuenta, encontramos la factorización (con el formato explicado antes) con este procedimiento:
 
+\newpage
 \begin{lstlisting}
 Sea A la matriz que queremos factorizar
 Sea n la cantidad de filas (y columnas, porque es cuadrada) de A
@@ -154,47 +155,34 @@ FactorizarLU(A, n, M)
 Ya teniendo la factorización LU de A, solo quedaría resolver las ecuaciones $Ux = y$, $Ly = b$ adaptando los algoritmos clásicos de triangulación de sistemas lineales para que tomen en cuenta el formato con el cual guardamos la factorización LU de A en una sola matriz:
 
 \begin{lstlisting}
-Sean A, n y M definidos como el pseudocódigo anterior
+Sean A, n y M definidos como el pseudocodigo anterior
+Sea b el vector de n elementos correspondiente a la ecuacion a resolver
 
 ResolverSistema(A,n,b)
     M = Crear matriz cuadrada de n*n
     FactorizarLU(A,n,M)
-    x = Crear vector de n elementos
-    ResolverTriangularSuperiorLU(M,x)
     y = Crear vector de n elementos
-    ResolverTriangularInferiorLU(M,y)
-    devolver y
+    ResolverTriangularInferiorLU(M,b,n,y) \\ Ly = b
+    x = Crear vector de n elementos
+    ResolverTriangularSuperiorLU(M,y,n,x) \\ Ux = y
+    devolver x
 
-ResolverTriangularSuperiorLU(M,x)
+ResolverTriangularInferiorLU(M,y,n,x)
+    Para i desde 0 hasta n-1
+        Poner x[i] = b[i]
+        Para j desde 0 hasta i-1
+            Poner x[i] = x[i] - M[i][j] * x[j]
+        // la diagonal es 1, asi que no hay que dividir por nada
+
+ResolverTriangularSuperiorLU(M,b,n,y) \\ seria igual al procedimiento de la seccion 4.1.1.2
     Para i desde n-1 hasta 0
         Poner x[i] = b[i]
         Para j desde i+1 hasta n-1
-            Poner x[i] = x[i] - U[i][j] * x[j]
-        Poner x[i] = x[i] / U[i][i]
-
-ResolverTriangularInferiorLU(M,y)
-    Para i desde 0 hasta n-1
-        Poner x[i] = b[i]
-        Para j desde i+1 hasta n-1
-            Poner x[i] = x[i] - U[i][j] * x[j]
-        Poner x[i] = x[i] / U[i][i]
-
-for(int i = 0; i < n; ++i) {
-    x[i] = b[i];
-    for (int j = 0; j < i; ++j) {
-        x[i] -= x[j] * L[i][j];
-    }
-    // la diagonal es 1, asi que no hay que dividir por nada
-}
-
-Copiar la primer fila de A hacia M
-Para i desde 0 hasta n-2
-    Para j desde i+1 hasta n-1
-        Poner c = A[j][i]/A[i][i]
-        Poner M[j][i] = c
-        Para k desde i+1 hasta n-1
-            M[j][k]-= c*A[i][k];
+            Poner x[i] = x[i] - M[i][j] * x[j]
+        Poner x[i] = x[i] / M[i][i]
 \end{lstlisting}
+
+Finalmente, es importante aclarar que la ventaja de utilizar la factorización LU de una matriz para resolver sistemas de ecuaciones lineales radica en que una vez computada la factorización, solo queda resolver sistemas triangulares. Es decir, si bien encontrar la factorización LU no es una operación barata, una vez que la obtenemos, solo nos queda resolver las ecuaciones $Ux = y$, $Ly = b$ donde U y L son triangulares. Por lo tanto, una vez que calculamos L y U no hace falta hacer eliminación gaussiana devuelta aunque cambiemos el 'b', a diferencia de la eliminación gaussiana normal.
 
 \subsection{Determinación de la Isoterma}
 
