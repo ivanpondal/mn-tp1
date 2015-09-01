@@ -72,20 +72,129 @@ Fin para
 
 \subsection{Factorización LU}
 
-\subsubsection{Descripción del método}
-
 Dada la matriz A $\in \mathbb{R}^{n \times\ n}$, los vectores x $\in \mathbb{R}^{n}$ y b $\in \mathbb{R}^{n}$ y la ecuación $Ax = b$, esta técnica de resolución descompone la matriz en cuestión de la siguiente manera:
 
-\begin{lstlisting}
+\begin{center}
+    $A = LU$ con L,U $\in \mathbb{R}^{n \times\ n}$\\
+    L es triangular inferior con 1's en los elementos de su diagonal\\
+    U es triangular superior\\
+    Y por lo tanto, $Ux = y$, $Ly = b$ reemplazando la ecuación original
+\end{center}
 
+Ahora, como vimos en las clases prácticas y teóricas, estas dos matrices son únicas y la forma de obtenerla es haciendo los pasos de eliminación gaussiana (descripta anteriormente) y guardarnos los coeficientes por los cuáles vamos multiplicando las filas para triangular las de abajo. A modo de ejemplo:
+
+\newenvironment{spmatrix}[1]
+ {\def\mysubscript{#1}\mathop\bgroup\begin{pmatrix}}
+ {\end{pmatrix}\egroup_{\textstyle\mathstrut\mysubscript}}
+
+\newcommand*{\temp}[1]{\multicolumn{1}{c|}{#1}}
+
+\begin{equation*}
+\begin{spmatrix}{A}
+    5 & −1 & 2 \\
+    10 & 3 & 7 \\
+    15 & 17 & 19
+\end{spmatrix}
+=
+\begin{spmatrix}{L}
+    1 & 0 & 0 \\
+    2 & 1 & 0 \\
+    3 & 4 & 1
+\end{spmatrix}
+\times
+\begin{spmatrix}{U}
+    5 & −1 & 2 \\
+    0 & 5 & 3 \\
+    0 & 0 & 1
+\end{spmatrix}
+\end{equation*}
+
+En términos de espacio, guardar las matrices L y U se puede hacer en una 'misma' matriz si se la interpreta de forma diferente. Lo que hay que tener en cuenta que la única parte relevante de U es de la diagonal para arriba (con la diagonal inclusive), pero de L ya sabemos que la diagonal contiene 1's y solo nos interesa saber la parte de abajo. Entonces la matriz anterior se podría guardar así en memoria:
+
+\begin{equation*}
+\begin{spmatrix}{L}
+    1 & 0 & 0 \\
+    2 & 1 & 0 \\
+    3 & 4 & 1
+\end{spmatrix}
+\begin{spmatrix}{U}
+    5 & −1 & 2 \\
+    0 & 5 & 3 \\
+    0 & 0 & 1
+\end{spmatrix}
+\leftarrow
+\left(
+\begin{array}{cccc}
+5 & -1 & 2 \\ \cline{1-1}
+\temp{2} & 5 & 3 \\ \cline{2-2}
+3 & \temp{4} & 1
+\end{array}
+\right)
+\end{equation*}
+
+Además, como ya demostramos que la matriz se puede triangular mediante eliminación gaussiana sin pivoteo, sabemos que la factorización LU existe (y no tenemos que tomar matrices de permutación). \\
+Teniendo todo eso en cuenta, encontramos la factorización (con el formato explicado antes) con este procedimiento:
+
+\begin{lstlisting}
+Sea A la matriz que queremos factorizar
+Sea n la cantidad de filas (y columnas, porque es cuadrada) de A
+Sea M una matriz de n*n (donde guardaremos la respuesta)
+
+FactorizarLU(A, n, M)
+    Copiar la primer fila de A hacia M
+    Para i desde 0 hasta n-2
+        Para j desde i+1 hasta n-1
+            Poner c = A[j][i]/A[i][i]
+            Poner M[j][i] = c
+            Para k desde i+1 hasta n-1
+                M[j][k]-= c*A[i][k]
+    devolver M
 \end{lstlisting}
 
+Ya teniendo la factorización LU de A, solo quedaría resolver las ecuaciones $Ux = y$, $Ly = b$ adaptando los algoritmos clásicos de triangulación de sistemas lineales para que tomen en cuenta el formato con el cual guardamos la factorización LU de A en una sola matriz:
 
-\begin{itemize}
-    \item $Ax = b$, $A = LU$ tal que L es triangular inferior con 1's en los elementos de su diagonal y U es traingular superior.
-    \item $LUx = b$
-    \item $Ux = y$, $Ly = b$
-\end{itemize}
+\begin{lstlisting}
+Sean A, n y M definidos como el pseudocódigo anterior
+
+ResolverSistema(A,n,b)
+    M = Crear matriz cuadrada de n*n
+    FactorizarLU(A,n,M)
+    x = Crear vector de n elementos
+    ResolverTriangularSuperiorLU(M,x)
+    y = Crear vector de n elementos
+    ResolverTriangularInferiorLU(M,y)
+    devolver y
+
+ResolverTriangularSuperiorLU(M,x)
+    Para i desde n-1 hasta 0
+        Poner x[i] = b[i]
+        Para j desde i+1 hasta n-1
+            Poner x[i] = x[i] - U[i][j] * x[j]
+        Poner x[i] = x[i] / U[i][i]
+
+ResolverTriangularInferiorLU(M,y)
+    Para i desde 0 hasta n-1
+        Poner x[i] = b[i]
+        Para j desde i+1 hasta n-1
+            Poner x[i] = x[i] - U[i][j] * x[j]
+        Poner x[i] = x[i] / U[i][i]
+
+for(int i = 0; i < n; ++i) {
+    x[i] = b[i];
+    for (int j = 0; j < i; ++j) {
+        x[i] -= x[j] * L[i][j];
+    }
+    // la diagonal es 1, asi que no hay que dividir por nada
+}
+
+Copiar la primer fila de A hacia M
+Para i desde 0 hasta n-2
+    Para j desde i+1 hasta n-1
+        Poner c = A[j][i]/A[i][i]
+        Poner M[j][i] = c
+        Para k desde i+1 hasta n-1
+            M[j][k]-= c*A[i][k];
+\end{lstlisting}
 
 \subsection{Determinación de la Isoterma}
 
