@@ -815,28 +815,52 @@ double stop_timer() {
     return double(chrono::duration_cast<chrono::nanoseconds>(end_time - start_time).count());
 }
 
+int RandomInRange(int min, int max) {
+  return min + (rand() % (max - min + 1));
+}
 
 void exp_temporal() {
 	// Archivo donde guardo resultados
-	FILE* salida = fopen("exp/salida.txt","w+");
+	//FILE* salida = fopen("exp/salida.txt","w+");
+	FILE* salida = fopen("exp/salidaVar.txt","w+");
 	//fprintf(salida, "n*m t_G t_LU t_G/n^2 t_LU/n^2 t_G/n^3 t_LU/n^3\n");
 	// Valores del horno de hierro
 	int ri = 11;
 	int re = 15;
 	int iso = 500;
-	int ninst = 1;
-	int Ti = 1538;
-	int Te = 20;
+	int ninst = 2;
+	//int Ti = 1538;
+	//int Te = 20;
 	// Genero instancias del problema con valores del horno de hierro
-	int n = 3;
-	int m = 3;
+	int n = 12;
+	int m = 5;
 	// Valores de la experimentacion, fijando el n
 	int limite_m = 58;
 	int muestras = 30;
+	int limite_ninst = 59;
 	// Guardo tiempos
-	vector <double> tiempos_gauss(limite_m, 0);
-	vector <double> tiempos_LU(limite_m, 0);
-	for (int i = 0; i < limite_m; i++) {
+	//vector <double> tiempos_gauss(limite_m, 0);
+	//vector <double> tiempos_LU(limite_m, 0);
+	vector <double> tiempos_gauss(limite_ninst, 0);
+	vector <double> tiempos_LU(limite_ninst, 0);
+
+	for (int i = 0; i < limite_ninst; i++) {
+		FILE* entrada = fopen("exp/entrada.in","w+");
+		fprintf(entrada, "%d %d %d %d %d %d \n", ri, re, m, n, iso, ninst+i);
+		for(int j = 0; j < ninst+i; j++) {
+			int Ti = RandomInRange(600, 2000);
+			int Te = RandomInRange(20, 100);
+
+			for (int j = 0; j < n; j++) {
+				fprintf(entrada, "%d %s", Ti, " ");
+			}
+
+			for (int j = 0; j < n; j++) {
+				fprintf(entrada, "%d %s", Te, " ");
+			}
+			fprintf(entrada, "\n");
+		}
+	/*for (int i = 0; i < limite_m; i++) {
 		FILE* entrada = fopen("exp/entrada.in","w+");
 		//FILE* prueba = fopen("exp/prueba.in","w+");
 		fprintf(entrada, "%d %d %d %d %d %d \n", ri, re, m+i, n, iso, ninst);
@@ -846,7 +870,7 @@ void exp_temporal() {
 
 		for (int j = 0; j < n; j++) {
 			fprintf(entrada, "%d %s", Te, " ");
-		}
+		}*/
 		fclose(entrada);
 		//fclose(prueba);
 		// Solucion para Gauss
@@ -867,16 +891,19 @@ void exp_temporal() {
 			tiempo1 = stop_timer();
 			tiempos_LU[i] += tiempo1;
 		}
+	//}
 	}
+
 	for (unsigned int i = 0; i < tiempos_gauss.size(); i++) {
-		double tamanio = n*(i+m);
+		int ninst_inst = ninst + i;
+		double tamanio = 60;
 		double tiempo_gauss = tiempos_gauss[i]/muestras;
 		double tiempo_LU = tiempos_LU[i]/muestras;
-		double tiempo_gauss_cuad = tiempo_gauss/(tamanio*tamanio);
-		double tiempo_LU_cuad = tiempo_LU/(tamanio*tamanio);
+		double tiempo_gauss_cuad = tiempo_gauss/ninst_inst;
+		double tiempo_LU_cuad = tiempo_LU/ninst_inst;
 		double tiempo_gauss_cub = tiempo_gauss_cuad/tamanio;
 		double tiempo_LU_cub = tiempo_LU_cuad/tamanio;
-		fprintf(salida, "%d %.5f %.5f %.5f %.5f %.5f %.5f\n", n*(i+m), tiempo_gauss , tiempo_LU, tiempo_gauss_cuad, tiempo_LU_cuad, tiempo_gauss_cub, tiempo_LU_cub);
+		fprintf(salida, "%d %.5f %.5f %.5f %.5f\n", ninst_inst, tiempo_gauss , tiempo_LU, tiempo_gauss_cuad, tiempo_LU_cuad/*, tiempo_gauss_cub, tiempo_LU_cub*/);
 	}
 	fclose(salida);
 }
@@ -884,13 +911,15 @@ void exp_temporal() {
 // para correr un test: ./test test.in test.expected {0: EG, 1: LU}
 int main(int argc, char *argv[])
 {
+	srand(time(0));
+	exp_temporal();
 	// si no hay argumentos corro tests unitarios, si no los de la cátedra
 	if(argc == 4){
-		char* entrada = argv[1];
+		/*char* entrada = argv[1];
 		char* salida = argv[2];
 		TipoResolucion tipo = argv[3][0] == '0' ? GAUSS : LU; // enum definido en sistema_ecuaciones.h
 		AltoHorno altoHorno(entrada);
-		altoHorno.generarSoluciones(salida, tipo);
+		altoHorno.generarSoluciones(salida, tipo);*/
 	} else {
 		// exp_temporal();
 		// tests generales para evaluar las funciones
