@@ -294,23 +294,30 @@ Analizando los valores obtenidos en el Cuadro \ref{tabla-isoterma-plomo}:
 \subsection{Evaluación de los métodos}
 
 \subsubsection{Tiempo de cómputo}
-La complejidad teorica calculado para nuestras implementaciones de la Eliminación Gaussiana y LU es de: 
 
-Consideraciones:
+En esta sección queremos evaluar los tiempos de cómputo de los métodos implementados, teniendo como hipótesis la complejidad teórica calculada para nuestras implementaciones,
+siendo la misma $\mathcal{O}(p^3)$ para ambos métodos, donde $p = n*(m+1)$. A su vez queremos ver si existen diferencias de tiempos de cómputo entre los métodos.
+\newline
+\newline
+Para concretar este objetivo, realizamos el siguiente experimento:
 \begin{itemize}
-    \item Los casos de tests para esta experimentación se generaron a partir de los valores del Alto Horno de Hierro, vease Sección \ref{instancias}, variando la cantidad de puntos de la discretización y seteando el $ninst$ en 1.
-    \item El tamaño de la matriz generada, a partir de la entrada, varia de $9x9$ hasta $180x180$.
+    \item Generamos casos tests a partir de los valores del Alto Horno de Hierro, vease Sección \ref{instancias}, variando la cantidad de puntos de la discretización y seteando el $ninst$ en 1.
+    \item El tamaño de la matriz generada, a partir de la entrada, varia de $9*9$ hasta $180*180$.
     \item Los tiempos de ejecución se midieron con la biblioteca chrono y estos fueron convertidos a nanosegundos.
-    \item Para cada caso de test, se midió la ejecución de los metodos Eliminación Gaussiana y LU.
-    \item Para cada tamaño de la matriz$n(m+1)$ se promediaron los resultados obtenidos para cada método.
+    \item Para cada caso de test, se midió la ejecución de los métodos Eliminación Gaussiana y LU.
+    \item Para cada tamaño de la matriz, generamos $30$ muestras para las cuales se promediaron los resultados obtenidos para cada método.
+    \item No se tuvo en cuenta la optimizacion generada cuando se tiene en cuenta la caracteristica de banda de la matriz.
 \end{itemize}
+
+
+Los resultados obtenidos fueron los siguientes:
 
 \begin{center}
 
     \begin{tikzpicture}
     \begin{axis}[
         title={},
-        xlabel={Tamanio de la matriz(n*(m+1))},
+        xlabel={Cantidad de filas o columnas ($p$)},
         ylabel={Tiempos de ejecucion (nanoseconds)},
         scaled x ticks=false,
         scaled y ticks=false,
@@ -321,35 +328,25 @@ Consideraciones:
         xmin=5
     ]
     \addplot[color=black] table[x index=0,y index=1]{datos/salida.txt};
-    \legend{GAUSS}
-    \end{axis}
-    \end{tikzpicture}
-    \begin{tikzpicture}
-    \begin{axis}[
-        title={},
-        xlabel={Tamanio de la matriz(n*(m+1))},
-        ylabel={},
-        scaled x ticks=false,
-        scaled y ticks=false,
-        enlargelimits=0.05,
-        width=0.5\textwidth,
-        height=0.5\textwidth,
-        legend pos=north west,
-        xmin=5
-    ]
-    \addplot[color=black] table[x index=0,y index=2]{datos/salida.txt};
-    \legend{LU}
+    \addplot[color=red] table[x index=0,y index=2]{datos/salida.txt};
+    \legend{GAUSS, LU}
     \end{axis}
     \end{tikzpicture}
 \end{center}
 
+A partir de la información suministrada por el gráfico precedente, estaríamos tentados a afimar que la complejidad experimental de los métodos es $\mathcal{O}(p^3)$,
+debido a la formas de las curvas, y que Gauss es más rápido que LU, lo cual no es correcto en este estadio del análisis. Para poder concluir que, efectivamente, la complejidad experimental coincide con
+la teórica, debemos realizar un paso más en el análisis, que consiste en tomar los tiempos de la experimentación y dividirlos por su correspondiente $p$ elevado al cubo.
+\newline
+\newline
+En los siguientes graficos mostramos este procedimiento:
 \begin{center}
 
     \begin{tikzpicture}
     \begin{axis}[
         title={},
-        xlabel={Tamanio de la matriz($n*(m+1)$)},
-        ylabel={Tiempos de ejecucion (nanoseconds) / $(n*(m+1)^2)$},
+        xlabel={Cantidad de filas o columnas ($p$)},
+        ylabel={Tiempos de ejecución (nanoseconds) / $p^2$},
         scaled x ticks=false,
         scaled y ticks=false,
         enlargelimits=0.05,
@@ -365,7 +362,7 @@ Consideraciones:
     \begin{tikzpicture}
     \begin{axis}[
         title={},
-        xlabel={Tamanio de la matriz($n*(m+1)$)},
+        xlabel={Cantidad de filas o columnas ($p$)},
         ylabel={},
         scaled x ticks=false,
         scaled y ticks=false,
@@ -379,6 +376,7 @@ Consideraciones:
     \legend{LU}
     \end{axis}
     \end{tikzpicture}
+    \caption{Dividiendo los tiempos por $p^2$}
 \end{center}
 
 \begin{center}
@@ -386,8 +384,8 @@ Consideraciones:
     \begin{tikzpicture}
     \begin{axis}[
         title={},
-        xlabel={Tamanio de la matriz($n*(m+1)$)},
-        ylabel={Tiempos de ejecucion (nanoseconds) / $(n*(m+1)^3)$},
+        xlabel={Cantidad de filas o columnas ($p$)},
+        ylabel={Tiempos de ejecución (nanoseconds) / $p^3$},
         scaled x ticks=false,
         scaled y ticks=false,
         enlargelimits=0.05,
@@ -397,13 +395,13 @@ Consideraciones:
         xmin=5
     ]
     \addplot[color=black] table[x index=0,y index=5]{datos/salida.txt};
-    \legend{GAUSS}
+    \legend{GAUSS, LU}
     \end{axis}
     \end{tikzpicture}
     \begin{tikzpicture}
     \begin{axis}[
         title={},
-        xlabel={Tamanio de la matriz($n*(m+1)$},
+        xlabel={Cantidad de filas o columnas ($p$)},
         ylabel={},
         scaled x ticks=false,
         scaled y ticks=false,
@@ -417,6 +415,84 @@ Consideraciones:
     \legend{LU}
     \end{axis}
     \end{tikzpicture}
+    \caption{Dividiendo los tiempos por $p^3$}
 \end{center}
 
+Como podemos ver en los ultimos graficos, al dividir los tiempos por $p^3$, estos tienden a un número constante mayor a 0. Por lo tanto los métodos tendrían una complejidad
+de $\mathcal{O}(c_{1}*p^3)$ y $\mathcal{O}(c_{2}*p^3)$ para la Eliminación Gaussiana y LU respectivamente, donde $c_{1}$ y $c_{2}$ son las constantes a las cuales convergen los graficos, y $c_{1} \leq c_{2}$.
+Por lo tanto podemos concluir que la complejidad experimental coincide con la complejidad teórica propuesta, corroborando la hipótesis planteada al inicio de la seccion, y que no existen diferencias en terminos asintoticos entre ambos métodos.
+
+
 \subsubsection{Variación a lo largo del tiempo}
+
+En esta sección nos interesa comparar los métodos implementados con respecto al tiempo computacional que insumen en instancias del problema con variacion del $b$.
+La hipótesis que se busca corroborar es que el método LU es mas rápido en este tipo de instancias que la Eliminación Gaussiana, debido a sus caracteristicas.
+\newline
+\newline
+En este caso, realizamos el siguiente experimento:
+\begin{itemize}
+    \item Fijamos el $p = n*(m+1)$ tal que el tamaño de la matriz generada es de $60*60$.
+    \item Variamos el $ninst$ de $2$ hasta $30$.
+    \item Utilizamos el $r_i$, $r_e$ e $iso$ del Alto Horno de Hierro, vease Sección \ref{instancias}.
+    \item Generamos los valores de $T_{i}$ y $T_{e}(\theta)$ para cada $ninst$ de forma aleatoria dentro de los siguientes intervalos:
+    \begin{itemize}
+      \item $600 \leq T_{i} \leq 2000$
+      \item $20 \leq T_{e}(\theta) \leq 100$
+    \end{itemize}
+    \item Los tiempos de ejecución se midieron con la biblioteca chrono y estos fueron convertidos a nanosegundos.
+    \item Para cada caso de test, se midió la ejecución de los métodos Eliminación Gaussiana y LU.
+    \item Para cada valor del $ninst$, generamos $30$ muestras para las cuales se promediaron los resultados obtenidos para cada método.
+    \item No se tuvo en cuenta la optimizacion generada cuando se tiene en cuenta la caracteristica de banda de la matriz.
+\end{itemize}
+
+Los resultados obtenidos fueron los siguientes:
+
+\begin{center}
+
+    \begin{tikzpicture}
+    \begin{axis}[
+        title={},
+        xlabel={$ninst$},
+        ylabel={Tiempos de ejecucion (nanoseconds)},
+        scaled x ticks=false,
+        scaled y ticks=false,
+        enlargelimits=0.05,
+        width=0.5\textwidth,
+        height=0.5\textwidth,
+        legend pos=north west,
+        xmin=5
+    ]
+    \addplot[color=black] table[x index=0,y index=1]{datos/salidaVar.txt};
+    \addplot[color=red] table[x index=0,y index=2]{datos/salidaVar.txt};
+    \legend{GAUSS, LU}
+    \end{axis}
+    \end{tikzpicture}
+\end{center}
+
+Queda en evidencia la diferencia considerable entre Eliminación Gaussiana y LU, la cual se va acentuando a medida que aumenta el $ninst$.
+Podemos llevar al análisis un paso más y dividir los tiempos de cómputo por su respectivo $ninst$:
+
+\begin{center}
+
+    \begin{tikzpicture}
+    \begin{axis}[
+        title={},
+        xlabel={$ninst$},
+        ylabel={Tiempos de ejecucion (nanoseconds) / $ninst$},
+        scaled x ticks=false,
+        scaled y ticks=false,
+        enlargelimits=0.05,
+        width=0.5\textwidth,
+        height=0.5\textwidth,
+        legend pos=north west,
+        xmin=5
+    ]
+    \addplot[color=black] table[x index=0,y index=3]{datos/salidaVar.txt};
+    \addplot[color=red] table[x index=0,y index=4]{datos/salidaVar.txt};
+    \legend{GAUSS, LU}
+    \end{axis}
+    \end{tikzpicture}
+\end{center}
+
+El gráfico muestra como, a medida que se aumenta el $ninst$, el costo promedio de resolver un sistema de ecuaciones disminuye en el caso de LU, mientras que en Gauss se mantiene constante.
+A partir de estas afirmaciones, podemos concluir que, efectivamente, LU es más rápido que Gauss en este tipo de instancis dinámicas.
