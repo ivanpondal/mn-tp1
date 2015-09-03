@@ -1,0 +1,47 @@
+\setlength{\parindent}{15.0pt} % algún comando dejó en cero el parindent
+En este trabajo pudimos no solo modelar el sistema planteado, sino que
+apreciar y aprovechar las propiedades del mismo para así resolverlo con los
+métodos estudiados observando también las características de ellos.
+
+Por un lado mediante la forma en la que construímos nuestro sistema probamos
+que se podía resolver con Eliminación Gaussiana sin pivoteo. Además produjimos
+una versión mejorada del algoritmo de eliminación donde aprovechando la
+propiedad de banda de la matriz del sistema, redujimos drásticamente la
+cantidad de operaciones necesarias para resolverla.
+
+Luego, en lo que respecta el cálculo de la isoterma, al plantear diversas
+metodologías tuvimos la posiblidad de analizar y discutir los resultados de las
+mismas, donde en particular pudimos observar cómo al utilizar la búsqueda
+binaria podíamos llegar al grado de precisión que deseásemos y que para el
+método por promedio, al aumentar la cantidad de particiones mejoraba la
+aproximación, mientras que usando la regresión lineal, esta se ajustaba más a
+una función lineal que no reflejaba el comportamiento de la fórmula de calor,
+convergiendo así a un valor distinto tanto al del promedio como el de la
+búsqueda binaria.
+
+Mediante estas aproximaciones, habiendo establecido previamente nuestro
+criterio para evaluar si una estructura se encontraba en peligro, llegamos a
+estimar qué sistemas eran seguros dentro de lo estipulado.
+
+Para el análisis del tiempo de ejecución de una así como
+varias instancias del sistema modelado, vimos cómo se cumplían las complejidades
+teóricas de la resolución a través de Eliminación Gaussiana y LU. En este
+análisis corroboramos cómo si se trataba de una sola instancia la Eliminación
+Gaussiana presentaba una ventaja sobre LU, dado que el último debe calcular su
+factorización en su primer corrida, mientras que al subir el número de
+instancias el algoritmo para LU lograba un tiempo sumamente mejor que el de
+Eliminación Gaussiana, ya que con la factorización LU habiendo pagado un costo
+cúbico en la primer instancia, luego es es del orden cuadrático contra el
+siempre cúbico de la Eliminación Gaussiana.
+
+Por último, podemos mencionar algunos experimentos que podrían realizarse a
+futuro, como el aprovechamiento de la matriz banda en lo que es el algoritmo
+para la factorización LU, ya que esta optimización se realizó sólo para la
+Eliminación Gaussiana, junto a su correspondiente estudio de tiempo de
+ejecución. A su vez, quedó pendiente el realizar la mejora no únicamente en lo
+que son los tiempos de ejecución sino que el espacio que consume nuestro
+algoritmo dado que en la matriz banda gran parte de la misma permanece
+inalterada. También se podría haber profundizado en la experimentación del
+cálculo de la isoterma con sistemas donde la temperatura interna y externa no
+fueran constantes si no que tuvieran algún tipo de fluctuación donde se pudiera
+ver con más detalle cómo se comportaba cada método.
