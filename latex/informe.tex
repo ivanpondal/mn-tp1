@@ -61,8 +61,14 @@
 \usepackage{enumitem}
 \usepackage{multicol}
 \usepackage{etoolbox}
+\usepackage{listingsutf8}
+\lstset{inputencoding=utf8/latin1}
+\usepackage{fancyvrb}
 %\newcommand{\noindex}{\hspace*{-0.8em}}%
-\lstset{breaklines=true}
+\lstset{
+	breaklines=true,
+	literate={\ \ }{{\ }}1,
+	tabsize=2}
 \newcommand{\subscript}[2]{$#1 _ #2$}
 % *********************** %
 
