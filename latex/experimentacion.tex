@@ -319,7 +319,6 @@ Para concretar este objetivo, realizamos el siguiente experimento:
 Los resultados obtenidos fueron los siguientes:
 
 \begin{center}
-
     \begin{tikzpicture}
     \begin{axis}[
         title={},
@@ -347,7 +346,6 @@ la teórica, debemos realizar un paso más en el análisis, que consiste en toma
 \newline
 En los siguientes gráficos mostramos este procedimiento:
 \begin{center}
-
     \begin{tikzpicture}
     \begin{axis}[
         title={},
@@ -386,7 +384,6 @@ En los siguientes gráficos mostramos este procedimiento:
 \end{center}
 
 \begin{center}
-
     \begin{tikzpicture}
     \begin{axis}[
         title={},
@@ -428,6 +425,107 @@ Como podemos ver en los últimos gráficos, al dividir los tiempos por $p^3$, es
 de $\mathcal{O}(c_{1}*p^3)$ y $\mathcal{O}(c_{2}*p^3)$ para la Eliminación Gaussiana y LU respectivamente, donde $c_{1}$ y $c_{2}$ son las constantes a las cuales convergen los gráficos, y $c_{1} \leq c_{2}$.
 Por lo tanto podemos concluir que la complejidad experimental coincide con la complejidad teórica propuesta, corroborando la hipótesis planteada al inicio de la sección, y que no existen diferencias en términos asintóticos entre ambos métodos.
 
+\paragraph{Utilizando que la matriz es Banda}
+
+Como mostramos en la sección Implementación, se puede modificar el método de Eliminación Gaussiana para que utilize la propiedad de que la matriz es Banda.
+Intuitivamente, al usar esta propiedad evitamos tener que calcular elementos de la matriz en los cuales sabemos que ya hay ceros.
+
+Como nuestra matriz tiene tamaño $n\times(m+1)$ y las banda $p,q = n$, podemos calcular las secciones de la matriz que ya tienen ceros:
+\begin{itemize}
+    \item Viendo la parte triangular inferior: en la primer fila tenemos $n(m+1) - (n+1)$ ceros (más 1 por el elemento de la diagonal), en la segunda fila tenemos $n(m+1) - (n+2)$ ceros, \dots, en la anteúltima fila tenemos 1 cero.
+
+        Entonces, en total tenemos:
+        \begin{equation*}
+            \begin{aligned}
+            \sum\limits_{i = 1}^{n(m+1) - (n+1)}{i} &= \frac{(n(m+1) - (n+1) + 1)(n(m+1) - (n+1))}{2} \\
+                                                    &= \frac{(nm)(nm -1)}{2} \\
+                                                    &= \frac{(nm)^2 -nm}{2} \\
+            \end{aligned}
+        \end{equation*}
+        ceros, que no hacen falta computar.
+    \item Identicamente, en la parte triangular superior tenemos  $\frac{(nm)^2 -nm}{2}$ ceros, que no hacen falta computar.
+\end{itemize}
+
+Si sabemos que la cantidad total de elementos en la matriz es $(n(m+1))^2$ y la cantidad total de ceros fuera de la banda es: $\frac{2((nm)^2 -nm)}{2} = (nm)^2 -nm$, entonces en el algoritmo propuesto solo hacen falta calcular:
+
+\begin{equation*}
+    \begin{aligned}
+    (n(m+1))^2 - ((nm)^2 - nm) &= (nm + n)^2 - (nm)^2 + nm\\
+                               &= 2n^2m+n^2+nm \\
+                               &= n^2(2m + 1)+nm \\
+    \end{aligned}
+\end{equation*}
+
+elementos de la matriz. Notese que en esta cantidad ya no interfiere el $m$ de forma cuadrática, lo que es una gran mejora respecto al algoritmo original.
+
+Usando los mismos parametros de experimentación mencionados para comparar los métodos de Eliminación Gaussiana y Factorización LU, se tomaron los tiempos para el método de Eliminación Gaussiana aprovechando la propiedad Banda.
+Los resultados obtenidos se muestran a continuación:
+
+\begin{center}
+    \begin{tikzpicture}
+    \begin{axis}[
+        title={},
+        xlabel={Cantidad de filas o columnas ($p$)},
+        ylabel={Tiempos de ejecución (nanoseconds)},
+        scaled x ticks=false,
+        scaled y ticks=false,
+        enlargelimits=0.05,
+        width=0.5\textwidth,
+        height=0.5\textwidth,
+        legend pos=north west,
+        xmin=5
+    ]
+    \addplot[color=black] table[x index=0,y index=1]{datos/salida.txt};
+    \addplot[color=red] table[x index=0,y index=1]{datos/salidaBanda.txt};
+    \legend{GAUSS, GAUSS-BANDA}
+    \end{axis}
+    \end{tikzpicture}
+\end{center}
+
+En este gráfico ya puede verse una gran diferencia en los tiempos de cómputos entre los dos métodos. Al dividir los tiempos por su correspondiente $p^2$ tenemos que:
+
+\begin{center}
+    \begin{tikzpicture}
+    \begin{axis}[
+        title={},
+        xlabel={Cantidad de filas o columnas ($p$)},
+        ylabel={Tiempos de ejecución (nanoseconds) / $p^2$},
+        scaled x ticks=false,
+        scaled y ticks=false,
+        enlargelimits=0.05,
+        width=0.5\textwidth,
+        height=0.5\textwidth,
+        legend pos=north west,
+        xmin=5
+    ]
+    \addplot[color=black] table[x index=0,y index=3]{datos/salida.txt};
+    \legend{GAUSS}
+    \end{axis}
+    \end{tikzpicture}
+    \begin{tikzpicture}
+    \begin{axis}[
+        title={},
+        xlabel={Cantidad de filas o columnas ($p$)},
+        ylabel={},
+        scaled x ticks=false,
+        scaled y ticks=false,
+        enlargelimits=0.05,
+        width=0.5\textwidth,
+        height=0.5\textwidth,
+        legend pos=north west,
+        xmin=5
+    ]
+    \addplot[color=black] table[x index=0,y index=2]{datos/salidaBanda.txt};
+    \legend{GAUSS-BANDA}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Dividiendo los tiempos por $p^2$}
+\end{center}
+
+Como ya habíamos visto antes, los tiemps de cómputo del método de Eliminación Gaussiana al dividirlo por $p^2$ tienden a una función lineal.
+Lo que es muy interesante aquí es que la variación utilizando la propiedad Banda, tienda a un numero constante mayor a 0, sin tener que dividirlo por $p^3$, con lo que este método optimizado tendría una complejidad de $\mathcal{O}(c_{3}*p^2)$ donde $c_{3}$ es la constante a la cual converge el gráfico.
+
+Por lo tanto, viendo la complejidad experimental podemos concluir que esta optimización es una gran mejora con respecto al método de Eliminación Gaussiana sin optimizaciones, ya que nos permite resolver los mismos sistemas en un orden de tiempo menor.
 
 \subsubsection{Variación a lo largo del tiempo}
 
@@ -459,7 +557,6 @@ En este caso, realizamos el siguiente experimento:
 Los resultados obtenidos fueron los siguientes:
 
 \begin{center}
-
     \begin{tikzpicture}
     \begin{axis}[
         title={},
@@ -484,7 +581,6 @@ Queda en evidencia la diferencia considerable entre Eliminación Gaussiana y LU,
 Podemos llevar al análisis un paso más y dividir los tiempos de cómputo por su respectivo $ninst$:
 
 \begin{center}
-
     \begin{tikzpicture}
     \begin{axis}[
         title={},

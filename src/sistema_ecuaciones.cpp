@@ -1,6 +1,6 @@
 #include <sistema_ecuaciones.h>
 
-#define BANDA false
+#define BANDA true
 
 SistemaEcuaciones::SistemaEcuaciones(){
 	this->dimMatriz = 0;
