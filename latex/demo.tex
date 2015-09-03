@@ -123,20 +123,18 @@ Sabemos que $a^{(1)}_{i,0} = 0$. Luego:
 \end{equation*}
 
 \begin{itemize}
-
-
 \item Por lo tanto, el dominio diagonal no estricto se establece en los renglones $1,..,n-1$, y como el primer renglon de $A^{(1)}$ y de $A$ son iguales,
 $A^{(1)}$ sera diagonal dominante no estricto.
 
 \item Para poder aplicar un paso más de la Eliminación Gaussiana, es necesario que $a^{(1)}_{1,1} \neq 0$. Sabemos por definición del Modelo que $a^{(0)}_{1,1} = 1$, y como $a^{(0)}_{1,0} = 0$, por definición de la Eliminación Gaussiana $a^{(1)}_{1,1} = 1$. Esta situación se repite para las $n$ primeras flas de $A$, ya que para $\forall i=0,...,n-1$ $\forall j=0,...,n(m+1)-1 \land j \neq i, a^{(0)}_{i,j} = 0$, por lo tanto podemos afimar que podemos realizar los primeros $n-1$ pasos de la Eliminación Gaussiana, y que la matriz $A^{(n-1)}$ será diagonal dominante no estricta (repitiendo el procedmiento hecho para $A^{(1)}$).
 
-\item Queda ver que sucede para los pasos $n \leq k \leq n(m+1)-n-1$ de la Eliminación Gaussiana. 
-  \begin{enumerate}[label=\Roman*]
-      \item Para el paso $k=n$, utilizamos que $A$ es una matriz banda ($L_{1}$), en particular la banda esta definida por las filas $i=n,..,n(m+1)-n-1$, en donde el último coeficiente distinto de 0 de cada fila es $\beta_{i}$, el valor de la banda derecha $q$. 
+\item Queda ver que sucede para los pasos $n \leq k \leq n(m+1)-n-1$ de la Eliminación Gaussiana.
+  \begin{itemize}
+      \item Para el paso $k=n$, utilizamos que $A$ es una matriz banda ($L_{1}$), en particular la banda esta definida por las filas $i=n,..,n(m+1)-n-1$, en donde el último coeficiente distinto de 0 de cada fila es $\beta_{i}$, el valor de la banda derecha $q$.
       \item Sabemos que $\beta_{i} > 0$, por definición de los $\beta$. Al realizar el paso $k$, sabemos que la matriz resultante $A^{(k)}$ será diagonal dominante no estricta, (mismo procedimientos que en las filas precedentes) y también sabemos que $\beta^{k}_{k} = \beta^{0}_{k}$, debido al hecho que $\forall u=0,..,k-1, a^{(u)}_{u,j} = 0$, donde $j$ es el indice de la columna de $\beta^{0}_{k}$.
-      \item Como $A^{(k)}$ es diagonal dominante no estricta, sabemos que $a^{(k)}_{k,k} \geq \beta^{k}_{k}$, y como $\beta^{k}_{k} > 0$, entonces $a^{(k)}_{k,k} > 0$, por lo tanto podemos realizar un paso más de la Eliminación Gaussiana. 
+      \item Como $A^{(k)}$ es diagonal dominante no estricta, sabemos que $a^{(k)}_{k,k} \geq \beta^{k}_{k}$, y como $\beta^{k}_{k} > 0$, entonces $a^{(k)}_{k,k} > 0$, por lo tanto podemos realizar un paso más de la Eliminación Gaussiana.
       \item Esta situación de repite para el resto de las pasos $n+1 \leq k \leq n(m+1)-n-1$.
-  \end{enumerate}  
+  \end{itemize}  
 \item Por último queda por ver que sucede con los pasos $ n(m+1)-n \leq k \leq n(m+1)-1$. Esta situación es idéntica al de los primeros $n$ pasos, ya que en $A$  $\forall i=n(m+1)-n,...,n(m+1)-1$ $\forall j=0,...,n(m+1)-1 \land j \neq i, a^{(0)}_{i,j} = 0$. Es decir, el valor de la diagonal de estas filas no será alterado por la Eliminación Gaussiana, y como en $A$ su valor es $1$, podemos aplicar los pasos de la Eliminación Gaussiana.
 
 \item Por todo lo expuesto, podemos concluir que es posible aplicar a $A$ Eliminación Gaussiana sin pivoteo.
