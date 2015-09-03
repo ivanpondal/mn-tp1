@@ -37,7 +37,7 @@ En base a esto, se armaron 3 instancias de prueba distintas (las discretizacione
 
 \subsection{Número de condición}
 
-Antes de empezar a experimentar, queremos saber para cada instancia de prueba que tamaño de discretizaciones son aceptables, en terminos del Número de Condición ($K$).
+Antes de empezar a experimentar, queremos saber para cada instancia de prueba que tamaño de discretizaciones son aceptables, en términos del Número de Condición ($K$).
 En el caso de que este fuera muy grande, al resolver el sistema no tendríamos garantía de que la solución hallada fuera efectivamente buena. Esta medida se calcula de la forma:
 
 $$K(A) = ||A||_{\infty} * ||A^{-1}||_{\infty} = \left( \max\limits_{1\leq i \leq n\times(m+1)}\sum_{j=1}^{n\times(m+1)}{|a_{i,j}|} \right) * \left( \max\limits_{1\leq i \leq n\times(m+1)}\sum_{j=1}^{n\times(m+1)}{|a_{i,j}^{-1}|} \right)$$
@@ -56,8 +56,8 @@ Pero observemos cual es el espesor del horno para cada instancia de prueba:
     \item Para el Alto Horno de Hierro, el espesor de la pared es de $r_e - r_i = 4$.
 \end{itemize}
 
-Luego, plantemos la siguiente \textbf{Hipotesis:} \textit{el número de condición
-aumenta con la cantidad de ecuaciones (relacionado a la cantidad de angulos y
+Luego, plantemos la siguiente \textbf{Hipótesis:} \textit{el número de condición
+aumenta con la cantidad de ecuaciones (relacionado a la cantidad de ángulos y
 radios) y disminuye al aumentar el espesor de la pared (diferencia entre el
 radio externo e interno).} Intuitivamente, podemos pensar el espesor de la pared
 como el espacio a resolver, y al aumentar las ecuaciones aumenta la redundancia
@@ -70,7 +70,7 @@ Podemos entonces probar con una discretización de 60 ángulos ($n = 60$) y 60 r
     \item Para el Alto Horno de Hierro, el número de condición es: 435.281
 \end{itemize}
 
-Vemos que el resultado corrobora nuestra hipotesis.
+Vemos que el resultado corrobora nuestra hipótesis.
 
 Más aún, el mayor número de condición (con las discretizaciones vistas) es 6957.49, que es relativamente aceptable\footnote{Fuente: \textit{Numerical Mathematics and Computing, by Cheney and Kincaid.}, con un número de condición de $10^k$, se pierde $k$ dígitos de precisión. Como el formato \textit{double} maneja una precisión de al menos 15 dígitos, los valores obtenidos son aceptables.}.
 
@@ -104,7 +104,7 @@ Al resolver los sistemas con el método de Eliminación Gaussiana obtenemos los 
     \end{center}
 \end{table}
 
-Viendo los distintos $\Delta(b, \tilde{b})$ podemos concluir que tenemos, en el peor caso, una precision de $10^{-10}$, lo cual es muy aceptable.
+Viendo los distintos $\Delta(b, \tilde{b})$ podemos concluir que tenemos, en el peor caso, una precisión de $10^{-10}$, lo cual es muy aceptable.
 
 \subsection{Comportamiento del sistema}
 
@@ -148,7 +148,7 @@ Los resultados obtenidos se muestran a continuación:
 
 \medskip
 
-Y, a modo de ejemplo, las figuras \ref{fig:solucion_hierro_1} y \ref{fig:isoterma_binaria_hierro_1} muestran para el Alto Horno de Hierro la úbicación de la isoterma con respecto a las paredes, y la evolución de la temperatura dentro de las mismas. Los gráficos para los otros Hornos son muy similares por lo que se omiten.
+Y, a modo de ejemplo, las figuras \ref{fig:solucion_hierro_1} y \ref{fig:isoterma_binaria_hierro_1} muestran para el Alto Horno de Hierro la ubicación de la isoterma con respecto a las paredes, y la evolución de la temperatura dentro de las mismas. Los gráficos para los otros Hornos son muy similares por lo que se omiten.
 
 \begin{figure}[H]
     \begin{center}
@@ -170,11 +170,11 @@ Y, a modo de ejemplo, las figuras \ref{fig:solucion_hierro_1} y \ref{fig:isoterm
 Analizando los valores obtenidos en el Cuadro \ref{tablaisoterma}:
 \begin{itemize}
     \item En todas las instancias de pruebas, la diferencia entre la discretización de 30x30 y la discretización de 60x60 no supera nunca $0.1$, con lo que podemos concluir que el aumento en la discretización es significativo a nivel de 1 decimal. Esto es importante ya que en el Alto Horno de Plomo por ejemplo, el espesor es de 1 metro por lo que la isoterma hallada con una discretización de 30x30 podría variar $\pm 0.1m$, que en este espesor es exactamente $\pm 0.1\%$.
-    \item Teniendo en cuenta que al realizar la discretización de la ecuación del calor para construir la representación del sistema tenemos cierta perdida de precisión, y que la naturaleza misma de la arítmetica finita que realiza el computador puede llevar a errores de precisión, no podemos garantizar que las isotermas halladas sean 100\% confiables.
+    \item Teniendo en cuenta que al realizar la discretización de la ecuación del calor para construir la representación del sistema tenemos cierta perdida de precisión, y que la naturaleza misma de la aritmética finita que realiza el computador puede llevar a errores de precisión, no podemos garantizar que las isotermas halladas sean 100\% confiables.
 
         Sin embargo, al comparar los distintos métodos para hallar la isoterma, dentro del mismo error de precisión, podemos ver que el mejor método es el de \textit{Búsqueda Binaria}, ya que con una discretización de 30x30 obtiene unos resultados muy similares (mirando los primeros 4 decimales) que con una discretización de 60x60. En el otro extremo, tenemos que el método de \textit{Promedio} es el más burdo, teniendo una variación importante entre las diferentes discretizaciones. Esto último lo atribuimos que este método no tiene en cuenta la forma en la que se se resuelve el sistema original, realizando un simple promedio entre dos cotas de la isoterma, mientras que el método \textit{Búsqueda Binaria} utiliza internamente el método de Eliminación Gaussiana.
 
-        En un punto intermedio se encuentra el método de \textit{Regresión Lineal}, que varía al aumentar la discretización pero cada vez menos, estabilizandose en un valor a medida que se aumenta la discretización.
+        En un punto intermedio se encuentra el método de \textit{Regresión Lineal}, que varía al aumentar la discretización pero cada vez menos, estabilizándose en un valor a medida que se aumenta la discretización.
 \end{itemize}
 
 \subsubsection{Proximidad de la isoterma}
@@ -241,7 +241,7 @@ Analizando los valores obtenidos en el Cuadro \ref{tabla-isoterma-plomo}:
     \item El método de \textit{Regresión Lineal} converge a medida que aumentamos la discretización, cada vez variando menos. Esto lo atribuimos a que a medida que aumentamos la discretización, también aumenta la cantidad de puntos que tiene en cuenta el método para cada ángulo, convergiendo en una función lineal en particular.
     \item Para el método de \textit{Promedio}, la variación entre las distintas
 		discretizaciones es bastante, pero podemos ver que para la última discretización (60x60), este método calcula una isoterma muy similar al método de \textit{Búsqueda Binaria}.
-    \item En base a esto último, es interesante notar que lo que parece ser el valor más confiable de la isoterma ($5.85\dots$) es aproximado tanto utilizando \textit{Búsqueda Binaria} con discretización 15x15 como haciendo \textit{Promedio} con discretización 60x60. En este aspecto, podemos inferir que el primero de los dos, por la forma en la que funciona, puede partir de cualquier discretización y arrivar a resultados parecidos.
+    \item En base a esto último, es interesante notar que lo que parece ser el valor más confiable de la isoterma ($5.85\dots$) es aproximado tanto utilizando \textit{Búsqueda Binaria} con discretización 15x15 como haciendo \textit{Promedio} con discretización 60x60. En este aspecto, podemos inferir que el primero de los dos, por la forma en la que funciona, puede partir de cualquier discretización y arribar a resultados parecidos.
     \item Para finalizar, tomando el promedio de las distintas isotermas halladas para la discretización de 60x60 tenemos: $5.8527$, que usando un $\varepsilon_C = 0.15$ definiríamos como \textbf{Peligrosa}, lo que se corresponde con el promedio de la ``peligrosidad'': \textit{Promedio} y \textit{Búsqueda Binaria} dicen que la estructura es \textbf{Peligrosa} y \textit{Regresión Lineal} dice que está fuera de peligro.
 \end{itemize}
 
@@ -307,12 +307,12 @@ siendo la misma $\mathcal{O}(p^3)$ para ambos métodos, donde $p = n*(m+1)$. A s
 \newline
 Para concretar este objetivo, realizamos el siguiente experimento:
 \begin{itemize}
-    \item Generamos casos tests a partir de los valores del Alto Horno de Hierro, vease Sección \ref{instancias}, variando aleatoriamente la cantidad de puntos de la discretización y seteando el $ninst$ en 1.
+    \item Generamos casos tests a partir de los valores del Alto Horno de Hierro, véase Sección \ref{instancias}, variando aleatoriamente la cantidad de puntos de la discretización y seteando el $ninst$ en 1.
     \item El tamaño de la matriz generada, a partir de la entrada, varia de $9*9$ hasta $180*180$.
     \item Los tiempos de ejecución se midieron con la biblioteca \texttt{chrono} y estos fueron convertidos a nanosegundos.
     \item Para cada caso de test, se midió la ejecución de los métodos Eliminación Gaussiana y LU.
     \item Para cada tamaño de la matriz, generamos $30$ muestras para las cuales se promediaron los resultados obtenidos para cada método.
-    \item No se tuvo en cuenta la optimizacion generada cuando se tiene en cuenta la caracteristica de banda de la matriz.
+    \item No se tuvo en cuenta la optimización generada cuando se tiene en cuenta la característica de banda de la matriz.
 \end{itemize}
 
 
@@ -324,7 +324,7 @@ Los resultados obtenidos fueron los siguientes:
     \begin{axis}[
         title={},
         xlabel={Cantidad de filas o columnas ($p$)},
-        ylabel={Tiempos de ejecucion (nanoseconds)},
+        ylabel={Tiempos de ejecución (nanoseconds)},
         scaled x ticks=false,
         scaled y ticks=false,
         enlargelimits=0.05,
@@ -340,7 +340,7 @@ Los resultados obtenidos fueron los siguientes:
     \end{tikzpicture}
 \end{center}
 
-A partir de la información suministrada por el gráfico precedente, estaríamos tentados a afimar que la complejidad experimental de los métodos es $\mathcal{O}(p^3)$,
+A partir de la información suministrada por el gráfico precedente, estaríamos tentados a afirmar que la complejidad experimental de los métodos es $\mathcal{O}(p^3)$,
 debido a la formas de las curvas, y que Gauss es más rápido que LU, lo cual no es correcto en este estadio del análisis. Para poder concluir que, efectivamente, la complejidad experimental coincide con
 la teórica, debemos realizar un paso más en el análisis, que consiste en tomar los tiempos de la experimentación y dividirlos por su correspondiente $p$ elevado al cubo.
 \newline
@@ -439,7 +439,7 @@ En este caso, realizamos el siguiente experimento:
 \begin{itemize}
     \item Fijamos el $p = n*(m+1)$ tal que el tamaño de la matriz generada es de $60*60$.
     \item Variamos el $ninst$ de $2$ hasta $30$.
-    \item Utilizamos el $r_i$, $r_e$ e $iso$ del Alto Horno de Hierro, vease Sección \ref{instancias}.
+    \item Utilizamos el $r_i$, $r_e$ e $iso$ del Alto Horno de Hierro, véase Sección \ref{instancias}.
     \item Generamos los valores de $T_{i}$ y $T_{e}(\theta)$ para cada $ninst$ de forma aleatoria dentro de los siguientes intervalos:
     \begin{itemize}
       \item $600 \leq T_{i} \leq 2000$
@@ -464,7 +464,7 @@ Los resultados obtenidos fueron los siguientes:
     \begin{axis}[
         title={},
         xlabel={$ninst$},
-        ylabel={Tiempos de ejecucion (nanoseconds)},
+        ylabel={Tiempos de ejecución (nanoseconds)},
         scaled x ticks=false,
         scaled y ticks=false,
         enlargelimits=0.05,
@@ -489,7 +489,7 @@ Podemos llevar al análisis un paso más y dividir los tiempos de cómputo por s
     \begin{axis}[
         title={},
         xlabel={$ninst$},
-        ylabel={Tiempos de ejecucion (nanoseconds) / $ninst$},
+        ylabel={Tiempos de ejecución (nanoseconds) / $ninst$},
         scaled x ticks=false,
         scaled y ticks=false,
         enlargelimits=0.05,
