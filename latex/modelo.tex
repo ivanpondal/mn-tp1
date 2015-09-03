@@ -34,15 +34,15 @@ Para resolver este problema computacionalmente, discretizamos el dominio del pro
 
 \medskip
 
-El problema ahora consiste en determinar el valor de la funci\'on $T$ en los puntos de la discretizaci\'on $(r_j,\theta_k)$ que se encuentren dentro del sector A. Llamemos $t_{jk} = T(r_j,\theta_k)$ al valor (desconocido) de la funci\'on $T$ en el punto $(r_j,\theta_k)$.
+El problema ahora consiste en determinar el valor de la funci\'on $T$ en los puntos de la discretizaci\'on $(r_j,\theta_k)$ que se encuentren dentro del sector A. Llamemos $t_{j,k} = T(r_j,\theta_k)$ al valor (desconocido) de la funci\'on $T$ en el punto $(r_j,\theta_k)$.
 
 \medskip
 
-Para encontrar estos valores, transformamos la ecuaci\'on (\ref{calor}) en un conjunto de ecuaciones lineales sobre las inc\'ognitas $t_{jk}$, evaluando (\ref{calor}) en todos los puntos de la discretizaci\'on que se encuentren dentro del sector A. Al hacer esta evaluaci\'on, aproximamos las derivadas parciales de $T$ en (\ref{calor}) por medio de las siguientes f\'ormulas de diferencias finitas:
+Para encontrar estos valores, transformamos la ecuaci\'on (\ref{calor}) en un conjunto de ecuaciones lineales sobre las inc\'ognitas $t_{j,k}$, evaluando (\ref{calor}) en todos los puntos de la discretizaci\'on que se encuentren dentro del sector A. Al hacer esta evaluaci\'on, aproximamos las derivadas parciales de $T$ en (\ref{calor}) por medio de las siguientes f\'ormulas de diferencias finitas:
 
 
 \begin{equation}
-\frac{\partial^2T(r,\theta)}{\partial r^2}(r_j,\theta_k) \cong \frac{t_{j-1,k}-2t_{jk}+t_{j+1,k}}{(\Delta r)^2}
+\frac{\partial^2T(r,\theta)}{\partial r^2}(r_j,\theta_k) \cong \frac{t_{j-1,k}-2t_{j,k}+t_{j+1,k}}{(\Delta r)^2}
 \end{equation}
 
 \begin{equation}
@@ -50,13 +50,13 @@ Para encontrar estos valores, transformamos la ecuaci\'on (\ref{calor}) en un co
 \end{equation}
 
 \begin{equation}
-\frac{\partial^2T(r,\theta)}{\partial \theta^2}(r_j,\theta_k) \cong \frac{t_{j,k-1}-2t_{jk}+t_{j,k+1}}{(\Delta \theta)^2}
+\frac{\partial^2T(r,\theta)}{\partial \theta^2}(r_j,\theta_k) \cong \frac{t_{j,k-1}-2t_{j,k}+t_{j,k+1}}{(\Delta \theta)^2}
 \end{equation}
 
 Luego,
 
 \begin{equation}\label{calor_discretizada}
-\frac{\partial^2T(r,\theta)}{\partial r^2}+\frac{1}{r}\frac{\partial T(r,\theta)}{\partial r}+\frac{1}{r^2}\frac{\partial^2T(r,\theta)}{\partial \theta^2} \cong \frac{t_{j-1,k}-2t_{jk}+t_{j+1,k}}{(\Delta r)^2} + \frac{1}{r}\frac{t_{j,k}-t_{j-1,k}}{\Delta r} + \frac{1}{r^2}\frac{t_{j,k-1}-2t_{jk}+t_{j,k+1}}{(\Delta \theta)^2}
+\frac{\partial^2T(r,\theta)}{\partial r^2}+\frac{1}{r}\frac{\partial T(r,\theta)}{\partial r}+\frac{1}{r^2}\frac{\partial^2T(r,\theta)}{\partial \theta^2} \cong \frac{t_{j-1,k}-2t_{j,k}+t_{j+1,k}}{(\Delta r)^2} + \frac{1}{r}\frac{t_{j,k}-t_{j-1,k}}{\Delta r} + \frac{1}{r^2}\frac{t_{j,k-1}-2t_{j,k}+t_{j,k+1}}{(\Delta \theta)^2}
 \end{equation}
 
 Si agrupamos los términos para los $t$, la ecuación (\ref{calor_discretizada}) nos queda:
@@ -82,10 +82,10 @@ Tenemos:
 Entonces, a partir de la ecuación previa (6), podemos reemplazar usando los términos nuevos:
 \begin{equation}
    \begin{aligned}
-      (\beta_{j,k} - \gamma_{j,k})t_{j-1,k} + 
-      (\alpha_{j,k})t_{j,k-1} + 
-      (-2\alpha_{j,k}-2\beta_{j,k}+\gamma_{j,k})t_{j,k} + 
-      (\alpha_{j,k})t_{j,k+1} + 
+      (\beta_{j,k} - \gamma_{j,k})t_{j-1,k} +
+      (\alpha_{j,k})t_{j,k-1} +
+      (-2\alpha_{j,k}-2\beta_{j,k}+\gamma_{j,k})t_{j,k} +
+      (\alpha_{j,k})t_{j,k+1} +
       (\beta_{j,k})t_{j+1,k} &= 0\\
     \end{aligned}
 \end{equation}
@@ -98,22 +98,22 @@ A partir de lo detallado previamente, armamos el siguiente sistema de ecuaciones
           t_{0,0} &= T_{i}(0) \\
           ...& \\
           t_{0,n-1} &= T_{i}(n-1) \\
-          (\beta_{1,0} - \gamma_{1,0})t_{0,0} + 
-          (\alpha_{1,0})t_{1,n-1} + 
-          (-2\alpha_{1,0}-2\beta_{1,0}+\gamma_{1,0})t_{1,0} + 
-          (\alpha_{1,0})t_{1,1} + 
+          (\beta_{1,0} - \gamma_{1,0})t_{0,0} +
+          (\alpha_{1,0})t_{1,n-1} +
+          (-2\alpha_{1,0}-2\beta_{1,0}+\gamma_{1,0})t_{1,0} +
+          (\alpha_{1,0})t_{1,1} +
           (\beta_{1,0})t_{2,0} &= 0\\
           ...& \\
-          (\beta_{j,k} - \gamma_{j,k})t_{j-1,k} + 
-          (\alpha_{j,k})t_{j,k-1} + 
-          (-2\alpha_{j,k}-2\beta_{j,k}+\gamma_{j,k})t_{j,k} + 
-          (\alpha_{j,k})t_{j,(k+1)\%n} + 
+          (\beta_{j,k} - \gamma_{j,k})t_{j-1,k} +
+          (\alpha_{j,k})t_{j,k-1} +
+          (-2\alpha_{j,k}-2\beta_{j,k}+\gamma_{j,k})t_{j,k} +
+          (\alpha_{j,k})t_{j,(k+1)\%n} +
           (\beta_{j,k})t_{j+1,k} &= 0\\
           ...& \\
-          (\beta_{m-1,n-1} - \gamma_{m-1,n-1})t_{m-2,n-1} + 
+          (\beta_{m-1,n-1} - \gamma_{m-1,n-1})t_{m-2,n-1} +
           (\alpha_{m-1,n-1})t_{m-1,n-2} + \\
-          (-2\alpha_{m-1,n-1}-2\beta_{m-1,n-1}+\gamma_{m-1,n-1})t_{m-1,n-1} + 
-          (\alpha_{m-1,n-1})t_{m-1,0} + 
+          (-2\alpha_{m-1,n-1}-2\beta_{m-1,n-1}+\gamma_{m-1,n-1})t_{m-1,n-1} +
+          (\alpha_{m-1,n-1})t_{m-1,0} +
           (\beta_{m-1,n-1})t_{m,n-1} &= 0\\
           t_{m,0} &= T_{e}(0) \\
           ...& \\
@@ -121,7 +121,7 @@ A partir de lo detallado previamente, armamos el siguiente sistema de ecuaciones
         \end{aligned}
     \end{equation*}
   \endgroup
-En donde las primeras $n$ ecuaciones, son las ecuaciones correspondientes al radio de la pared interior, $r_{j}$, para los distintos $\theta$ de la discretización. Luego para cada radio $r \neq r_{i}$ y $r \neq r_{e}$ , se listan las ecuaciones correspondientes a los distintos $\theta$ de la discretización. Por último las últimas $n$ ecuaciones son las ecuaciones correspondientes al radio de la pared exterior, $r_{e}$, para los distintos $\theta$ de la discretización.
+En donde las primeras $n$ ecuaciones, son las ecuaciones correspondientes al radio de la pared interior, $r_{i}$, para los distintos $\theta$ de la discretización. Luego para cada radio $r \neq r_{i}$ y $r \neq r_{e}$ , se listan las ecuaciones correspondientes a los distintos $\theta$ de la discretización. Por último las últimas $n$ ecuaciones son las ecuaciones correspondientes al radio de la pared exterior, $r_{e}$, para los distintos $\theta$ de la discretización.
 \newline
 \newline
 Para representar el sistema de ecuaciones presentado, se utilizará una matriz cuadrada simple de tamaño $n(m+1)$, en donde las filas representan las ecuaciones detalladas previamente y las columnas cada punto de la discretización, $t_{j,k}$, implementada como un vector de vectores. A continuación, se muestra como quedaría la matriz para las ecuaciones de los puntos $t_{0,0}, t_{0,n-1}, t_{j,k}, t_{m,0}$ y $t_{m,n-1}$.

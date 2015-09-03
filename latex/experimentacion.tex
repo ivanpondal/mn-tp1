@@ -79,7 +79,7 @@ Llamemos $\tilde{x}$ al resultado de resolver el sistema $Ax = b$, y $\tilde{b}$
 
 Luego, podemos definir $\Delta(b, \tilde{b}) = \max\limits_{1 \leq i \leq n\times(m+1)}|b[i] - \tilde{b}[i]|$.
 
-Al resolver los sistemas con X obtenemos los siguientes resultados:
+Al resolver los sistemas con el método de Eliminación Gaussiana obtenemos los siguientes resultados:
 
 \begin{table}[H]
     \begin{center}
@@ -301,9 +301,9 @@ siendo la misma $\mathcal{O}(p^3)$ para ambos métodos, donde $p = n*(m+1)$. A s
 \newline
 Para concretar este objetivo, realizamos el siguiente experimento:
 \begin{itemize}
-    \item Generamos casos tests a partir de los valores del Alto Horno de Hierro, vease Sección \ref{instancias}, variando la cantidad de puntos de la discretización y seteando el $ninst$ en 1.
+    \item Generamos casos tests a partir de los valores del Alto Horno de Hierro, vease Sección \ref{instancias}, variando aleatoriamente la cantidad de puntos de la discretización y seteando el $ninst$ en 1.
     \item El tamaño de la matriz generada, a partir de la entrada, varia de $9*9$ hasta $180*180$.
-    \item Los tiempos de ejecución se midieron con la biblioteca chrono y estos fueron convertidos a nanosegundos.
+    \item Los tiempos de ejecución se midieron con la biblioteca \texttt{chrono} y estos fueron convertidos a nanosegundos.
     \item Para cada caso de test, se midió la ejecución de los métodos Eliminación Gaussiana y LU.
     \item Para cada tamaño de la matriz, generamos $30$ muestras para las cuales se promediaron los resultados obtenidos para cada método.
     \item No se tuvo en cuenta la optimizacion generada cuando se tiene en cuenta la caracteristica de banda de la matriz.
@@ -425,8 +425,8 @@ Por lo tanto podemos concluir que la complejidad experimental coincide con la co
 
 \subsubsection{Variación a lo largo del tiempo}
 
-En esta sección nos interesa comparar los métodos implementados con respecto al tiempo computacional que insumen en instancias del problema con variacion del $b$.
-La hipótesis que se busca corroborar es que el método LU es mas rápido en este tipo de instancias que la Eliminación Gaussiana, debido a sus caracteristicas.
+En esta sección nos interesa comparar los métodos implementados con respecto al tiempo computacional que insumen para resolver sistemas en los cuales hay variación del $b$.
+La hipótesis que se busca corroborar es que el método LU es mas rápido en este tipo de instancias que la Eliminación Gaussiana, debido a la reutilización de las matrices L y U.
 \newline
 \newline
 En este caso, realizamos el siguiente experimento:
@@ -439,7 +439,7 @@ En este caso, realizamos el siguiente experimento:
       \item $600 \leq T_{i} \leq 2000$
       \item $20 \leq T_{e}(\theta) \leq 100$
     \end{itemize}
-    \item Los tiempos de ejecución se midieron con la biblioteca chrono y estos fueron convertidos a nanosegundos.
+    \item Los tiempos de ejecución se midieron con la biblioteca \texttt{chrono} y estos fueron convertidos a nanosegundos.
     \item Para cada caso de test, se midió la ejecución de los métodos Eliminación Gaussiana y LU.
     \item Para cada valor del $ninst$, generamos $30$ muestras para las cuales se promediaron los resultados obtenidos para cada método.
     \item No se tuvo en cuenta la optimizacion generada cuando se tiene en cuenta la caracteristica de banda de la matriz.
@@ -494,5 +494,5 @@ Podemos llevar al análisis un paso más y dividir los tiempos de cómputo por s
     \end{tikzpicture}
 \end{center}
 
-El gráfico muestra como, a medida que se aumenta el $ninst$, el costo promedio de resolver un sistema de ecuaciones disminuye en el caso de LU, mientras que en Gauss se mantiene constante.
-A partir de estas afirmaciones, podemos concluir que, efectivamente, LU es más rápido que Gauss en este tipo de instancis dinámicas.
+El gráfico muestra como, a medida que se aumenta el $ninst$, el costo promedio (o costo \textit{amortizado}) de resolver un sistema de ecuaciones para un $b$ en particular disminuye en el caso de LU, mientras que en Gauss se mantiene constante.
+A partir de estas afirmaciones, podemos concluir que, efectivamente, LU es más rápido que Gauss en este tipo de instancias dinámicas.

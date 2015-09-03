@@ -50,7 +50,7 @@ Fin para
 Si miramos la matriz con la cual representamos el modelo del problema, podemos ver que alrededor de los elementos de la diagonal hay una ``banda'' de tamaño $2n$.
 Es decir, si quisieramos poner elementos debajo del elemento $a_{i,i}$, nos bastaría con modificar las filas desde $i+1$ hasta $i+2n+1$, ya que $\forall\ a_{j,i},\ j> i+2n+1 \implies a_{j,i} = 0$.
 
-Usando esto podemos optimizar significativamente el primer paso de la Elminación Gaussiana, que consiste en hallar la matriz equivalente Triangular Superior. El pseudocódigo es el siguiente:
+Usando esto podemos optimizar significativamente el primer paso de la Eliminación Gaussiana, que consiste en hallar la matriz equivalente Triangular Superior. El pseudocódigo es el siguiente:
 
 \begin{lstlisting}
 Para j desde 0 hasta n-1 hacer:
@@ -298,6 +298,6 @@ $$\varepsilon_C \geq \min\limits_{\substack{1 \leq j \leq n-1}}(\Delta_j(C))$$
 
 En la medida anterior, podría pasar que para un $j'$ dado $\Delta_{j'}(C) < \varepsilon_C$ pero el resto de los $\Delta_j(C)$ sean mayores a $\varepsilon_C$, en cuyo caso, igualmente la estructura sería catalogada como peligrosa.
 
-Entonces, querriamos dar una medida de la peligrosidad de la estructura que tome en cuenta todos los angulos. Para esto, vamos a tomar el promedio de todos los $\Delta_j(C)$, definidos como en la medida anterior para cada ángulo $j$, y decimos que la estructura se encuentra en peligro si:
+Entonces, querríamos dar una medida de la peligrosidad de la estructura que tome en cuenta todos los ángulos. Para esto, vamos a tomar el promedio de todos los $\Delta_j(C)$, definidos como en la medida anterior para cada ángulo $j$, y decimos que la estructura se encuentra en peligro si:
 
 $$\Delta(C)= \frac{\sum\limits_{j=1}^{n}{\Delta_j(C)}}{n} \leq  \varepsilon_C$$
