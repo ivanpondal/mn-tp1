@@ -56,7 +56,12 @@ Pero observemos cual es el espesor del horno para cada instancia de prueba:
     \item Para el Alto Horno de Hierro, el espesor de la pared es de $r_e - r_i = 4$.
 \end{itemize}
 
-Luego, plantemos la siguiente \textbf{Hipotesis:} \textit{el número de condición aumenta con la cantidad de ecuaciones (relacionado a la cantidad de angulos y radios) y disminuye al aumentar el espesor de la pared (diferencia entre el radio externo e interno).} Intuitivamente, podemos pensar el espesor de la pared como el espacio a resolver, y al aumentar las ecuaciones aumenta la redundancia (disminuye la indepencia) del sistema.
+Luego, plantemos la siguiente \textbf{Hipotesis:} \textit{el número de condición
+aumenta con la cantidad de ecuaciones (relacionado a la cantidad de angulos y
+radios) y disminuye al aumentar el espesor de la pared (diferencia entre el
+radio externo e interno).} Intuitivamente, podemos pensar el espesor de la pared
+como el espacio a resolver, y al aumentar las ecuaciones aumenta la redundancia
+(disminuye la independencia) del sistema.
 
 Podemos entonces probar con una discretización de 60 ángulos ($n = 60$) y 60 radios ($m = 60$);
 \begin{itemize}
@@ -234,9 +239,10 @@ Analizando los valores obtenidos en el Cuadro \ref{tabla-isoterma-plomo}:
 \begin{itemize}
     \item Para el método de \textit{Búsqueda Binaria} no influyó los primero 4 decimales que se varíe la discretización. Esto lo atribuimos a que éste método utiliza la misma mecánica que el método de Eliminación Gaussiana y continúa hasta que satisface una precisión determinada, por lo que es entendible que las distintas discretizaciones den resultados parecidos en los primeros decimales.
     \item El método de \textit{Regresión Lineal} converge a medida que aumentamos la discretización, cada vez variando menos. Esto lo atribuimos a que a medida que aumentamos la discretización, también aumenta la cantidad de puntos que tiene en cuenta el método para cada ángulo, convergiendo en una función lineal en particular.
-    \item Para el método de \textit{Promedio}, la variación entre las distintas discretizacion es bastante, pero podemos ver que para la última discretización (60x60), este método calcula una isoterma muy similar al método de \textit{Búsqueda Binaria}.
+    \item Para el método de \textit{Promedio}, la variación entre las distintas
+		discretizaciones es bastante, pero podemos ver que para la última discretización (60x60), este método calcula una isoterma muy similar al método de \textit{Búsqueda Binaria}.
     \item En base a esto último, es interesante notar que lo que parece ser el valor más confiable de la isoterma ($5.85\dots$) es aproximado tanto utilizando \textit{Búsqueda Binaria} con discretización 15x15 como haciendo \textit{Promedio} con discretización 60x60. En este aspecto, podemos inferir que el primero de los dos, por la forma en la que funciona, puede partir de cualquier discretización y arrivar a resultados parecidos.
-    \item Para finalizar, tomando el promedio de las distintas isotermas halladas para la discretización de 60x60 tenemos: $5.8527$, que usando un $\varepsilon_C = 0.15$ definiriamos como \textbf{Peligrosa}, lo que se corresponde con el promedio de la ``peligrosidad'': \textit{Promedio} y \textit{Búsqueda Binaria} dicen que la estructura es \textbf{Peligrosa} y \textit{Regresión Lineal} dice que está fuera de peligro.
+    \item Para finalizar, tomando el promedio de las distintas isotermas halladas para la discretización de 60x60 tenemos: $5.8527$, que usando un $\varepsilon_C = 0.15$ definiríamos como \textbf{Peligrosa}, lo que se corresponde con el promedio de la ``peligrosidad'': \textit{Promedio} y \textit{Búsqueda Binaria} dicen que la estructura es \textbf{Peligrosa} y \textit{Regresión Lineal} dice que está fuera de peligro.
 \end{itemize}
 
 % exp_isoterma_horno_plomo_3a...
@@ -301,7 +307,7 @@ siendo la misma $\mathcal{O}(p^3)$ para ambos métodos, donde $p = n*(m+1)$. A s
 \newline
 Para concretar este objetivo, realizamos el siguiente experimento:
 \begin{itemize}
-    \item Generamos casos tests a partir de los valores del Alto Horno de Hierro, vease Sección \ref{instancias}, variando la cantidad de puntos de la discretización y seteando el $ninst$ en 1.
+    \item Generamos casos tests a partir de los valores del Alto Horno de Hierro, véase Sección \ref{instancias}, variando la cantidad de puntos de la discretización y seteando el $ninst$ en 1.
     \item El tamaño de la matriz generada, a partir de la entrada, varia de $9*9$ hasta $180*180$.
     \item Los tiempos de ejecución se midieron con la biblioteca chrono y estos fueron convertidos a nanosegundos.
     \item Para cada caso de test, se midió la ejecución de los métodos Eliminación Gaussiana y LU.
@@ -339,7 +345,7 @@ debido a la formas de las curvas, y que Gauss es más rápido que LU, lo cual no
 la teórica, debemos realizar un paso más en el análisis, que consiste en tomar los tiempos de la experimentación y dividirlos por su correspondiente $p$ elevado al cubo.
 \newline
 \newline
-En los siguientes graficos mostramos este procedimiento:
+En los siguientes gráficos mostramos este procedimiento:
 \begin{center}
 
     \begin{tikzpicture}
@@ -418,15 +424,15 @@ En los siguientes graficos mostramos este procedimiento:
     \caption{Dividiendo los tiempos por $p^3$}
 \end{center}
 
-Como podemos ver en los ultimos graficos, al dividir los tiempos por $p^3$, estos tienden a un número constante mayor a 0. Por lo tanto los métodos tendrían una complejidad
-de $\mathcal{O}(c_{1}*p^3)$ y $\mathcal{O}(c_{2}*p^3)$ para la Eliminación Gaussiana y LU respectivamente, donde $c_{1}$ y $c_{2}$ son las constantes a las cuales convergen los graficos, y $c_{1} \leq c_{2}$.
-Por lo tanto podemos concluir que la complejidad experimental coincide con la complejidad teórica propuesta, corroborando la hipótesis planteada al inicio de la seccion, y que no existen diferencias en terminos asintoticos entre ambos métodos.
+Como podemos ver en los últimos gráficos, al dividir los tiempos por $p^3$, estos tienden a un número constante mayor a 0. Por lo tanto los métodos tendrían una complejidad
+de $\mathcal{O}(c_{1}*p^3)$ y $\mathcal{O}(c_{2}*p^3)$ para la Eliminación Gaussiana y LU respectivamente, donde $c_{1}$ y $c_{2}$ son las constantes a las cuales convergen los gráficos, y $c_{1} \leq c_{2}$.
+Por lo tanto podemos concluir que la complejidad experimental coincide con la complejidad teórica propuesta, corroborando la hipótesis planteada al inicio de la sección, y que no existen diferencias en términos asintóticos entre ambos métodos.
 
 
 \subsubsection{Variación a lo largo del tiempo}
 
-En esta sección nos interesa comparar los métodos implementados con respecto al tiempo computacional que insumen en instancias del problema con variacion del $b$.
-La hipótesis que se busca corroborar es que el método LU es mas rápido en este tipo de instancias que la Eliminación Gaussiana, debido a sus caracteristicas.
+En esta sección nos interesa comparar los métodos implementados con respecto al tiempo computacional que insumen en instancias del problema con variación del $b$.
+La hipótesis que se busca corroborar es que el método LU es mas rápido en este tipo de instancias que la Eliminación Gaussiana, debido a sus características.
 \newline
 \newline
 En este caso, realizamos el siguiente experimento:
@@ -442,7 +448,7 @@ En este caso, realizamos el siguiente experimento:
     \item Los tiempos de ejecución se midieron con la biblioteca chrono y estos fueron convertidos a nanosegundos.
     \item Para cada caso de test, se midió la ejecución de los métodos Eliminación Gaussiana y LU.
     \item Para cada valor del $ninst$, generamos $30$ muestras para las cuales se promediaron los resultados obtenidos para cada método.
-    \item No se tuvo en cuenta la optimizacion generada cuando se tiene en cuenta la caracteristica de banda de la matriz.
+    \item No se tuvo en cuenta la optimización generada cuando se tiene en cuenta la característica de banda de la matriz.
 \end{itemize}
 
 Los resultados obtenidos fueron los siguientes:
@@ -495,4 +501,5 @@ Podemos llevar al análisis un paso más y dividir los tiempos de cómputo por s
 \end{center}
 
 El gráfico muestra como, a medida que se aumenta el $ninst$, el costo promedio de resolver un sistema de ecuaciones disminuye en el caso de LU, mientras que en Gauss se mantiene constante.
-A partir de estas afirmaciones, podemos concluir que, efectivamente, LU es más rápido que Gauss en este tipo de instancis dinámicas.
+A partir de estas afirmaciones, podemos concluir que, efectivamente, LU es más
+rápido que Gauss en este tipo de instancias dinámicas.
