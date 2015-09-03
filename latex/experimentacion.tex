@@ -449,6 +449,11 @@ En este caso, realizamos el siguiente experimento:
     \item Para cada caso de test, se midió la ejecución de los métodos Eliminación Gaussiana y LU.
     \item Para cada valor del $ninst$, generamos $30$ muestras para las cuales se promediaron los resultados obtenidos para cada método.
     \item No se tuvo en cuenta la optimización generada cuando se tiene en cuenta la característica de banda de la matriz.
+	\item No se incluyó el tiempo de ejecución del cálculo de la isoterma ya que
+		el mismo se aplica sobre el sistema ya resuelto,
+		independientemente de si este se resolvió utilizando Eliminación
+		Gaussiana o LU, por ende su resultado no afecta el análisis de ambos
+		métodos.
 \end{itemize}
 
 Los resultados obtenidos fueron los siguientes:
