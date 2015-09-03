@@ -69,41 +69,62 @@ Si agrupamos los términos para los $t$, la ecuación (\ref{calor_discretizada})
 \end{equation}
 
 \subsection{Representación del sistema}
-Sea:
 
+Tenemos:
 \begin{itemize}
-    \item $0 < i < n$
-    \item $0 < j < m+1$
-    \item $n-1 < k < n(m+1)-n$
-    \item $h = n(m+1)-n-1$
-    \item $\alpha_{k} = \frac{1}{(\Delta\theta)^2 * r_{k}^2}$
-    \item $\beta_{k} = \frac{1}{(\Delta\ r)^2}$
-    \item $\gamma_{k} = \frac{1}{(\Delta\ r) * r_{k}}$
+    \item $0 < j < m+1$ : los indices de los radios
+    \item $0 < k < n$ : los indices de los ángulos
+    \item $\alpha_{j,k} = \frac{1}{(\Delta\theta)^2 * r_{j}^2}$ donde $\Delta\theta = \theta_{k}-\theta_{k-1}$
+    \item $\beta_{j,k} = \frac{1}{(\Delta\ r)^2}$ donde $\Delta r = r_{j}-r_{j-1}$
+    \item $\gamma_{j,k} = \frac{1}{(\Delta\ r) * r_j}$ donde $\Delta r = r_{j}-r_{j-1}$
 \end{itemize}
+
+Entonces, a partir de la ecuación previa (6), podemos reemplazar usando los términos nuevos:
+\begin{equation}
+   \begin{aligned}
+      (\beta_{j,k} - \gamma_{j,k})t_{j-1,k} + 
+      (\alpha_{j,k})t_{j,k-1} + 
+      (-2\alpha_{j,k}-2\beta_{j,k}+\gamma_{j,k})t_{j,k} + 
+      (\alpha_{j,k})t_{j,k+1} + 
+      (\beta_{j,k})t_{j+1,k} &= 0\\
+    \end{aligned}
+\end{equation}
 
 A partir de lo detallado previamente, armamos el siguiente sistema de ecuaciones:
 \begingroup
     \fontsize{8pt}{10pt}\selectfont
     \begin{equation*}
         \begin{aligned}
-          t_{r_{i},0} &= T_{i} \\
+          t_{0,0} &= T_{i}(0) \\
           ...& \\
-          t_{r_{i},n} &= T_{i} \\
-          (\beta_{n} - \gamma_{n})t_{i-1,0} + (\alpha_{n})t_{i,n-1} + (-2\alpha_{n}-2\beta_{n}+\gamma_{n})t_{i,0} + (\alpha_{n})t_{i,1} + (\beta_{n})t_{i+1,0} &= 0\\
+          t_{0,n-1} &= T_{i}(n-1) \\
+          (\beta_{1,0} - \gamma_{1,0})t_{0,0} + 
+          (\alpha_{1,0})t_{1,n-1} + 
+          (-2\alpha_{1,0}-2\beta_{1,0}+\gamma_{1,0})t_{1,0} + 
+          (\alpha_{1,0})t_{1,1} + 
+          (\beta_{1,0})t_{2,0} &= 0\\
           ...& \\
-          (\beta_{k} - \gamma_{k})t_{i-1,j} + (\alpha_{k})t_{i,j-1} + (-2\alpha_{k}-2\beta_{k}+\gamma_{k})t_{i,j} + (\alpha_{k})t_{i,j+1} + (\beta_{k})t_{i+1,j} &= 0\\
+          (\beta_{j,k} - \gamma_{j,k})t_{j-1,k} + 
+          (\alpha_{j,k})t_{j,k-1} + 
+          (-2\alpha_{j,k}-2\beta_{j,k}+\gamma_{j,k})t_{j,k} + 
+          (\alpha_{j,k})t_{j,(k+1)\%n} + 
+          (\beta_{j,k})t_{j+1,k} &= 0\\
           ...& \\
-          (\beta_{h} - \gamma_{h})t_{m-2,n} + (\alpha_{h})t_{m-1,n-1} + (-2\alpha_{h}-2\beta_{h}+\gamma_{h})t_{m-1,n} + (\alpha_{h})t_{m,0} + (\beta_{h})t_{m,n} &= 0\\
-          t_{r_{e},0} &= T_{e}(0) \\
+          (\beta_{m-1,n-1} - \gamma_{m-1,n-1})t_{m-2,n-1} + 
+          (\alpha_{m-1,n-1})t_{m-1,n-2} + \\
+          (-2\alpha_{m-1,n-1}-2\beta_{m-1,n-1}+\gamma_{m-1,n-1})t_{m-1,n-1} + 
+          (\alpha_{m-1,n-1})t_{m-1,0} + 
+          (\beta_{m-1,n-1})t_{m,n-1} &= 0\\
+          t_{m,0} &= T_{e}(0) \\
           ...& \\
-          t_{r_{e},n} &= T_{e}(n) \\
+          t_{m,n-1} &= T_{e}(n-1) \\
         \end{aligned}
     \end{equation*}
   \endgroup
-En donde las primeras $n$ ecuaciones, son las ecuaciones correspondientes al radio de la pared interior, $r_{i}$, para los distintos $\theta$ de la discretización. Luego para cada radio $r \neq r_{i}$ y $r \neq r_{e}$ , se listan las ecuaciones correspondientes a los distintos $\theta$ de la discretización. Por último las últimas $n$ ecuaciones son las ecuaciones correspondientes al radio de la pared exterior, $r_{e}$, para los distintos $\theta$ de la discretización.
+En donde las primeras $n$ ecuaciones, son las ecuaciones correspondientes al radio de la pared interior, $r_{j}$, para los distintos $\theta$ de la discretización. Luego para cada radio $r \neq r_{i}$ y $r \neq r_{e}$ , se listan las ecuaciones correspondientes a los distintos $\theta$ de la discretización. Por último las últimas $n$ ecuaciones son las ecuaciones correspondientes al radio de la pared exterior, $r_{e}$, para los distintos $\theta$ de la discretización.
 \newline
 \newline
-Para representar el sistema de ecuaciones presentado, se utilizará una matriz cuadrada simple de tamaño $n(m+1)$, en donde las filas representan las ecuaciones detalladas previamente y las columnas cada punto de la discretización, $t_{i,j}$, implementada como un vector de vectores. A continuación, se muestra como quedaría la matriz para las ecuaciones de los puntos $t_{0,0}, t_{0,n-1}, t_{i,j}, t_{m,0}$ y $t_{m,n-1}$.
+Para representar el sistema de ecuaciones presentado, se utilizará una matriz cuadrada simple de tamaño $n(m+1)$, en donde las filas representan las ecuaciones detalladas previamente y las columnas cada punto de la discretización, $t_{j,k}$, implementada como un vector de vectores. A continuación, se muestra como quedaría la matriz para las ecuaciones de los puntos $t_{0,0}, t_{0,n-1}, t_{j,k}, t_{m,0}$ y $t_{m,n-1}$.
 
 \[
     % reduce columns padding:
@@ -111,12 +132,12 @@ Para representar el sistema de ecuaciones presentado, se utilizará una matriz c
     % fila vertical alternativa:
     % \vdots   &  \multicolumn{6}{c}{\strut}      &\vdots&         \multicolumn{6}{c}{}               & \vrule & {} \\
     \kbordermatrix{%
-                       & \bm{t_{0,0}} & \ldots & \bm{t_{0,n-1}} & \ldots & t_{i-1,j}           & \ldots & t_{i,j-1}   & \bm{t_{i,j}}                & t_{i,j+1}   & \ldots & t_{i+1,j}   & \ldots & \bm{t_{m,0}} & \ldots & \bm{t_{m,n-1}} &        & b        \\
+                       & \bm{t_{0,0}} & \ldots & \bm{t_{0,n-1}} & \ldots & t_{j-1,k}           & \ldots & t_{j,k-1}   & \bm{t_{j,k}}                & t_{j,k+1}   & \ldots & t_{j+1,k}   & \ldots & \bm{t_{m,0}} & \ldots & \bm{t_{m,n-1}} &        & b        \\
         \bm{t_{0,0}}   & 1            & \ldots & 0              & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 0            & \ldots & 0              & \vrule & t_{0,0}   \\
         \vdots         & \vdots       & {}     & \vdots         & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots       & {}     & \vdots         & \vrule & {}       \\
         \bm{t_{0,n-1}} & 0            & \ldots & 1              & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 0            & \ldots & 0              & \vrule & t_{0,n-1} \\
         \vdots         & \vdots       & {}     & \vdots         & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots       & {}     & \vdots         & \vrule & {}       \\
-        \bm{t_{i,j}}   & 0            & \ldots & 0              & \ldots & \bm{\beta_{k} - \gamma_{k}} & \ldots & \bm{\alpha_{k}} & \bm{-2\alpha_{k}-2\beta_{k}+\gamma_{k}} & \bm{\alpha_{k}} & \ldots & \bm{\beta_{k}}  & \ldots & 0            & \ldots & 0              & \vrule & 0        \\
+        \bm{t_{j,k}}   & 0            & \ldots & 0              & \ldots & \bm{\beta_{j,k} - \gamma_{j,k}} & \ldots & \bm{\alpha_{j,k}} & \bm{-2\alpha_{j,k}-2\beta_{j,k}+\gamma_{j,k}} & \bm{\alpha_{j,k}} & \ldots & \bm{\beta_{j,k}}  & \ldots & 0            & \ldots & 0              & \vrule & 0        \\
         \vdots         & \vdots       & {}     & \vdots         & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots       & {}     & \vdots         & \vrule & {}       \\
         \bm{t_{m,0}}   & 0            & \ldots & 0              & \ldots & 0                   & \ldots & 0           & 0                           & 0           & \ldots & 0           & \ldots & 1            & \ldots & 0              & \vrule & t_{m,0}   \\
         \vdots         & \vdots       & {}     & \vdots         & {}     & \vdots              & {}     & \vdots      & \vdots                      & \vdots      & {}     & \vdots      & {}     & \vdots       & {}     & \vdots         & \vrule & {}       \\
@@ -126,19 +147,19 @@ Para representar el sistema de ecuaciones presentado, se utilizará una matriz c
 \captionof{figure}{Matriz del Sistema}\label{fig:matriz}
 
 \medskip
-Notese que, para las filas que representan las ecuaciones de los puntos de la pared distintos del interior e exterior, los coeficientes distintos de 0 se ubican en $t_{i-1,j}$, $t_{i,j}$, $t_{i+1,j}$, $t_{i,j-1}$ y $t_{i,j+1}$.
-Es importante destacar que el primer coeficiente distinto de 0 es siempre $\beta_{k} - \gamma_{k}$, mientras que el ultimo es siempre $\beta_{k}$, siendo la distancia entre ellos $2n$. Esto se debe al hecho de que, en nuestra disposicion de las ecuaciones del sistema en la matriz,
-en las columnas fijamos el radio y luego avanzamos con los distintos angulos para ese radio, para luego avanzar de radio, por lo cual $t_{i-1,j}$ y $t_{i+1,j}$ seran siempre el primer e ultimo coeficiente distinto de 0 en ese tipo de fila.
+Notese que, para las filas que representan las ecuaciones de los puntos de la pared distintos del interior e exterior, los coeficientes distintos de 0 se ubican en $t_{j-1,k}$, $t_{j,k}$, $t_{j+1,k}$, $t_{j,k-1}$ y $t_{j,k+1}$.
+Es importante destacar que el primer coeficiente distinto de 0 es siempre $\beta_{j,k} - \gamma_{j,k}$, mientras que el ultimo es siempre $\beta_{j,k}$, siendo la distancia entre ellos $2n$. Esto se debe al hecho de que, en nuestra disposicion de las ecuaciones del sistema en la matriz,
+en las columnas fijamos el radio y luego avanzamos con los distintos angulos para ese radio, para luego avanzar de radio, por lo cual $t_{j-1,k}$ y $t_{j+1,k}$ seran siempre el primer e ultimo coeficiente distinto de 0 en ese tipo de fila.
 
-Esta caracteristica de la matriz la hace una matriz banda, en donde las diagonales $p, q = n$, estan compuestas por los valores $\beta_{k} - \gamma_{k}$ y $\beta_{k}$ respectivamente.
+Esta caracteristica de la matriz la hace una matriz banda, en donde las diagonales $p, q = n$, estan compuestas por los valores $\beta_{j,k} - \gamma_{j,k}$ y $\beta_{j,k}$ respectivamente.
 \newline
 \newline
 \textbf{Ejemplo con} $\bm{n,m+1=3}$:
 \begingroup
-    \fontsize{8pt}{10pt}\selectfont
+    \fontsize{7pt}{7pt}\selectfont
 \[
     % reduce columns padding:
-    \setlength{\arraycolsep}{6pt}
+    \setlength{\arraycolsep}{3pt}
     % fila vertical alternativa:
     % \vdots   &  \multicolumn{6}{c}{\strut}      &\vdots&         \multicolumn{6}{c}{}               & \vrule & {} \\
     \kbordermatrix{%
@@ -146,9 +167,9 @@ Esta caracteristica de la matriz la hace una matriz banda, en donde las diagonal
         {t_{0,0}}   & 1                       & 0                       & 0                       & 0                                   & 0                                   & 0                                   & 0             & 0                  & 0             & \vrule & t_{0,0}   \\
         {t_{0,1}}   & 0                       & 1                       & 0                       & 0                                   & 0                                   & 0                                   & 0             & 0                  & 0             & \vrule & t_{0,1}       \\
         {t_{0,2}}   & 0                       & 0                       & 1                       & 0                                   & 0                                   & 0                                   & 0             & 0                  & 0             & \vrule & t_{0,2} \\
-        {t_{1,0}}   & \beta_{3} - \gamma_{3}  & 0                       & 0                       & -2\alpha_{3}-2\beta_{3}+\gamma_{3}  & \alpha_{3}                          & \alpha_{3}                          & \beta_{3}     & 0                  & 0             & \vrule & 0       \\
-        {t_{1,1}}   & 0                       & \beta_{4} - \gamma_{4}  & 0                       & \alpha_{4}                          & -2\alpha_{4}-2\beta_{4}+\gamma_{4}  & \alpha_{4}                          & 0             & \beta_{4}          & 0             & \vrule & 0        \\
-        {t_{1,2}}   & 0                       & 0                       & \beta_{5} - \gamma_{5}  & \alpha_{5}                          & \alpha_{5}                          & -2\alpha_{5}-2\beta_{5}+\gamma_{5}  & 0             & 0                  & \beta_{5}     & \vrule & 0       \\
+        {t_{1,0}}   & \beta_{1,0} - \gamma_{1,0}  & 0                       & 0                       & -2\alpha_{1,0}-2\beta_{1,0}+\gamma_{1,0}  & \alpha_{1,0}                          & \alpha_{1,0}                          & \beta_{1,0}     & 0                  & 0             & \vrule & 0       \\
+        {t_{1,1}}   & 0                       & \beta_{1,1} - \gamma_{1,1}  & 0                       & \alpha_{1,1}                          & -2\alpha_{1,1}-2\beta_{1,1}+\gamma_{1,1}  & \alpha_{1,1}                          & 0             & \beta_{1,1}          & 0             & \vrule & 0        \\
+        {t_{1,2}}   & 0                       & 0                       & \beta_{1,2} - \gamma_{1,2}  & \alpha_{1,2}                          & \alpha_{1,2}                          & -2\alpha_{1,2}-2\beta_{1,2}+\gamma_{1,2}  & 0             & 0                  & \beta_{1,2}     & \vrule & 0       \\
         {t_{2,0}}   & 0                       & 0                       & 0                       & 0                                   & 0                                   & 0                                   & 1             & 0                  & 0             & \vrule & t_{2,0}   \\
         {t_{2,1}}   & 0                       & 0                       & 0                       & 0                                   & 0                                   & 0                                   & 0             & 1                  & 0             & \vrule & t_{2,1}       \\
         {t_{2,2}}   & 0                       & 0                       & 0                       & 0                                   & 0                                   & 0                                   & 0             & 0                  & 1             & \vrule & t_{2,2}
