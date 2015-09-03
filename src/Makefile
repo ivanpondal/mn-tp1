@@ -19,7 +19,9 @@ OBJECTS=$(SOURCES:.cpp=.o)
 # Nombre del ejecutable a generar
 EXECUTABLE=test
 
-all: $(SOURCES) tests
+.PHONY: all
+
+all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): clean $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@

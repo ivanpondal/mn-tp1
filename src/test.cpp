@@ -899,7 +899,7 @@ void exp_temporal_2() {
 	int n = 12;
 	int m = 5;
 	// Valores de la experimentacion, fijando el n
-	int limite_m = 58;
+	// int limite_m = 58;
 	int muestras = 30;
 	int limite_ninst = 59;
 	// Guardo tiempos
@@ -946,13 +946,13 @@ void exp_temporal_2() {
 
 	for (unsigned int i = 0; i < tiempos_gauss.size(); i++) {
 		int ninst_inst = ninst + i;
-		double tamanio = 60;
+		// double tamanio = 60;
 		double tiempo_gauss = tiempos_gauss[i]/muestras;
 		double tiempo_LU = tiempos_LU[i]/muestras;
 		double tiempo_gauss_cuad = tiempo_gauss/ninst_inst;
 		double tiempo_LU_cuad = tiempo_LU/ninst_inst;
-		double tiempo_gauss_cub = tiempo_gauss_cuad/tamanio;
-		double tiempo_LU_cub = tiempo_LU_cuad/tamanio;
+		// double tiempo_gauss_cub = tiempo_gauss_cuad/tamanio;
+		// double tiempo_LU_cub = tiempo_LU_cuad/tamanio;
 		fprintf(salida, "%d %.5f %.5f %.5f %.5f\n", ninst_inst, tiempo_gauss , tiempo_LU, tiempo_gauss_cuad, tiempo_LU_cuad/*, tiempo_gauss_cub, tiempo_LU_cub*/);
 	}
 	fclose(salida);
@@ -970,56 +970,56 @@ int main(int argc, char *argv[])
 		altoHorno.generarSoluciones(salida, tipo);
 	} else {
 		// tests generales para evaluar las funciones
-		// RUN_TEST(check_carga_alto_horno_instancias_una);
-		// RUN_TEST(check_carga_alto_horno_instancias_dos);
-		// RUN_TEST(check_sistema_ecuaciones_LU);
-		// RUN_TEST(check_isoterma_binaria);
-		// RUN_TEST(check_isoterma_avg);
-		// RUN_TEST(check_isoterma_linear_fit);
-		// RUN_TEST(check_numero_condicion_1);
-		// RUN_TEST(check_evaluar_estructura_simple);
-		// RUN_TEST(check_evaluar_estructura_promedio);
+		RUN_TEST(check_carga_alto_horno_instancias_una);
+		RUN_TEST(check_carga_alto_horno_instancias_dos);
+		RUN_TEST(check_sistema_ecuaciones_LU);
+		RUN_TEST(check_isoterma_binaria);
+		RUN_TEST(check_isoterma_avg);
+		RUN_TEST(check_isoterma_linear_fit);
+		RUN_TEST(check_numero_condicion_1);
+		RUN_TEST(check_evaluar_estructura_simple);
+		RUN_TEST(check_evaluar_estructura_promedio);
 		// tests pesados que tardan un poco más:
-		//RUN_TEST(check_numero_condicion_2);
-		//RUN_TEST(check_numero_condicion_3);
-		//RUN_TEST(check_numero_condicion_4);
-		// RUN_TEST(check_calidad_isoterma);
+		RUN_TEST(check_numero_condicion_2);
+		RUN_TEST(check_numero_condicion_3);
+		RUN_TEST(check_numero_condicion_4);
+		RUN_TEST(check_calidad_isoterma);
 
 		// tests de datos para la experimentacion del informe
 		// discretización:
-		// RUN_TEST(exp_discretizacion_horno_plomo_1_numero_condicion);
-		// RUN_TEST(exp_discretizacion_horno_zinc_1_numero_condicion);
-		// RUN_TEST(exp_discretizacion_horno_hierro_1_numero_condicion);
+		RUN_TEST(exp_discretizacion_horno_plomo_1_numero_condicion);
+		RUN_TEST(exp_discretizacion_horno_zinc_1_numero_condicion);
+		RUN_TEST(exp_discretizacion_horno_hierro_1_numero_condicion);
 		// tests pesados que tardan un poco más:
-		// RUN_TEST(exp_discretizacion_horno_plomo_2_numero_condicion);
-		// RUN_TEST(exp_discretizacion_horno_zinc_2_numero_condicion);
-		// RUN_TEST(exp_discretizacion_horno_hierro_2_numero_condicion);
+		RUN_TEST(exp_discretizacion_horno_plomo_2_numero_condicion);
+		RUN_TEST(exp_discretizacion_horno_zinc_2_numero_condicion);
+		RUN_TEST(exp_discretizacion_horno_hierro_2_numero_condicion);
 		// calidad de la solucion:
-		// RUN_TEST(exp_calidad_solucion_horno_plomo_1);
-		// RUN_TEST(exp_calidad_solucion_horno_zinc_1);
-		// RUN_TEST(exp_calidad_solucion_horno_hierro_1);
-		// RUN_TEST(exp_calidad_solucion_horno_plomo_2);
-		// RUN_TEST(exp_calidad_solucion_horno_zinc_2);
-		// RUN_TEST(exp_calidad_solucion_horno_hierro_2);
+		RUN_TEST(exp_calidad_solucion_horno_plomo_1);
+		RUN_TEST(exp_calidad_solucion_horno_zinc_1);
+		RUN_TEST(exp_calidad_solucion_horno_hierro_1);
+		RUN_TEST(exp_calidad_solucion_horno_plomo_2);
+		RUN_TEST(exp_calidad_solucion_horno_zinc_2);
+		RUN_TEST(exp_calidad_solucion_horno_hierro_2);
 
 		// isotermas:
-		// RUN_TEST(exp_isoterma_horno_plomo_1);
-		// RUN_TEST(exp_isoterma_horno_zinc_1);
-		// RUN_TEST(exp_isoterma_horno_hierro_1);
+		RUN_TEST(exp_isoterma_horno_plomo_1);
+		RUN_TEST(exp_isoterma_horno_zinc_1);
+		RUN_TEST(exp_isoterma_horno_hierro_1);
 		// tests pesados que tardan un poco más:
-		// RUN_TEST(exp_isoterma_horno_plomo_2);
-		// RUN_TEST(exp_isoterma_horno_zinc_2);
-		// RUN_TEST(exp_isoterma_horno_hierro_2);
+		RUN_TEST(exp_isoterma_horno_plomo_2);
+		RUN_TEST(exp_isoterma_horno_zinc_2);
+		RUN_TEST(exp_isoterma_horno_hierro_2);
 
 		// proximidad de la isoterma:
-		// RUN_TEST(exp_isoterma_horno_plomo_3a);
-		// RUN_TEST(exp_isoterma_horno_plomo_3b);
-		// RUN_TEST(exp_isoterma_horno_plomo_3c);
+		RUN_TEST(exp_isoterma_horno_plomo_3a);
+		RUN_TEST(exp_isoterma_horno_plomo_3b);
+		RUN_TEST(exp_isoterma_horno_plomo_3c);
 
 		// tiempos de computo:
 		srand(time(0));
-		//exp_temporal_1();
-		//exp_temporal_2();
+		exp_temporal_1();
+		exp_temporal_2();
 
 		// script importante:
 		// octave --path tools/ --eval 'horno tests/test_horno_hierro1.inn tests/test_horno_hierro1.out tests/test_isoterma_horno_hierro_1_binaria.out'

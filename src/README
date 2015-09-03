@@ -12,3 +12,23 @@ test: hace el build, busca lo archivos *.in en la carpeta tests/, ejecuta el pro
 resultado para cada corrida en el correspondiente .out. Despues, chequea que el resultado sea el "mismo" que el
 .expected, tambien del directorio test. En este caso, la comparacion es por tolerancia coordenada a coordeanda del vector
 solucion.
+
+----------------------------- Agregado -----------------------------------------
+
+Se modificó internamente el script metnum.py para que utilize el Makefile.
+
+Se puede compilar haciendo:
+    > make
+O bien haciendo:
+    > python metnum.py
+
+Se puede limpiar el entorno haciendo:
+    > make clean
+O bien haciendo:
+    > python metnum.py clean
+
+Para correr los tests de la catedra hacer:
+    > python metnum.py test
+
+Para correr los tests del Grupo (tanto tests unitarios como de experimentación) hacer:
+    > make tests
